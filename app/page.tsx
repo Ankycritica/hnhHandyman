@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -9,12 +10,44 @@ import { Phone, Search, Star, CheckCircle2, Facebook, Twitter, Youtube, Linkedin
 import Image from "next/image"
 import { ChatWidget } from "@/components/chat-widget"
 
-export default function MrHandymanPage() {
-  const [isChatOpen, setIsChatOpen] = useState(false)
+// Fade-in animation component
+function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <div className="min-h-screen bg-white">
-      <header className="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export default function MrHandymanPage() {
+  const [isChatOpen, setIsChatOpen] = useState(false)
+  const heroRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  })
+
+  // Parallax effects
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
+  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0])
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
+
+  return (
+    <div className="min-h-screen bg-white overflow-x-hidden">
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-sm"
+      >
         <div className="container mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-12">
             <Image
@@ -53,97 +86,167 @@ export default function MrHandymanPage() {
             </Button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
-      <div className="fixed bottom-8 right-8 z-50">
-        <Button 
-          onClick={() => setIsChatOpen(true)}
-          className="bg-red-600 hover:bg-red-700 text-white shadow-2xl shadow-red-600/50 h-14 px-8 text-lg font-bold rounded-full animate-pulse hover:animate-none"
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 1, duration: 0.5, ease: "backOut" }}
+        className="fixed bottom-8 right-8 z-50"
+      >
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          <Calendar className="mr-2 h-5 w-5" />
-          Book a Handyman
-        </Button>
-      </div>
+          <Button 
+            onClick={() => setIsChatOpen(true)}
+            className="bg-red-600 hover:bg-red-700 text-white shadow-2xl shadow-red-600/50 h-14 px-8 text-lg font-bold rounded-full"
+          >
+            <Calendar className="mr-2 h-5 w-5" />
+            Book a Handyman
+          </Button>
+        </motion.div>
+      </motion.div>
 
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
-      {/* Hero Section */}
-      <section
-        className="relative h-[600px] bg-cover bg-center"
-        style={{ backgroundImage: "url('/red-handyman-van-in-driveway-professional-service.jpg')" }}
-      >
+      {/* Hero Section with Parallax */}
+      <section ref={heroRef} className="relative h-[600px] overflow-hidden">
+        <motion.div
+          style={{ 
+            y: heroY, 
+            scale: heroScale,
+            backgroundImage: "url('/red-handyman-van-in-driveway-professional-service.jpg')"
+          }}
+          className="absolute inset-0 bg-cover bg-center"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
-        <div className="relative container mx-auto px-6 h-full flex flex-col justify-center">
-          <h1 className="text-6xl font-bold text-white mb-6 max-w-2xl leading-tight">
+        <motion.div
+          style={{ opacity: heroOpacity }}
+          className="relative container mx-auto px-6 h-full flex flex-col justify-center"
+        >
+          <motion.h1
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="text-6xl font-bold text-white mb-6 max-w-2xl leading-tight"
+          >
             Local Professional Services You Can Trust
-          </h1>
-          <p className="text-xl text-white/90 mb-8 max-w-xl leading-relaxed">
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            className="text-xl text-white/90 mb-8 max-w-xl leading-relaxed"
+          >
             Quality home repairs and improvements from experienced professionals
-          </p>
-          <div className="flex gap-4">
-            <Button className="bg-red-600 hover:bg-red-700 text-white shadow-lg h-12 px-8 text-base font-semibold">
-              <Calendar className="mr-2 h-5 w-5" />
-              SCHEDULE AN APPOINTMENT
-            </Button>
-            <Button
-              variant="outline"
-              className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-gray-900 h-12 px-8 text-base font-semibold"
-            >
-              Learn More
-            </Button>
-          </div>
-        </div>
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+            className="flex gap-4"
+          >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                onClick={() => setIsChatOpen(true)}
+                className="bg-red-600 hover:bg-red-700 text-white shadow-lg h-12 px-8 text-base font-semibold"
+              >
+                <Calendar className="mr-2 h-5 w-5" />
+                SCHEDULE AN APPOINTMENT
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="outline"
+                className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-gray-900 h-12 px-8 text-base font-semibold transition-all duration-300"
+              >
+                Learn More
+              </Button>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </section>
 
       <section className="py-16 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-              <h2 className="text-4xl font-bold mb-3 text-center">Book Your Handyman Today</h2>
-              <p className="text-gray-600 text-center mb-8">
-                Enter your ZIP code to find qualified professionals in your area
-              </p>
-              <div className="flex gap-4 max-w-2xl mx-auto">
-                <Input
-                  placeholder="Enter ZIP Code"
-                  className="flex-1 h-14 text-lg border-gray-300 focus:border-red-600 focus:ring-red-600"
-                />
-                <Button className="bg-red-600 hover:bg-red-700 text-white h-14 px-8 text-base font-semibold shadow-lg shadow-red-600/30">
-                  <Search className="mr-2 h-5 w-5" />
-                  SEARCH
-                </Button>
-              </div>
+          <FadeIn>
+            <div className="max-w-4xl mx-auto">
+              <motion.div
+                whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(239, 68, 68, 0.25)" }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8"
+              >
+                <h2 className="text-4xl font-bold mb-3 text-center">Book Your Handyman Today</h2>
+                <p className="text-gray-600 text-center mb-8">
+                  Enter your ZIP code to find qualified professionals in your area
+                </p>
+                <div className="flex gap-4 max-w-2xl mx-auto">
+                  <Input
+                    placeholder="Enter ZIP Code"
+                    className="flex-1 h-14 text-lg border-gray-300 focus:border-red-600 focus:ring-red-600 transition-all duration-300"
+                  />
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button className="bg-red-600 hover:bg-red-700 text-white h-14 px-8 text-base font-semibold shadow-lg shadow-red-600/30">
+                      <Search className="mr-2 h-5 w-5" />
+                      SEARCH
+                    </Button>
+                  </motion.div>
+                </div>
+              </motion.div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* Customer Reviews */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Customer Reviews</h2>
+          <FadeIn>
+            <h2 className="text-3xl font-bold text-center mb-12">Customer Reviews</h2>
+          </FadeIn>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-orange-500 mx-auto mb-4 flex items-center justify-center">
-                <Star className="h-10 w-10 text-white fill-white" />
-              </div>
-              <h3 className="font-bold text-xl mb-2">4.8 Average Rating</h3>
-              <p className="text-gray-600">Based on thousands of customer reviews across all locations</p>
-            </div>
-            <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-pink-500 mx-auto mb-4 flex items-center justify-center">
-                <CheckCircle2 className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="font-bold text-xl mb-2">Satisfaction Guaranteed</h3>
-              <p className="text-gray-600">We stand behind our work with a comprehensive guarantee</p>
-            </div>
-            <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-blue-500 mx-auto mb-4 flex items-center justify-center">
-                <Phone className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="font-bold text-xl mb-2">24/7 Support</h3>
-              <p className="text-gray-600">Our customer service team is always ready to help</p>
-            </div>
+            {[
+              {
+                icon: Star,
+                title: "4.8 Average Rating",
+                desc: "Based on thousands of customer reviews across all locations",
+                color: "bg-orange-500",
+                delay: 0,
+              },
+              {
+                icon: CheckCircle2,
+                title: "Satisfaction Guaranteed",
+                desc: "We stand behind our work with a comprehensive guarantee",
+                color: "bg-pink-500",
+                delay: 0.2,
+              },
+              {
+                icon: Phone,
+                title: "24/7 Support",
+                desc: "Our customer service team is always ready to help",
+                color: "bg-blue-500",
+                delay: 0.4,
+              },
+            ].map((item, i) => (
+              <FadeIn key={i} delay={item.delay}>
+                <motion.div
+                  whileHover={{ y: -10, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center"
+                >
+                  <motion.div
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                    className={`w-20 h-20 rounded-full ${item.color} mx-auto mb-4 flex items-center justify-center`}
+                  >
+                    <item.icon className="h-10 w-10 text-white fill-white" />
+                  </motion.div>
+                  <h3 className="font-bold text-xl mb-2">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
+                </motion.div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
@@ -151,31 +254,44 @@ export default function MrHandymanPage() {
       {/* Professional Handyman Services */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Professional Handyman Services</h2>
+          <FadeIn>
+            <h2 className="text-3xl font-bold text-center mb-12">Our Professional Handyman Services</h2>
+          </FadeIn>
           <div className="grid md:grid-cols-4 gap-6">
             {[
-              { title: "Home Repairs", image: "home-repairs.jpg", icon: "🔧" },
-              { title: "Painting Services", image: "painting-services.jpg", icon: "🎨" },
-              { title: "Carpentry Work", image: "carpentry-work.jpg", icon: "🪚" },
-              { title: "Electrical Services", image: "electrical-services.jpg", icon: "⚡" },
+              { title: "Home Repairs", image: "home-repairs.jpg", icon: "🔧", delay: 0 },
+              { title: "Painting Services", image: "painting-services.jpg", icon: "🎨", delay: 0.1 },
+              { title: "Carpentry Work", image: "carpentry-work.jpg", icon: "🪚", delay: 0.2 },
+              { title: "Electrical Services", image: "electrical-services.jpg", icon: "⚡", delay: 0.3 },
             ].map((service, i) => (
-              <Card key={i} className="overflow-hidden">
-                <div className="relative h-48">
-                  <Image
-                    src={`/${service.image}`}
-                    alt={service.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white text-2xl mb-4">
-                    {service.icon}
-                  </div>
-                  <h3 className="font-bold text-lg mb-2">{service.title}</h3>
-                  <p className="text-gray-600 text-sm">Professional and reliable service for all your home needs</p>
-                </CardContent>
-              </Card>
+              <FadeIn key={i} delay={service.delay}>
+                <motion.div
+                  whileHover={{ y: -10, scale: 1.03 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Card className="overflow-hidden border-2 border-transparent hover:border-red-600/20 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.3 }}
+                      className="relative h-48 overflow-hidden"
+                    >
+                      <Image
+                        src={`/${service.image}`}
+                        alt={service.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </motion.div>
+                    <CardContent className="p-6">
+                      <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white text-2xl mb-4 shadow-lg">
+                        {service.icon}
+                      </div>
+                      <h3 className="font-bold text-lg mb-2">{service.title}</h3>
+                      <p className="text-gray-600 text-sm">Professional and reliable service for all your home needs</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -184,62 +300,70 @@ export default function MrHandymanPage() {
       {/* Neighborhood Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">What's In The Neighborhood You're Right</h2>
-            <p className="text-gray-600 mb-6">
-              We're proud to serve your local community with professional handyman services. Our experienced technicians
-              are familiar with the unique needs of homes in your area.
-            </p>
-            <Button className="bg-red-600 hover:bg-red-700 text-white">LEARN MORE</Button>
-          </div>
+          <FadeIn>
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-3xl font-bold mb-4">What's In The Neighborhood You're Right</h2>
+              <p className="text-gray-600 mb-6">
+                We're proud to serve your local community with professional handyman services. Our experienced technicians
+                are familiar with the unique needs of homes in your area.
+              </p>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button className="bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+                  LEARN MORE
+                </Button>
+              </motion.div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* Great Reasons Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Great Reasons to Choose Mr. Handyman</h2>
+          <FadeIn>
+            <h2 className="text-3xl font-bold text-center mb-12">Great Reasons to Choose Mr. Handyman</h2>
+          </FadeIn>
           <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
-            <div className="relative h-[400px]">
-              <Image
-                src="/two-handymen-in-red-shirts-working-in-modern-kitch.jpg"
-                alt="Professional handymen at work"
-                fill
-                className="object-cover rounded-lg"
-              />
-            </div>
+            <FadeIn>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                className="relative h-[400px] rounded-lg overflow-hidden shadow-2xl"
+              >
+                <Image
+                  src="/two-handymen-in-red-shirts-working-in-modern-kitch.jpg"
+                  alt="Professional handymen at work"
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
+            </FadeIn>
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle2 className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-2">Licensed & Insured</h3>
-                  <p className="text-gray-600">
-                    All our technicians are fully licensed and insured for your peace of mind
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle2 className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-2">Experienced Professionals</h3>
-                  <p className="text-gray-600">
-                    Years of experience handling all types of home repairs and improvements
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle2 className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-2">Quality Workmanship</h3>
-                  <p className="text-gray-600">We take pride in delivering exceptional results on every job</p>
-                </div>
-              </div>
+              {[
+                { title: "Licensed & Insured", desc: "All our technicians are fully licensed and insured for your peace of mind", delay: 0.1 },
+                { title: "Experienced Professionals", desc: "Years of experience handling all types of home repairs and improvements", delay: 0.2 },
+                { title: "Quality Workmanship", desc: "We take pride in delivering exceptional results on every job", delay: 0.3 },
+              ].map((item, i) => (
+                <FadeIn key={i} delay={item.delay}>
+                  <motion.div
+                    whileHover={{ x: 10 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex items-start gap-4"
+                  >
+                    <motion.div
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 shadow-lg"
+                    >
+                      <CheckCircle2 className="h-6 w-6 text-white" />
+                    </motion.div>
+                    <div>
+                      <h3 className="font-bold text-lg mb-2">{item.title}</h3>
+                      <p className="text-gray-600">{item.desc}</p>
+                    </div>
+                  </motion.div>
+                </FadeIn>
+              ))}
             </div>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -251,30 +375,67 @@ export default function MrHandymanPage() {
               "Flexible scheduling",
               "Professional equipment",
             ].map((reason, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle2 className="h-5 w-5 text-white" />
-                </div>
-                <span className="font-medium">{reason}</span>
-              </div>
+              <FadeIn key={i} delay={i * 0.1}>
+                <motion.div
+                  whileHover={{ x: 5, scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex items-center gap-3"
+                >
+                  <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <CheckCircle2 className="h-5 w-5 text-white" />
+                  </div>
+                  <span className="font-medium">{reason}</span>
+                </motion.div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
       {/* Find a Handyman Form */}
-      <section className="py-16 bg-red-600 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Find a Handyman Near Me</h2>
-            <p className="mb-8">Enter your ZIP code to find qualified handyman services in your area</p>
-            <div className="bg-white rounded-lg p-6">
-              <div className="flex gap-4">
-                <Input placeholder="Enter ZIP Code" className="flex-1 text-gray-900" />
-                <Button className="bg-red-600 hover:bg-red-700 text-white">FIND NOW</Button>
-              </div>
+      <section className="py-16 bg-red-600 text-white relative overflow-hidden">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute top-0 right-0 w-96 h-96 bg-red-700/30 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, -90, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute bottom-0 left-0 w-96 h-96 bg-red-800/30 rounded-full blur-3xl"
+        />
+        <div className="container mx-auto px-4 relative z-10">
+          <FadeIn>
+            <div className="max-w-2xl mx-auto text-center">
+              <h2 className="text-3xl font-bold mb-4">Find a Handyman Near Me</h2>
+              <p className="mb-8">Enter your ZIP code to find qualified handyman services in your area</p>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="bg-white rounded-lg p-6 shadow-2xl"
+              >
+                <div className="flex gap-4">
+                  <Input placeholder="Enter ZIP Code" className="flex-1 text-gray-900" />
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button className="bg-red-600 hover:bg-red-700 text-white shadow-lg">FIND NOW</Button>
+                  </motion.div>
+                </div>
+              </motion.div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
