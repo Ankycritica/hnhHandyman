@@ -115,11 +115,20 @@ export default function MrHandymanPage() {
         <motion.div
           style={{ 
             y: heroY, 
-            scale: heroScale,
-            backgroundImage: "url('/red-handyman-van-in-driveway-professional-service.jpg')"
+            scale: heroScale
           }}
-          className="absolute inset-0 bg-cover bg-center"
-        />
+          className="absolute inset-0"
+        >
+          <video
+            className="w-full h-full object-cover"
+            src="/hnhhandyman.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/red-handyman-van-in-driveway-professional-service.jpg"
+          />
+        </motion.div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
         <motion.div
           style={{ opacity: heroOpacity }}
@@ -366,7 +375,7 @@ export default function MrHandymanPage() {
               ))}
             </div>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto justify-items-center">
             {[
               "Background-checked technicians",
               "Upfront pricing",
@@ -442,41 +451,46 @@ export default function MrHandymanPage() {
       {/* Why Choose Us */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8">Why Choose Us?</h2>
-          <div className="space-y-6 max-w-3xl">
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 text-white font-bold">
-                1
-              </div>
-              <div>
-                <h3 className="font-bold text-lg mb-2">Trusted Professionals</h3>
-                <p className="text-gray-600">
-                  Our handymen are carefully screened, background-checked, and trained to deliver exceptional service
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 text-white font-bold">
-                2
-              </div>
-              <div>
-                <h3 className="font-bold text-lg mb-2">Comprehensive Services</h3>
-                <p className="text-gray-600">
-                  From minor repairs to major renovations, we handle all your home improvement needs
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 text-white font-bold">
-                3
-              </div>
-              <div>
-                <h3 className="font-bold text-lg mb-2">Customer Satisfaction</h3>
-                <p className="text-gray-600">
-                  We're not satisfied until you are. Our guarantee ensures you get the quality you deserve
-                </p>
-              </div>
-            </div>
+          <div className="max-w-5xl mx-auto text-center mb-12">
+            <h2 className="text-3xl font-bold mb-3">Why Choose Us?</h2>
+            <p className="text-gray-600">Premium service, professional team, and results you can trust</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {[
+              {
+                icon: CheckCircle2,
+                title: "Trusted Professionals",
+                desc: "Carefully screened, background-checked, and trained technicians for peace of mind",
+                delay: 0,
+              },
+              {
+                icon: Phone,
+                title: "Comprehensive Services",
+                desc: "From small repairs to major projects, one reliable team handles it all",
+                delay: 0.1,
+              },
+              {
+                icon: Star,
+                title: "Customer Satisfaction",
+                desc: "Top-tier workmanship with a satisfaction guarantee on every job",
+                delay: 0.2,
+              },
+            ].map((item, i) => (
+              <FadeIn key={i} delay={item.delay}>
+                <motion.div
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                  className="group relative rounded-2xl border border-gray-100 bg-white p-6 shadow-lg hover:shadow-2xl overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-600/0 via-red-600/0 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="w-12 h-12 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-lg mb-4">
+                    <item.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
+                </motion.div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
@@ -513,8 +527,8 @@ export default function MrHandymanPage() {
       {/* FAQ Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8">Frequently Asked Questions</h2>
-          <Accordion type="single" collapsible className="max-w-3xl">
+          <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+          <Accordion type="single" collapsible className="max-w-3xl mx-auto">
             <AccordionItem value="item-1">
               <AccordionTrigger>What services do you offer?</AccordionTrigger>
               <AccordionContent>
