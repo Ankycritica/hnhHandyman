@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     /*
     const resend = new Resend(process.env.RESEND_API_KEY)
     await resend.emails.send({
-      from: "Mr. Handyman <onboarding@resend.dev>",
+      from: "HnHHandyman <onboarding@resend.dev>",
       to: CLIENT_EMAIL,
       subject: `New Customer Inquiry from ${customerInfo.name}`,
       html: `

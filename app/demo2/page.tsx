@@ -29,6 +29,7 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 export default function MrHandymanPage() {
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -60,7 +61,6 @@ export default function MrHandymanPage() {
       const step = cardWidth + gap
       const half = el.scrollWidth / 2
       el.scrollBy({ left: step, behavior: 'smooth' })
-      // wrap seamlessly when passing midpoint (since we duplicate items)
       if (el.scrollLeft + step >= half) {
         setTimeout(() => {
           el.scrollLeft = el.scrollLeft - half
@@ -75,6 +75,14 @@ export default function MrHandymanPage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0])
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
 
+  // Scroll listener for header color change
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
@@ -82,7 +90,11 @@ export default function MrHandymanPage() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm'
+            : 'bg-transparent border-b border-white/20'
+        }`}
       >
         <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
           <div className="flex items-center gap-12">
@@ -94,16 +106,24 @@ export default function MrHandymanPage() {
               className="h-10 w-auto"
             />
             <nav className="hidden lg:flex items-center gap-8">
-              <a href="#" className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors">
+              <a href="#" className={`text-sm font-semibold transition-colors ${
+                isScrolled ? 'text-gray-700 hover:text-red-600' : 'text-white hover:text-red-400'
+              }`}>
                 Services
               </a>
-              <a href="#" className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors">
+              <a href="#" className={`text-sm font-semibold transition-colors ${
+                isScrolled ? 'text-gray-700 hover:text-red-600' : 'text-white hover:text-red-400'
+              }`}>
                 Locations
               </a>
-              <a href="#" className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors">
+              <a href="#" className={`text-sm font-semibold transition-colors ${
+                isScrolled ? 'text-gray-700 hover:text-red-600' : 'text-white hover:text-red-400'
+              }`}>
                 About Us
               </a>
-              <a href="#" className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors">
+              <a href="#" className={`text-sm font-semibold transition-colors ${
+                isScrolled ? 'text-gray-700 hover:text-red-600' : 'text-white hover:text-red-400'
+              }`}>
                 Franchise
               </a>
             </nav>
@@ -111,7 +131,11 @@ export default function MrHandymanPage() {
           <div className="flex items-center gap-3">
             <Button
               variant="outline"
-              className="hidden md:flex border-gray-300 text-gray-700 hover:border-red-600 hover:text-red-600 bg-transparent transition-colors"
+              className={`hidden md:flex bg-transparent transition-colors ${
+                isScrolled
+                  ? 'border-gray-300 text-gray-700 hover:border-red-600 hover:text-red-600'
+                  : 'border-white text-white hover:border-red-400 hover:text-red-400'
+              }`}
             >
               <Phone className="mr-2 h-4 w-4" />
               (800) 123-4567
@@ -147,7 +171,7 @@ export default function MrHandymanPage() {
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
       {/* Hero Section with Parallax */}
-      <section ref={heroRef} className="relative h-[80vh] min-h-[500px] md:min-h-[700px] overflow-hidden">
+      <section ref={heroRef} className="relative h-[85vh] min-h-[500px] md:min-h-[700px] overflow-hidden">
         <motion.div
           style={{ 
             y: heroY, 
@@ -155,12 +179,14 @@ export default function MrHandymanPage() {
           }}
           className="absolute inset-0"
         >
-          <Image
-            src="/red-handyman-van-in-driveway-professional-service.jpg"
-            alt="Professional handyman service van"
-            fill
-            className="object-cover"
-            priority
+          <video
+            className="w-full h-full object-cover"
+            src="/hnhhandyman.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/red-handyman-van-in-driveway-professional-service.jpg"
           />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
@@ -548,10 +574,7 @@ export default function MrHandymanPage() {
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
-            <div
-              ref={tipsRef}
-              className="flex gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2"
-            >
+            <div ref={tipsRef} className="flex gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2">
               {tipsData.concat(tipsData).map((tip, i) => (
                 <Card key={i} className="tip-card group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow h-full bg-white snap-start flex-[0_0_85%] md:flex-[0_0_40%] lg:flex-[0_0_24%]">
                   <div className="relative h-72 md:h-80 w-full overflow-hidden">
