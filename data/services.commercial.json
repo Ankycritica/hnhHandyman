@@ -1,0 +1,51 @@
+[
+  {
+    "title": "Office Maintenance",
+    "shortDescription": "Comprehensive maintenance services for office spaces including repairs, updates, and ongoing facility care.",
+    "iconName": "Building",
+    "slug": "office-maintenance"
+  },
+  {
+    "title": "Retail Space Improvements",
+    "shortDescription": "Storefront enhancements, display installation, and retail space modifications to improve customer experience.",
+    "iconName": "Store",
+    "slug": "retail-space-improvements"
+  },
+  {
+    "title": "Commercial Painting",
+    "shortDescription": "Large-scale commercial painting projects with minimal disruption to your business operations.",
+    "iconName": "Paintbrush",
+    "slug": "commercial-painting"
+  },
+  {
+    "title": "Facility Repairs",
+    "shortDescription": "Quick response repairs for commercial facilities including HVAC, electrical, and structural issues.",
+    "iconName": "Settings",
+    "slug": "facility-repairs"
+  },
+  {
+    "title": "Tenant Improvements",
+    "shortDescription": "Custom build-outs and modifications to meet specific tenant needs and lease requirements.",
+    "iconName": "Layout",
+    "slug": "tenant-improvements"
+  },
+  {
+    "title": "Accessibility Upgrades",
+    "shortDescription": "ADA-compliant modifications and accessibility improvements for commercial properties.",
+    "iconName": "Accessibility",
+    "slug": "accessibility-upgrades"
+  },
+  {
+    "title": "Warehouse Services",
+    "shortDescription": "Industrial space maintenance, shelving installation, and warehouse organization solutions.",
+    "iconName": "Package",
+    "slug": "warehouse-services"
+  },
+  {
+    "title": "Restaurant Fit-Outs",
+    "shortDescription": "Specialized services for restaurant spaces including kitchen modifications and dining area updates.",
+    "iconName": "Utensils",
+    "slug": "restaurant-fit-outs"
+  }
+]
+

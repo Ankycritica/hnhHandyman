@@ -1,0 +1,51 @@
+[
+  {
+    "title": "Home Repair Solutions",
+    "shortDescription": "Expert repairs for common household issues including drywall, doors, windows, and general maintenance tasks.",
+    "iconName": "Wrench",
+    "slug": "home-repair-solutions"
+  },
+  {
+    "title": "Interior Painting Services",
+    "shortDescription": "Professional interior painting with quality materials and attention to detail for lasting results.",
+    "iconName": "Paintbrush",
+    "slug": "interior-painting-services"
+  },
+  {
+    "title": "Carpentry & Woodwork",
+    "shortDescription": "Custom carpentry projects including built-ins, shelving, trim work, and furniture assembly.",
+    "iconName": "Hammer",
+    "slug": "carpentry-woodwork"
+  },
+  {
+    "title": "Electrical Repairs",
+    "shortDescription": "Safe electrical work including outlet installation, fixture replacement, and basic wiring updates.",
+    "iconName": "Zap",
+    "slug": "electrical-repairs"
+  },
+  {
+    "title": "Plumbing Fixes",
+    "shortDescription": "Reliable plumbing services for leaks, clogs, fixture installation, and minor pipe repairs.",
+    "iconName": "Droplet",
+    "slug": "plumbing-fixes"
+  },
+  {
+    "title": "Drywall & Patching",
+    "shortDescription": "Seamless drywall repair, patching, and texturing to restore walls to like-new condition.",
+    "iconName": "Square",
+    "slug": "drywall-patching"
+  },
+  {
+    "title": "Tile Installation",
+    "shortDescription": "Professional tile work for bathrooms, kitchens, and floors with precision and quality craftsmanship.",
+    "iconName": "Grid",
+    "slug": "tile-installation"
+  },
+  {
+    "title": "Deck & Fence Services",
+    "shortDescription": "Deck construction, repair, and fence installation to enhance your outdoor living space.",
+    "iconName": "Trees",
+    "slug": "deck-fence-services"
+  }
+]
+

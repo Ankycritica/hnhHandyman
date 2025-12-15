@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Phone, Search, Star, CheckCircle2, Facebook, Twitter, Youtube, Linkedin, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
+import { Phone, Search, Star, CheckCircle2, Facebook, Twitter, Youtube, Linkedin, Calendar, ChevronLeft, ChevronRight, Menu, X } from "lucide-react"
 import Image from "next/image"
 import { ChatWidget } from "@/components/chat-widget"
 
@@ -29,6 +30,7 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 export default function MrHandymanPage() {
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [isNavOpen, setIsNavOpen] = useState(false)
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -84,46 +86,86 @@ export default function MrHandymanPage() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
       >
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
-          <div className="flex items-center gap-12">
+        <div className="container mx-auto px-6 py-4 flex items-center">
+          <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/mr-handyman-logo-red-and-blue.JPG"
+              src="/logo.png"
               alt="HnHHandyman"
-              width={150}
-              height={50}
-              className="h-10 w-auto"
+              width={156}
+              height={52}
+              className="h-12 w-auto"
+              priority
             />
-            <nav className="hidden lg:flex items-center gap-8">
-              <a href="#" className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors">
-                Services
+            <span className="text-lg font-semibold text-neutral-900 hidden sm:inline">Hand and Hand Handyman</span>
+          </Link>
+
+          <button
+            className="ml-auto lg:hidden inline-flex items-center justify-center rounded-md border border-neutral-200 h-10 w-10"
+            aria-label="Toggle navigation"
+            onClick={() => setIsNavOpen((prev) => !prev)}
+          >
+            {isNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+
+          <nav className="hidden lg:flex items-center gap-10 mx-auto">
+            {["Services", "Locations", "About Us", "Franchise"].map((item) => (
+              <a
+                key={item}
+                href="#"
+                className="text-sm font-semibold text-neutral-800 hover:text-[var(--primary-blue)] transition-colors"
+              >
+                {item}
               </a>
-              <a href="#" className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors">
-                Locations
-              </a>
-              <a href="#" className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors">
-                About Us
-              </a>
-              <a href="#" className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors">
-                Franchise
-              </a>
-            </nav>
-          </div>
-          <div className="flex items-center gap-3">
+            ))}
+          </nav>
+
+          <div className="ml-auto flex items-center gap-3">
             <Button
               variant="outline"
-              className="hidden md:flex border-gray-300 text-gray-700 hover:border-red-600 hover:text-red-600 bg-transparent transition-colors"
+              size="sm"
+              className="hidden md:inline-flex items-center gap-2 border-neutral-300 text-neutral-800"
+              aria-label="Call (703) 296-6409
+"
             >
-              <Phone className="mr-2 h-4 w-4" />
-              (800) 123-4567
+              <Phone className="h-4 w-4" />
+              <span className="leading-none">(703) 296-6409
+              </span>
             </Button>
-            <Button className="bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/30 font-semibold">
-              <Calendar className="mr-2 h-4 w-4" />
-              Book Now
+
+            <Button
+              size="lg"
+              className="hidden lg:inline-flex shadow-lg"
+              aria-label="Book Now"
+            >
+              <Calendar className="h-5 w-5" />
+              <span>Book Now</span>
             </Button>
           </div>
         </div>
-      </motion.header>
 
+        {isNavOpen && (
+          <div className="lg:hidden border-t border-neutral-200 bg-white px-6 pb-4">
+            <div className="flex flex-col gap-3 pt-3">
+              {["Services", "Locations", "About Us", "Franchise"].map((item) => (
+                <a
+                  key={item}
+                  href="#"
+                  className="text-sm font-semibold text-neutral-900 hover:text-[var(--primary-blue)]"
+                >
+                  {item}
+                </a>
+              ))}
+              <Button className="w-full" size="lg">
+                Book Now
+              </Button>
+              <Button variant="outline" className="w-full">
+                <Phone className="h-4 w-4" />
+                Call (703) 296-6409
+              </Button>
+            </div>
+          </div>
+        )}
+      </motion.header>
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -136,7 +178,7 @@ export default function MrHandymanPage() {
         >
           <Button 
             onClick={() => setIsChatOpen(true)}
-            className="bg-red-600 hover:bg-red-700 text-white shadow-2xl shadow-red-600/50 h-14 px-8 text-lg font-bold rounded-full"
+            className="bg-[var(--primary-red)] hover:bg-[var(--primary-red-dark)] text-white shadow-2xl shadow-[rgba(217,59,47,0.45)] h-14 px-8 text-lg font-bold rounded-full"
           >
             <Calendar className="mr-2 h-5 w-5" />
             Book a Handyman
@@ -147,7 +189,7 @@ export default function MrHandymanPage() {
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
       {/* Hero Section with Parallax */}
-      <section ref={heroRef} className="relative h-[80vh] min-h-[500px] md:min-h-[700px] overflow-hidden">
+      <section ref={heroRef} className="relative h-[80vh] min-h-[520px] md:min-h-[720px] overflow-hidden">
         <motion.div
           style={{ 
             y: heroY, 
@@ -163,16 +205,16 @@ export default function MrHandymanPage() {
             priority
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-white/50" />
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative container mx-auto px-4 sm:px-6 h-full flex flex-col justify-center"
+          className="relative container mx-auto px-6 h-full flex flex-col justify-center"
         >
           <motion.h1
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 max-w-2xl leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--primary-blue)] mb-4 sm:mb-6 max-w-2xl leading-tight"
           >
             Local Professional Services You Can Trust
           </motion.h1>
@@ -180,7 +222,7 @@ export default function MrHandymanPage() {
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-8 max-w-xl leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-neutral-900 mb-6 sm:mb-8 max-w-xl leading-relaxed"
           >
             Quality home repairs and improvements from experienced professionals
           </motion.p>
@@ -188,12 +230,13 @@ export default function MrHandymanPage() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button 
                 onClick={() => setIsChatOpen(true)}
-                className="bg-red-600 hover:bg-red-700 text-white shadow-lg h-12 px-8 text-base font-semibold"
+                size="lg"
+                className="w-full sm:w-auto shadow-lg"
               >
                 <Calendar className="mr-2 h-5 w-5" />
                 SCHEDULE AN APPOINTMENT
@@ -202,7 +245,8 @@ export default function MrHandymanPage() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="outline"
-                className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-gray-900 h-12 px-8 text-base font-semibold transition-all duration-300"
+                size="lg"
+                className="w-full sm:w-auto border-[var(--primary-blue)] text-[var(--primary-blue)] hover:text-white hover:border-[var(--primary-blue)]"
               >
                 Learn More
               </Button>
@@ -227,10 +271,10 @@ export default function MrHandymanPage() {
                 <div className="flex gap-4 max-w-2xl mx-auto">
                   <Input
                     placeholder="Enter ZIP Code"
-                    className="flex-1 h-14 text-lg border-gray-300 focus:border-red-600 focus:ring-red-600 transition-all duration-300"
+                    className="flex-1 h-14 text-lg border-gray-300 focus:border-[var(--primary-blue)] focus:ring-[var(--primary-blue)] transition-all duration-300"
                   />
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button className="bg-red-600 hover:bg-red-700 text-white h-14 px-8 text-base font-semibold shadow-lg shadow-red-600/30">
+                    <Button className="bg-[var(--primary-red)] hover:bg-[var(--primary-red-dark)] text-white h-14 px-8 text-base font-semibold shadow-lg shadow-[rgba(217,59,47,0.3)]">
                       <Search className="mr-2 h-5 w-5" />
                       SEARCH
                     </Button>
@@ -296,11 +340,12 @@ export default function MrHandymanPage() {
 
       {/* Professional Handyman Services */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6">
           <FadeIn>
-            <h2 className="text-3xl font-bold text-center mb-12">Our Professional Handyman Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[var(--primary-blue)]">Our Professional Handyman Services</h2>
+            <p className="text-center text-neutral-700 max-w-2xl mx-auto mb-12">Trusted technicians delivering reliable, on-time work for every project in your home.</p>
           </FadeIn>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[
               { title: "Home Repairs", image: "home-repairs.jpg", icon: "🔧", delay: 0 },
               { title: "Painting Services", image: "painting-services.jpg", icon: "🎨", delay: 0.1 },
@@ -312,7 +357,7 @@ export default function MrHandymanPage() {
                   whileHover={{ y: -10, scale: 1.03 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Card className="overflow-hidden border-2 border-transparent hover:border-red-600/20 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                  <Card className="overflow-hidden border border-neutral-200 hover:border-[var(--primary-blue)]/30 transition-all duration-300 shadow-md hover:shadow-xl">
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.3 }}
@@ -326,11 +371,11 @@ export default function MrHandymanPage() {
                       />
                     </motion.div>
                     <CardContent className="p-6">
-                      <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white text-2xl mb-4 shadow-lg">
+                      <div className="w-12 h-12 rounded-full bg-[var(--primary-green)] flex items-center justify-center text-white text-2xl mb-4 shadow-md">
                         {service.icon}
                       </div>
-                      <h3 className="font-bold text-lg mb-2">{service.title}</h3>
-                      <p className="text-gray-600 text-sm">Professional and reliable service for all your home needs</p>
+                      <h3 className="font-bold text-lg mb-2 text-[var(--primary-blue)]">{service.title}</h3>
+                      <p className="text-gray-700 text-sm">Professional and reliable service for all your home needs</p>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -351,7 +396,7 @@ export default function MrHandymanPage() {
                 are familiar with the unique needs of homes in your area.
               </p>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button className="bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+                <Button className="bg-[var(--primary-red)] hover:bg-[var(--primary-red-dark)] text-white shadow-lg hover:shadow-xl transition-all duration-300">
                   LEARN MORE
                 </Button>
               </motion.div>
@@ -396,7 +441,7 @@ export default function MrHandymanPage() {
                     <motion.div
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
-                      className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 shadow-lg"
+                    className="w-12 h-12 rounded-full bg-[var(--primary-green)] flex items-center justify-center flex-shrink-0 shadow-lg"
                     >
                       <CheckCircle2 className="h-6 w-6 text-white" />
                     </motion.div>
@@ -423,7 +468,7 @@ export default function MrHandymanPage() {
                       transition={{ duration: 0.3 }}
                       className="flex items-center gap-3"
                     >
-                      <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <div className="w-10 h-10 rounded-full bg-[var(--primary-green)] flex items-center justify-center flex-shrink-0 shadow-lg">
                         <CheckCircle2 className="h-5 w-5 text-white" />
                       </div>
                       <span className="font-medium">{reason}</span>
@@ -438,7 +483,7 @@ export default function MrHandymanPage() {
       </section>
 
       {/* Find a Handyman Form */}
-      <section className="py-16 bg-red-600 text-white relative overflow-hidden">
+      <section className="py-16 bg-[var(--primary-red)] text-white relative overflow-hidden">
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
@@ -449,7 +494,7 @@ export default function MrHandymanPage() {
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute top-0 right-0 w-96 h-96 bg-red-700/30 rounded-full blur-3xl"
+          className="absolute top-0 right-0 w-96 h-96 bg-[var(--primary-red-dark)]/30 rounded-full blur-3xl"
         />
         <motion.div
           animate={{
@@ -461,7 +506,7 @@ export default function MrHandymanPage() {
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute bottom-0 left-0 w-96 h-96 bg-red-800/30 rounded-full blur-3xl"
+          className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--primary-red-dark)]/30 rounded-full blur-3xl"
         />
         <div className="container mx-auto px-4 relative z-10">
           <FadeIn>
@@ -475,7 +520,7 @@ export default function MrHandymanPage() {
                 <div className="flex gap-4">
                   <Input placeholder="Enter ZIP Code" className="flex-1 text-gray-900" />
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button className="bg-red-600 hover:bg-red-700 text-white shadow-lg">FIND NOW</Button>
+                    <Button className="bg-[var(--primary-red)] hover:bg-[var(--primary-red-dark)] text-white shadow-lg">FIND NOW</Button>
                   </motion.div>
                 </div>
               </motion.div>
@@ -518,8 +563,8 @@ export default function MrHandymanPage() {
                   transition={{ duration: 0.3 }}
                   className="group relative rounded-2xl border border-gray-100 bg-white p-6 shadow-lg hover:shadow-2xl overflow-hidden h-full flex flex-col"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-red-600/0 via-red-600/0 to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="w-12 h-12 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-lg mb-4">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-blue)]/0 via-[var(--primary-blue)]/0 to-[var(--primary-blue)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="w-12 h-12 rounded-xl bg-[var(--primary-blue)] text-white flex items-center justify-center shadow-lg mb-4">
                     <item.icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-bold text-lg mb-2">{item.title}</h3>
@@ -536,7 +581,7 @@ export default function MrHandymanPage() {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold">Tips and Ideas</h2>
-            <a href="#" className="text-red-600 font-medium hover:underline">
+            <a href="#" className="text-[var(--primary-red)] font-medium hover:underline">
               View all articles →
             </a>
           </div>
@@ -572,7 +617,7 @@ export default function MrHandymanPage() {
                     </div>
                     <h3 className="font-bold text-lg mb-1">{tip.title}</h3>
                     <p className="text-gray-600 mb-3">{tip.desc}</p>
-                    <a href="#" className="text-red-600 font-medium hover:underline">Read more →</a>
+                    <a href="#" className="text-[var(--primary-red)] font-medium hover:underline">Read more →</a>
                   </CardContent>
                 </Card>
               ))}
@@ -639,148 +684,70 @@ export default function MrHandymanPage() {
       </section>
 
       {/* Get Our Team Section */}
-      <section className="py-16 bg-red-600 text-white">
+      <section className="py-16 bg-[var(--primary-red)] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-xl mb-8">Contact us today for a free estimate</p>
-          <Button className="bg-white text-red-600 hover:bg-gray-100">REQUEST A QUOTE</Button>
+          <Button className="bg-white text-[var(--primary-red)] hover:bg-gray-100">REQUEST A QUOTE</Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8 text-center md:text-left">
-            <div className="flex flex-col items-center md:items-start">
-              <Image
-                src="/mr-handyman-logo-white.jpg"
-                alt="HnHHandyman"
-                width={150}
-                height={50}
-                className="h-12 w-auto mb-4"
-              />
-              <p className="text-gray-400 text-sm mb-4">
-                We're proud to be part of the Neighborly family of home service brands
+      <footer className="bg-gray-100 text-neutral-900 py-12">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-10 mb-8">
+            <div className="flex flex-col gap-4">
+              <Image src="/logo.png" alt="HnHHandyman" width={156} height={52} className="h-12 w-auto" />
+              <p className="text-sm text-neutral-700">
+                Proudly serving homeowners with reliable, on-time service and workmanship backed by our satisfaction promise.
               </p>
-              <div className="flex gap-3 justify-center md:justify-start">
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center hover:bg-blue-700"
-                >
-                  <Facebook className="h-5 w-5" />
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center hover:bg-blue-500"
-                >
-                  <Twitter className="h-5 w-5" />
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center hover:bg-red-700"
-                >
-                  <Youtube className="h-5 w-5" />
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-800"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
+              <div className="flex items-center gap-3">
+                {[Facebook, Twitter, Youtube, Linkedin].map((Icon, i) => (
+                  <a
+                    key={i}
+                    href="#"
+                    className="h-10 w-10 rounded-full border border-neutral-300 flex items-center justify-center text-[var(--primary-blue)] hover:border-[var(--primary-blue)] hover:text-[var(--primary-blue)]"
+                  >
+                    <Icon className="h-5 w-5" />
+                  </a>
+                ))}
               </div>
             </div>
-            <div className="flex flex-col items-center md:items-start">
+            <div>
               <h3 className="font-bold mb-4">Services</h3>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Home Repairs
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Painting
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Carpentry
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Electrical
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Plumbing
-                  </a>
-                </li>
+              <ul className="space-y-2 text-sm text-neutral-700">
+                {["Home Repairs", "Painting", "Carpentry", "Electrical", "Plumbing"].map((link) => (
+                  <li key={link}>
+                    <a href="#" className="hover:text-[var(--primary-blue)]">
+                      {link}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="flex flex-col items-center md:items-start">
+            <div>
               <h3 className="font-bold mb-4">Company</h3>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Locations
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Careers
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Franchise
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Contact
-                  </a>
-                </li>
+              <ul className="space-y-2 text-sm text-neutral-700">
+                {["About Us", "Locations", "Careers", "Franchise", "Contact"].map((link) => (
+                  <li key={link}>
+                    <a href="#" className="hover:text-[var(--primary-blue)]">
+                      {link}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="flex flex-col items-center md:items-start">
-              <h3 className="font-bold mb-4">Resources</h3>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    FAQs
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Reviews
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Terms of Service
-                  </a>
-                </li>
+            <div>
+              <h3 className="font-bold mb-4">Contact</h3>
+              <ul className="space-y-2 text-sm text-neutral-700">
+                <li className="font-semibold text-[var(--primary-blue)]">(703) 296-6409</li>
+                <li>support@hnhhandyman.com</li>
+                <li>123 Service Ave, Suite 200</li>
+                <li>Mon - Sat: 8:00am - 6:00pm</li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
+          <div className="border-t border-neutral-200 pt-6 text-center text-sm text-neutral-600">
             <p>© 2025 HnHHandyman. All rights reserved. Each location is independently owned and operated.</p>
           </div>
         </div>
