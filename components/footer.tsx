@@ -11,15 +11,15 @@ export function Footer() {
             <Image
               src="/logo.png"
               alt="HnHHandyman"
-              width={156}
-              height={52}
+              width={400}
+              height={200}
               className="h-12 w-auto"
             />
             <p className="text-sm text-neutral-700">
               Proudly serving homeowners with reliable, on-time service and
               workmanship backed by our satisfaction promise.
             </p>
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               {[Facebook, Twitter, Youtube, Linkedin].map((Icon, i) => (
                 <a
                   key={i}
@@ -29,7 +29,7 @@ export function Footer() {
                   <Icon className="h-5 w-5" />
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
           <div>
             <h3 className="font-bold mb-4">Services</h3>
@@ -50,36 +50,29 @@ export function Footer() {
                   Commercial
                 </Link>
               </li>
-              <li>
-                <a href="#" className="hover:text-[var(--primary-blue)]">
-                  Home Repairs
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-[var(--primary-blue)]">
-                  Painting
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-[var(--primary-blue)]">
-                  Carpentry
-                </a>
-              </li>
             </ul>
           </div>
           <div>
-            <h3 className="font-bold mb-4">Company</h3>
-            <ul className="space-y-2 text-sm text-neutral-700">
-              {["About Us", "Locations", "Careers", "Franchise", "Contact"].map(
-                (link) => (
-                  <li key={link}>
-                    <a href="#" className="hover:text-[var(--primary-blue)]">
-                      {link}
-                    </a>
-                  </li>
-                )
-              )}
-            </ul>
+          <h3 className="font-bold mb-4">Company</h3>
+          <ul className="space-y-2 text-sm text-neutral-700">
+            <li>
+              <Link
+                href="/about-us"
+                className="hover:text-[var(--primary-blue)]"
+              >
+                About Us
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href="/services/locations"
+                className="hover:text-[var(--primary-blue)]"
+              >
+                Locations
+              </Link>
+            </li>
+          </ul>
           </div>
           <div>
             <h3 className="font-bold mb-4">Contact</h3>

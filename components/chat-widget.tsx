@@ -4,7 +4,28 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { X, Send, MessageCircle, Calendar } from "lucide-react"
+import { X, Send, MessageCircle } from "lucide-react"
+
+/* ================= HELPERS ================= */
+
+const uid = () =>
+  crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2)
+
+const normalize = (text: string) =>
+  text.toLowerCase().replace(/[^a-z\s]/g, "").trim()
+
+const isValidName = (v: string) =>
+  v.length >= 2 && /^[a-zA-Z\s]+$/.test(v)
+
+const isValidEmail = (v: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
+
+const isValidPhone = (v: string) =>
+  /^[6-9]\d{9}$/.test(v.replace(/\D/g, ""))
+
+const isValidZip = (v: string) => /^\d{5}$/.test(v)
+
+/* ================= TYPES ================= */
 
 interface Message {
   id: string
@@ -13,230 +34,340 @@ interface Message {
   timestamp: Date
 }
 
-interface ChatWidgetProps {
-  isOpen: boolean
-  onClose: () => void
+type Intent = "unknown" | "wall_repair" | "painting" | "general"
+
+type Stage = "intro" | "zip" | "name" | "email" | "phone" | "closed"
+
+/* ================= RECEPTIONIST ENGINE ================= */
+
+const getContextualReplyAfterSubmit = (msg: string, name: string) => {
+  const text = normalize(msg)
+  const user = name || "there"
+
+  // Goodbye / politeness / small talk
+  if (
+    text.includes("bye") ||
+    text.includes("take care") ||
+    text.includes("great day") ||
+    text.includes("good day") ||
+    text.includes("thanks") ||
+    text.includes("thank") ||
+    text.includes("sure") ||
+    text === "ok"
+  ) {
+    return `Thank you, ${user}! If you ever need help in the future, just let me know. Have a great day!`
+  }
+
+  // Typos / very short / confusion
+  if (text.length <= 3 || text === "no" || text === "on") {
+    return `No worries, ${user}! If you need anything in the future, feel free to reach out.`
+  }
+
+  // Pricing
+  if (text.includes("price") || text.includes("cost") || text.includes("estimate")) {
+    return "Pricing depends on the scope of work. A member of our team will reach out to provide an accurate estimate."
+  }
+
+  // Scheduling / timing
+  if (
+    text.includes("when") ||
+    text.includes("schedule") ||
+    text.includes("appointment") ||
+    text.includes("time")
+  ) {
+    return "Service timing depends on availability. Our team will contact you shortly to confirm scheduling details."
+  }
+
+  // Services
+  if (
+    text.includes("repair") ||
+    text.includes("painting") ||
+    text.includes("wall") ||
+    text.includes("service")
+  ) {
+    return "We offer a wide range of handyman services. Our team will be happy to discuss your specific needs in more detail."
+  }
+
+  // Agent / human
+  if (
+    text.includes("agent") ||
+    text.includes("human") ||
+    text.includes("call")
+  ) {
+    return "No problem! A member of our team will reach out to you shortly to assist you further."
+  }
+
+  // Safe fallback
+  return `Thank you, ${user}! If you have any questions or need help in the future, just let me know.`
 }
 
-export function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
+/* ================= COMPONENT ================= */
+
+export function ChatWidget({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean
+  onClose: () => void
+}) {
   const [messages, setMessages] = useState<Message[]>([
     {
-      id: "1",
-      text: "Hi! I'm here to help you book a handyman. What service do you need?",
+      id: uid(),
+      text: "Hello! How can I help you today? Are you looking for handyman or home repair services?",
       sender: "system",
       timestamp: new Date(),
     },
   ])
+
   const [input, setInput] = useState("")
-  const [customerInfo, setCustomerInfo] = useState({
+  const [stage, setStage] = useState<Stage>("intro")
+  const [intent, setIntent] = useState<Intent>("unknown")
+  const [conversationId, setConversationId] = useState<string | null>(null)
+
+  const [customer, setCustomer] = useState({
     name: "",
     email: "",
     phone: "",
-    collected: false,
   })
-  const [isCollectingInfo, setIsCollectingInfo] = useState(false)
-  const [currentField, setCurrentField] = useState<"name" | "email" | "phone" | null>(null)
-  const [isSending, setIsSending] = useState(false)
+
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
-
   useEffect(() => {
-    scrollToBottom()
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  const addSystemMessage = (text: string) => {
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text,
-      sender: "system",
-      timestamp: new Date(),
-    }
-    setMessages((prev) => [...prev, newMessage])
+  const addMessage = (text: string, sender: "user" | "system") => {
+    setMessages((prev) => [
+      ...prev,
+      { id: uid(), text, sender, timestamp: new Date() },
+    ])
   }
 
-  const addUserMessage = (text: string) => {
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text,
-      sender: "user",
-      timestamp: new Date(),
-    }
-    setMessages((prev) => [...prev, newMessage])
+  const detectIntent = (msg: string): Intent => {
+    const t = normalize(msg)
+    if (t.includes("wall")) return "wall_repair"
+    if (t.includes("paint")) return "painting"
+    if (t.includes("repair")) return "general"
+    return "unknown"
   }
 
   const handleSendMessage = async () => {
     if (!input.trim()) return
 
     const userMessage = input.trim()
-    addUserMessage(userMessage)
+    addMessage(userMessage, "user")
     setInput("")
 
-    // If we're collecting customer info
-    if (isCollectingInfo && currentField) {
-      const updatedInfo = { ...customerInfo, [currentField]: userMessage }
-      setCustomerInfo(updatedInfo)
-
-      if (currentField === "name") {
-        setCurrentField("email")
-        addSystemMessage(`Thanks ${userMessage}! What's your email address?`)
-      } else if (currentField === "email") {
-        setCurrentField("phone")
-        addSystemMessage("Great! And your phone number?")
-      } else if (currentField === "phone") {
-        setCurrentField(null)
-        setIsCollectingInfo(false)
-        updatedInfo.collected = true
-        setCustomerInfo(updatedInfo)
-        
-        // Send notification to client
-        setIsSending(true)
-        try {
-          const response = await fetch("/api/chat/notify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              customerInfo: updatedInfo,
-              initialMessage: messages.find(m => m.sender === "user" && m.text !== userMessage)?.text || userMessage,
-            }),
-          })
-
-          if (response.ok) {
-            addSystemMessage(
-              `Perfect! I've sent your request to our team. ${updatedInfo.name}, we'll contact you shortly at ${updatedInfo.email} or ${updatedInfo.phone}. Is there anything else you'd like to tell us about your project?`
-            )
-          } else {
-            addSystemMessage(
-              "Sorry, there was an issue sending your request. Please try calling us at (800) 123-4567."
-            )
-          }
-        } catch (error) {
-          addSystemMessage(
-            "Sorry, there was an issue sending your request. Please try calling us at (800) 123-4567."
-          )
-        } finally {
-          setIsSending(false)
-        }
-      }
+    /* ===== ALWAYS CONTEXTUAL REPLY AFTER SUBMIT ===== */
+    if (stage === "closed") {
+      const reply = getContextualReplyAfterSubmit(
+        userMessage,
+        customer.name
+      )
+      addMessage(reply, "system")
       return
     }
 
-    // If customer info not collected yet, start collecting
-    if (!customerInfo.collected && !isCollectingInfo) {
-      setIsCollectingInfo(true)
-      setCurrentField("name")
-      addSystemMessage("I'd love to help you with that! First, what's your name?")
-      return
-    }
+    /* ===== INTRO ===== */
+    if (stage === "intro") {
+      const detected = detectIntent(userMessage)
 
-    // After info collected, just send messages to client
-    if (customerInfo.collected) {
-      try {
-        await fetch("/api/chat/message", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            customerInfo,
-            message: userMessage,
-          }),
-        })
-        
-        addSystemMessage(
-          "Thanks for the additional information! We've sent that to our team. They'll be in touch soon!"
+      if (detected === "unknown") {
+        addMessage(
+          "What kind of repair or home improvement project can I help you with today?",
+          "system"
         )
-      } catch (error) {
-        addSystemMessage("Message received! Our team will follow up with you shortly.")
+        return
       }
-    }
-  }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      handleSendMessage()
+      setIntent(detected)
+
+      addMessage(
+        detected === "painting"
+          ? "Yes, we offer a variety of painting services including rooms, trim, cabinets, decks, and more."
+          : "We offer professional wall repair services including drywall repair for cracks, holes, and damage.",
+        "system"
+      )
+
+      addMessage(
+        "To check availability in your area, could you please share your ZIP code?",
+        "system"
+      )
+
+      setStage("zip")
+      return
+    }
+
+    /* ===== ZIP ===== */
+    if (stage === "zip") {
+      if (!isValidZip(userMessage)) {
+        addMessage(
+          "That ZIP code doesn’t look correct. Please enter a valid 5-digit ZIP code.",
+          "system"
+        )
+        return
+      }
+
+      addMessage(`Thanks! We do service the ${userMessage} area.`, "system")
+      addMessage("May I please have your name?", "system")
+      setStage("name")
+      return
+    }
+
+    /* ===== NAME ===== */
+    if (stage === "name") {
+      if (!isValidName(userMessage)) {
+        addMessage("Could you please tell me your name?", "system")
+        return
+      }
+
+      setCustomer((c) => ({ ...c, name: userMessage }))
+      addMessage(
+        `Thank you, ${userMessage}! Could you please provide your email address?`,
+        "system"
+      )
+      setStage("email")
+      return
+    }
+
+    /* ===== EMAIL ===== */
+    if (stage === "email") {
+      if (!isValidEmail(userMessage)) {
+        addMessage(
+          "That doesn’t look like a valid email. Could you double-check it?",
+          "system"
+        )
+        return
+      }
+
+      setCustomer((c) => ({ ...c, email: userMessage }))
+      addMessage("What’s the best phone number to reach you?", "system")
+      setStage("phone")
+      return
+    }
+
+    /* ===== PHONE + SUBMIT ===== */
+    if (stage === "phone") {
+      if (!isValidPhone(userMessage)) {
+        addMessage(
+          "That phone number doesn’t seem right. Please enter a valid 10-digit mobile number.",
+          "system"
+        )
+        return
+      }
+
+      const updatedCustomer = {
+        ...customer,
+        phone: userMessage,
+      }
+
+      setCustomer(updatedCustomer)
+
+      const res = await fetch("/api/chat/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          conversationId,
+          customerInfo: updatedCustomer,
+          initialMessage: `${intent.replace("_", " ")} service inquiry`,
+        }),
+      })
+
+      const data = await res.json()
+      if (data?.conversationId) setConversationId(data.conversationId)
+
+      addMessage(
+        `Thank you, ${updatedCustomer.name}! You’re all set. A member of our team will reach out to you soon to discuss your ${intent.replace(
+          "_",
+          " "
+        )} needs, pricing, and scheduling.`,
+        "system"
+      )
+
+      setStage("closed")
+      return
     }
   }
 
   if (!isOpen) return null
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 w-[400px] max-w-[calc(100vw-2rem)]">
-      <Card className="shadow-2xl border-2 border-red-600/20">
-        <CardHeader className="bg-red-600 text-white p-4 flex flex-row items-center justify-between rounded-t-lg">
-          <div className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5" />
-            <CardTitle className="text-lg">Book a Handyman</CardTitle>
+    <div className="fixed bottom-8 right-8 z-50 w-[380px]">
+      
+      <Card>
+        <CardHeader className="bg-red-600 text-white p-4 rounded-t-lg">
+        <div className="flex items-start justify-between">
+          <div className="flex gap-3">
+            {/* Avatar */}
+            <img 
+              src="/agent.png"
+              alt="Agent"
+              className="h-10 w-10"
+            />
+
+            {/* Title + subtitle */}
+            <div className="leading-tight">
+              <h4 className="text-base font-semibold">
+                How can we help you today?
+              </h4>
+              <p className="text-xs text-red-100 flex items-center gap-1">
+                <span className="h-2 w-2 bg-green-400 rounded-full inline-block" />
+                We respond immediately
+              </p>
+            </div>
           </div>
+
+          {/* Close button */}
           <Button
-            variant="ghost"
             size="icon"
-            className="text-white hover:bg-red-700 h-8 w-8"
+            variant="ghost"
+            className="text-white hover:bg-red-700"
             onClick={onClose}
           >
-            <X className="h-5 w-5" />
+            <X />
           </Button>
-        </CardHeader>
+        </div>
+      </CardHeader>
+
         <CardContent className="p-0">
-          <div className="h-[400px] overflow-y-auto p-4 space-y-4 bg-gray-50">
-            {messages.map((message) => (
+          <div className="h-[380px] overflow-y-auto p-4 space-y-3 bg-gray-50">
+            {messages.map((m) => (
               <div
-                key={message.id}
-                className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+                key={m.id}
+                className={`flex ${
+                  m.sender === "user" ? "justify-end" : "justify-start"
+                }`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.sender === "user"
+                  className={`max-w-[80%] p-3 rounded-lg text-sm ${
+                    m.sender === "user"
                       ? "bg-red-600 text-white"
-                      : "bg-white border border-gray-200 text-gray-900"
+                      : "bg-white border"
                   }`}
                 >
-                  <p className="text-sm">{message.text}</p>
-                  <p
-                    className={`text-xs mt-1 ${
-                      message.sender === "user" ? "text-red-100" : "text-gray-500"
-                    }`}
-                  >
-                    {message.timestamp.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
+                  {m.text}
                 </div>
               </div>
             ))}
-            {isSending && (
-              <div className="flex justify-start">
-                <div className="bg-white border border-gray-200 rounded-lg p-3">
-                  <p className="text-sm text-gray-600">Sending your request...</p>
-                </div>
-              </div>
-            )}
             <div ref={messagesEndRef} />
           </div>
-          <div className="p-4 bg-white border-t">
-            <div className="flex gap-2">
-              <Input
-                placeholder="Type your message..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
-                className="flex-1"
-                disabled={isSending}
-              />
-              <Button
-                onClick={handleSendMessage}
-                className="bg-red-600 hover:bg-red-700"
-                disabled={isSending || !input.trim()}
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
+          
+
+          <div className="p-3 border-t flex gap-2">
+            
+            <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type your message..."
+              onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+            />
+            <Button onClick={handleSendMessage} className="bg-red-600">
+              <Send size={16} />
+            </Button>
           </div>
         </CardContent>
       </Card>
     </div>
+    
   )
 }
-

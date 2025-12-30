@@ -10,6 +10,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Phone, Search, Star, CheckCircle2, Facebook, Twitter, Youtube, Linkedin, Calendar, ChevronLeft, ChevronRight, Menu, X } from "lucide-react"
 import Image from "next/image"
 import { ChatWidget } from "@/components/chat-widget"
+import { ContactForm } from "@/components/contact-form"
+
+/* ================= ZIP SERVICE AREA ================= */
+
+const SERVICE_ZIPS = new Set([
+  "23169","23176","22579","23043","22578","22482","22503","22480",
+  "22577","22539","23035","23066","23109","23138","23025","23061",
+  "23181","23149","23175","23092","23180","22523","23079","22454",
+  "22560","23045","23076","23068","23119","23072","23071","23178",
+  "23018","23107","22473","22432"
+])
 
 // Fade-in animation component
 function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
@@ -28,9 +39,56 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   )
 }
 
+
 export default function MrHandymanPage() {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isNavOpen, setIsNavOpen] = useState(false)
+  const [isBookOpen, setIsBookOpen] = useState(false)
+  const [serviceType, setServiceType] = useState<
+    "Residential" | "Commercial" | ""
+  >("")
+
+  
+  /* ---------- ZIP FLOW ---------- */
+  const [zip, setZip] = useState("")
+  const [step, setStep] = useState<"zip" | "form" | "success" | "not-available">("zip")
+
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
+  const [address, setAddress] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  function checkZip() {
+    if (SERVICE_ZIPS.has(zip.trim())) {
+      setStep("form")
+    } else {
+      setStep("not-available")
+
+      // auto reset after 6 seconds (optional but recommended)
+      setTimeout(() => resetZipFlow(), 6000)
+    }
+  }
+
+  function resetZipFlow() {
+    setZip("")
+    setEmail("")
+    setPhone("")
+    setAddress("")
+    setStep("zip")
+  }
+
+  async function submitBooking() {
+    setLoading(true)
+
+    await fetch("/api/zip-booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ zip, email, phone, address }),
+    })
+
+    setLoading(false)
+    setStep("success")
+  }
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -43,6 +101,31 @@ export default function MrHandymanPage() {
     const amount = el.clientWidth * 0.95
     el.scrollBy({ left: amount * direction, behavior: 'smooth' })
   }
+
+  const RESIDENTIAL_SERVICES = [
+  { label: "Repair", slug: "home-repair-solutions", icon: "🔧" },
+  { label: "Drywall And Ceiling", slug: "drywall-patching", icon: "🧱" },
+  { label: "Tile Installation", slug: "tile-installation", icon: "🏠" },
+  { label: "Deck & Fence Services", slug: "deck-fence-services", icon: "🪑" },
+  { label: "Painting", slug: "interior-painting-services", icon: "🎨" },
+  { label: "Carpentry Installation And Repair", slug: "carpentry-woodwork", icon: "🪚" },
+  { label: "Plumbing", slug: "plumbing-fixes", icon: "🚰" },
+  { label: "Lighting And Electrical", slug: "electrical-repairs", icon: "💡" },
+  
+]
+
+
+const COMMERCIAL_SERVICES = [
+  "Healthcare Facilities",
+  "Hotels And Hospitality",
+  "Retail Stores",
+  "Restaurants",
+  "Corporate Offices",
+  "Manufacturing",
+  "Municipal Buildings",
+  "Property Management",
+]
+
   const tipsData = [
     { title: "Home Maintenance Checklist", desc: "Essential tasks to keep your home in top condition", image: "home-maintenance.png", category: "Maintenance", readTime: "4 min read" },
     { title: "DIY vs Professional", desc: "When to call a handyman and when to do it yourself", image: "diy.png", category: "DIY", readTime: "5 min read" },
@@ -50,6 +133,8 @@ export default function MrHandymanPage() {
     { title: "Kitchen Upgrades", desc: "Smart kitchen improvements that add value without breaking the bank", image: "kitchen.png", category: "Upgrades", readTime: "6 min read" },
     { title: "Plumbing Basics", desc: "Simple plumbing fixes you can do before calling the pros", image: "plumbing.png", category: "Plumbing", readTime: "4 min read" },
   ]
+const [servicesOpen, setServicesOpen] = useState(false)
+const [activeType, setActiveType] = useState<"residential" | "commercial" | null>(null)
 
   // autoplay loop for tips slider
   useEffect(() => {
@@ -80,23 +165,17 @@ export default function MrHandymanPage() {
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
+      
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
       >
-        <div className="container mx-auto px-6 py-4 flex items-center">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt="HnHHandyman"
-              width={156}
-              height={52}
-              className="h-12 w-auto"
-              priority
-            />
-            <span className="text-lg font-semibold text-neutral-900 hidden sm:inline">Hand and Hand Handyman</span>
+            <Image src="/logo.png" alt="Logo" width={150} height={40} />
+            <span className="font-semibold">Hand and Hand Handyman</span>
           </Link>
 
           <button
@@ -108,16 +187,108 @@ export default function MrHandymanPage() {
           </button>
 
           <nav className="hidden lg:flex items-center gap-10 mx-auto">
-            {["Services", "Locations", "About Us", "Franchise"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="text-sm font-semibold text-neutral-800 hover:text-[var(--primary-blue)] transition-colors"
+
+          {/* SERVICES MEGA MENU */}
+          <div className="relative">
+            <Link
+                  href="/services/"
+                  className="hover:text-[var(--primary-blue)]"
+                >
+        
+            <button
+              onMouseEnter={() => {
+                setServicesOpen(true)
+                setActiveType("residential")
+              }}
+              className="text-sm font-semibold text-neutral-800 flex items-center gap-1"
+            >
+              Services 
+            </button> </Link> 
+
+            {servicesOpen && (
+              <div
+                onMouseEnter={() => setServicesOpen(true)}
+                onMouseLeave={() => setServicesOpen(false)}
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[980px] bg-white rounded-2xl shadow-2xl border p-6 flex gap-6 z-50"
               >
-                {item}
-              </a>
-            ))}
-          </nav>
+
+                {/* LEFT COLUMN */}
+                <div className="w-[220px] border-r pr-4">
+                  <div
+                    onMouseEnter={() => setActiveType("residential")}
+                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
+                      activeType === "residential"
+                        ? "bg-red-50 text-red-600"
+                        : "hover:bg-gray-50"
+                    }`}
+                  >
+                    Residential
+                  </div>
+
+                  <div
+                    onMouseEnter={() => setActiveType("commercial")}
+                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
+                      activeType === "commercial"
+                        ? "bg-red-50 text-red-600"
+                        : "hover:bg-gray-50"
+                    }`}
+                  >
+                    Commercial
+                  </div>
+                </div>
+
+                {/* RIGHT PANEL */}
+                <div className="flex-1">
+
+                  {/* RESIDENTIAL */}
+                  {activeType === "residential" && (
+                    <div className="grid grid-cols-4 gap-6">
+                      {RESIDENTIAL_SERVICES.map((s) => (
+                        <Link
+                          key={s.slug}
+                          href={`/services/residential/${s.slug}`}
+                          className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition"
+                        >
+                          <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-lg">
+                            {s.icon}
+                          </div>
+                          <span className="text-sm font-medium">{s.label}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* COMMERCIAL */}
+                  {activeType === "commercial" && (
+                    <div className="grid grid-cols-3 gap-6">
+                      {COMMERCIAL_SERVICES.map((name) => (
+                        <Link
+                          key={name}
+                          href={`/services/commercial/${name.toLowerCase().replace(/\s+/g, "-")}`}
+                          className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition"
+                        >
+                          <span className="text-red-600 font-bold text-lg">#</span>
+                          <span className="text-sm font-medium">{name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                </div>
+              </div>
+            )}
+          </div>
+
+      
+                <Link
+                  href="/services/locations"
+                  className="hover:text-[var(--primary-blue)]"
+                >
+                  Locations
+                </Link>
+              
+        </nav>
+
 
           <div className="ml-auto flex items-center gap-3">
             <Button
@@ -132,21 +303,24 @@ export default function MrHandymanPage() {
               </span>
             </Button>
 
-            <Button
-              size="lg"
-              className="hidden lg:inline-flex shadow-lg"
-              aria-label="Book Now"
-            >
-              <Calendar className="h-5 w-5" />
-              <span>Book Now</span>
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                  onClick={() => setIsBookOpen(true)}
+                  size="lg"
+                  className="hidden lg:inline-flex shadow-lg"
+                  aria-label="Book Now"
+                >
+                <Calendar className="h-5 w-5" />
+                <span>Book Now</span>
+              </Button>
+            </motion.div>
           </div>
         </div>
 
         {isNavOpen && (
           <div className="lg:hidden border-t border-neutral-200 bg-white px-6 pb-4">
             <div className="flex flex-col gap-3 pt-3">
-              {["Services", "Locations", "About Us", "Franchise"].map((item) => (
+              {["Services", "Locations"].map((item) => (
                 <a
                   key={item}
                   href="#"
@@ -181,7 +355,7 @@ export default function MrHandymanPage() {
             className="bg-[var(--primary-red)] hover:bg-[var(--primary-red-dark)] text-white shadow-2xl shadow-[rgba(217,59,47,0.45)] h-14 px-8 text-lg font-bold rounded-full"
           >
             <Calendar className="mr-2 h-5 w-5" />
-            Book a Handyman
+            Chat With Us
           </Button>
         </motion.div>
       </motion.div>
@@ -255,32 +429,72 @@ export default function MrHandymanPage() {
         </motion.div>
       </section>
 
-      <section className="py-16 bg-gradient-to-b from-white to-gray-50">
+      {/* ================= ZIP SECTION ================= */}
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <FadeIn>
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(239, 68, 68, 0.25)" }}
-                transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8"
-              >
-                <h2 className="text-4xl font-bold mb-3 text-center">Book Your Handyman Today</h2>
-                <p className="text-gray-600 text-center mb-8">
+            <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow">
+
+              <h2 className="text-3xl font-bold text-center mb-6">
+                Book Your Handyman Today
+              </h2>
+              <p className="text-gray-600 text-center mb-8">
                   Enter your ZIP code to find qualified professionals in your area
                 </p>
-                <div className="flex gap-4 max-w-2xl mx-auto">
+
+              {/* STEP 1 */}
+              {step === "zip" && (
+                <div className="flex gap-4">
                   <Input
                     placeholder="Enter ZIP Code"
-                    className="flex-1 h-14 text-lg border-gray-300 focus:border-[var(--primary-blue)] focus:ring-[var(--primary-blue)] transition-all duration-300"
+                    value={zip}
+                    onChange={(e) => setZip(e.target.value)}
                   />
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button className="bg-[var(--primary-red)] hover:bg-[var(--primary-red-dark)] text-white h-14 px-8 text-base font-semibold shadow-lg shadow-[rgba(217,59,47,0.3)]">
-                      <Search className="mr-2 h-5 w-5" />
-                      SEARCH
-                    </Button>
-                  </motion.div>
+                  <Button  onClick={checkZip}><Search className="mr-2 h-5 w-5" />SEARCH</Button>
                 </div>
-              </motion.div>
+              )}
+
+              {/* STEP 2 */}
+              {step === "form" && (
+                <div className="space-y-4">
+                  <p className="text-green-600 font-semibold text-center">
+                    ✔ Professionals available in your area
+                  </p>
+
+                  <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+                  <Input placeholder="Phone Number" value={phone} onChange={e => setPhone(e.target.value)} />
+                  <Input placeholder="Service Address" value={address} onChange={e => setAddress(e.target.value)} />
+
+                  <Button onClick={submitBooking} disabled={loading} className="w-full">
+                    {loading ? "Submitting..." : "Book Service"}
+                  </Button>
+                </div>
+              )}
+
+              {/* SUCCESS */}
+              {step === "success" && (
+                <p className="text-center text-green-700 font-bold">
+                  ✅ Thank you! Our service partner will contact you shortly.
+                </p>
+              )}
+
+              {/* NOT AVAILABLE */}
+              {step === "not-available" && (
+                <div className="text-center space-y-4">
+                  <p className="text-red-600 font-semibold">
+                    ❌ Sorry, we don’t serve this ZIP code yet.
+                  </p>
+
+                  <Button variant="outline" onClick={resetZipFlow}>
+                    Check another ZIP
+                  </Button>
+
+                  <p className="text-sm text-gray-500">
+                    We’re expanding soon — try a nearby ZIP
+                  </p>
+                </div>
+              )}
+
             </div>
           </FadeIn>
         </div>
@@ -386,17 +600,42 @@ export default function MrHandymanPage() {
       </section>
 
       {/* Neighborhood Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+     <section className="relative h-[360px] md:h-[480px] overflow-hidden">
+        {/* Background Video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/hnhhandyman.mp4" type="video/mp4" />
+        </video>
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/55" />
+
+        {/* Content wrapper — THIS IS THE KEY */}
+        <div className="relative z-10 h-full w-full flex items-center justify-center px-4">
           <FadeIn>
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">What's In The Neighborhood You're Right</h2>
-              <p className="text-gray-600 mb-6">
-                We're proud to serve your local community with professional handyman services. Our experienced technicians
-                are familiar with the unique needs of homes in your area.
+            <div className="max-w-3xl text-center text-white">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight text-white">
+                What's In The Neighborhood You're Right
+              </h2>
+
+              <p className="text-gray-200 mb-6 text-base md:text-lg">
+                We're proud to serve your local community with professional handyman
+                services. Our experienced technicians are familiar with the unique
+                needs of homes in your area.
               </p>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button className="bg-[var(--primary-red)] hover:bg-[var(--primary-red-dark)] text-white shadow-lg hover:shadow-xl transition-all duration-300">
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex justify-center"
+              >
+                <Button className="bg-[var(--primary-red)] hover:bg-[var(--primary-red-dark)] text-white px-8 py-3 shadow-lg">
                   LEARN MORE
                 </Button>
               </motion.div>
@@ -404,6 +643,7 @@ export default function MrHandymanPage() {
           </FadeIn>
         </div>
       </section>
+
 
       {/* Great Reasons Section */}
       <section className="py-16 bg-white">
@@ -482,7 +722,7 @@ export default function MrHandymanPage() {
         </div>
       </section>
 
-      {/* Find a Handyman Form */}
+      {/* Find a Handyman Form
       <section className="py-16 bg-[var(--primary-red)] text-white relative overflow-hidden">
         <motion.div
           animate={{
@@ -527,7 +767,7 @@ export default function MrHandymanPage() {
             </div>
           </FadeIn>
         </div>
-      </section>
+      </section> */}
 
       {/* Why Choose Us */}
       <section className="py-16 bg-white">
@@ -688,20 +928,99 @@ export default function MrHandymanPage() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-xl mb-8">Contact us today for a free estimate</p>
-          <Button className="bg-white text-[var(--primary-red)] hover:bg-gray-100">REQUEST A QUOTE</Button>
+          <Button onClick={() => setIsChatOpen(true)}
+                className="bg-white text-[var(--primary-red)] hover:bg-gray-100">REQUEST A QUOTE</Button>
         </div>
       </section>
+      {isBookOpen && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center">
+          
+          {/* Overlay */}
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => setIsBookOpen(false)}
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 40 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="relative bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 p-6 z-10"
+          >
+            {/* Close */}
+            <button
+              onClick={() => setIsBookOpen(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-black"
+            >
+              ✕
+            </button>
+
+            {/* YOUR EXISTING CONTENT */}
+            <FadeIn delay={0.2}>
+              <div className="bg-white rounded-lg">
+                <h2 className="text-2xl font-bold mb-4 text-[var(--primary-blue)]">
+                  Let Us Call You
+                </h2>
+
+                {/* Service Type Selector */}
+                <div className="mb-6">
+                  <p className="text-sm font-medium text-gray-600 mb-2">
+                    Select Service
+                  </p>
+
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setServiceType("Residential")}
+                      className={`flex-1 py-3 rounded-lg border font-semibold transition ${
+                        serviceType === "Residential"
+                          ? "bg-[var(--primary-blue)] text-white border-[var(--primary-blue)]"
+                          : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50"
+                      }`}
+                    >
+                      Residential
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setServiceType("Commercial")}
+                      className={`flex-1 py-3 rounded-lg border font-semibold transition ${
+                        serviceType === "Commercial"
+                          ? "bg-[var(--primary-blue)] text-white border-[var(--primary-blue)]"
+                          : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50"
+                      }`}
+                    >
+                      Commercial
+                    </button>
+                  </div>
+                </div>
+
+                {serviceType ? (
+                    <ContactForm serviceType={serviceType} />
+                  ) : (
+                    <p className="text-sm text-gray-500">
+                      Please select a service type to continue.
+                    </p>
+                  )}
+
+
+              </div>
+            </FadeIn>
+          </motion.div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-gray-100 text-neutral-900 py-12">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-10 mb-8">
             <div className="flex flex-col gap-4">
-              <Image src="/logo.png" alt="HnHHandyman" width={156} height={52} className="h-12 w-auto" />
+              <Image src="/logo.png" alt="HnHHandyman" width={300} height={200} className="h-12 w-auto" />
               <p className="text-sm text-neutral-700">
                 Proudly serving homeowners with reliable, on-time service and workmanship backed by our satisfaction promise.
               </p>
-              <div className="flex items-center gap-3">
+              {/* <div className="flex items-center gap-3">
                 {[Facebook, Twitter, Youtube, Linkedin].map((Icon, i) => (
                   <a
                     key={i}
@@ -711,24 +1030,37 @@ export default function MrHandymanPage() {
                     <Icon className="h-5 w-5" />
                   </a>
                 ))}
-              </div>
+              </div> */}
             </div>
             <div>
-              <h3 className="font-bold mb-4">Services</h3>
-              <ul className="space-y-2 text-sm text-neutral-700">
-                {["Home Repairs", "Painting", "Carpentry", "Electrical", "Plumbing"].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="hover:text-[var(--primary-blue)]">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
+            <Link
+                  href="/services/"
+                  className="hover:text-[var(--primary-blue)]"
+                > <h3 className="font-bold mb-4">Services</h3></Link>
+            <ul className="space-y-2 text-sm text-neutral-700">
+              <li>
+                <Link
+                  href="/services/residential"
+                  className="hover:text-[var(--primary-blue)]"
+                >
+                  Residential
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services/commercial"
+                  className="hover:text-[var(--primary-blue)]"
+                >
+                  Commercial
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
               <h3 className="font-bold mb-4">Company</h3>
               <ul className="space-y-2 text-sm text-neutral-700">
-                {["About Us", "Locations", "Careers", "Franchise", "Contact"].map((link) => (
+                {["About Us", "Locations"].map((link) => (
                   <li key={link}>
                     <a href="#" className="hover:text-[var(--primary-blue)]">
                       {link}
