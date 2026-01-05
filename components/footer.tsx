@@ -57,7 +57,7 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-neutral-700">
             <li>
               <Link
-                href="/about-us"
+                href="/services/about-us"
                 className="hover:text-[var(--primary-blue)]"
               >
                 About Us
@@ -88,7 +88,7 @@ export function Footer() {
         </div>
         <div className="border-t border-neutral-200 pt-6 text-center text-sm text-neutral-600">
           <p>
-            © 2025 HnHHandyman. All rights reserved. Each location is
+            © {new Date().getFullYear()} HnHHandyman. All rights reserved. Each location is
             independently owned and operated.
           </p>
         </div>

@@ -1,481 +1,429 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Phone, Calendar, Menu, X, ChevronLeft } from "lucide-react"
+import {
+  Phone,
+  Calendar,
+  Menu,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react"
+import { BookNowModal } from "@/components/book-now-modal"
 
-/* ---------------- SERVICES DATA ---------------- */
+/* ================= MOBILE MENU STATE ================= */
 
-type Section = {
-  title: string
-  items: string[]
-}
-
-type Category = {
-  id: string
-  label: string
-  sections: Section[]
-}
-
-type ServiceType = {
-  id: "residential" | "commercial"
-  label: string
-  categories: Category[]
-}
-
-const SERVICES: ServiceType[] = [
-  /* =======================
-     RESIDENTIAL SERVICES
-  ======================== */
-  {
-    id: "residential",
-    label: "Residential",
-    categories: [
-      {
-        id: "repair",
-        label: "Repair",
-        sections: [
-          {
-            title: "Interior Repair",
-            items: [
-              "TV Wall Mount Installation",
-              "Grout Repair and Service",
-              "Shelving Installation",
-              "Ceiling Fan Installation and Replacement",
-              "Child Proofing",
-              "Picture Hanging",
-              "Closet Shelving",
-            ],
-          },
-          {
-            title: "Exterior Repair",
-            items: [
-              "Gutter Guard Installation",
-              "Window Frame Repair",
-              "Window and Door Weatherproofing",
-              "Chimney Repair and Service",
-              "Debris Removal",
-              "Gutter Installation and Repair",
-              "Masonry and Concrete Services",
-            ],
-          },
-          {
-            title: "Garage Repair",
-            items: [
-              "Garage Storage and Organization",
-              "Garage Shelving",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "drywall",
-        label: "Drywall and Ceiling",
-        sections: [
-          {
-            title: "Walls and Ceilings",
-            items: [
-              "Drywall Patching and Repair",
-              "Drywall Finishing",
-              "Drywall Installation",
-              "Wall Finishing",
-              "Ceiling Repair and Replacement",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "remodel",
-        label: "Remodel",
-        sections: [
-          {
-            title: "Bathroom",
-            items: [
-              "Bathroom Remodeling and Repair",
-              "Tub to Shower Conversion",
-              "Vanity Installation",
-              "Tub Enclosure Installation and Repair",
-              "Bathtub Repair and Replacement",
-              "Walk-In Tub Installation and Repair",
-              "Shower Tile Installation and Repair",
-            ],
-          },
-          {
-            title: "Kitchen",
-            items: [
-              "Kitchen Remodeling and Repair",
-              "Kitchen Backsplash Installation",
-              "Cabinet Installation and Repair",
-              "Countertop Installation and Repair",
-              "Custom Kitchen Island Installation",
-            ],
-          },
-          {
-            title: "Rooms and Other Services",
-            items: [
-              "Bedroom Remodeling and Repair",
-              "Basement Remodeling and Repair",
-              "Attic Remodeling and Repair",
-              "Dining Room Remodeling and Repair",
-              "Home Office Remodeling and Repair",
-              "Living Room Remodeling and Repair",
-              "Safety and Mobility Services",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "painting",
-        label: "Painting",
-        sections: [
-          {
-            title: "Interior Painting",
-            items: [
-              "Cabinet Painting and Refinishing",
-              "Single Room Painting",
-              "Multiple Room Painting",
-              "Crown Molding and Trim Painting",
-              "Door Painting",
-              "Other Interior Painting Services",
-            ],
-          },
-          {
-            title: "Exterior Painting",
-            items: [
-              "Fence Painting and Staining",
-              "Deck Painting and Staining",
-              "Brick Painting and Treatments",
-              "Concrete Sealing and Staining",
-              "Exterior Staining",
-              "Garage Door Painting",
-              "Vinyl Siding Painting",
-            ],
-          },
-          {
-            title: "Wallpaper",
-            items: [
-              "Wallpaper Installation",
-              "Wallpaper Removal",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "plumbing",
-        label: "Plumbing",
-        sections: [
-          {
-            title: "Repair and Replace",
-            items: [
-              "Faucet Repair and Replacement",
-              "Sink Repair and Replacement",
-              "Sump Pump Repair and Replacement",
-              "Toilet Repair and Replacement",
-              "Basement Drain Repair and Replacement",
-              "Drain Repair and Replacement",
-              "Water Valve Repair and Replacement",
-            ],
-          },
-          {
-            title: "Other Plumbing Services",
-            items: [
-              "Pipe Insulation",
-              "Plumbing Leak Detection",
-              "Hot Water Dispenser Repair and Replacement",
-            ],
-          },
-        ],
-      },
-    ],
-  },
-
-  /* =======================
-     COMMERCIAL SERVICES
-  ======================== */
-  {
-    id: "commercial",
-    label: "Commercial",
-    categories: [
-      {
-        id: "office-maintenance",
-        label: "Office Maintenance",
-        sections: [
-          {
-            title: "Office Services",
-            items: [
-              "General Office Repairs",
-              "Furniture Assembly",
-              "Lighting Maintenance",
-              "Drywall and Ceiling Repairs",
-              "Restroom Repairs",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "retail-improvements",
-        label: "Retail Space Improvements",
-        sections: [
-          {
-            title: "Retail Services",
-            items: [
-              "Storefront Enhancements",
-              "Display Installation",
-              "Fixture Installation",
-              "Retail Space Modifications",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "commercial-painting",
-        label: "Commercial Painting",
-        sections: [
-          {
-            title: "Painting Services",
-            items: [
-              "Interior Commercial Painting",
-              "Exterior Commercial Painting",
-              "Warehouse Painting",
-              "Office Repainting",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "facility-repairs",
-        label: "Facility Repairs",
-        sections: [
-          {
-            title: "Facility Services",
-            items: [
-              "HVAC Minor Repairs",
-              "Electrical Repairs",
-              "Plumbing Repairs",
-              "Structural Repairs",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "tenant-improvements",
-        label: "Tenant Improvements",
-        sections: [
-          {
-            title: "Build-Out Services",
-            items: [
-              "Office Build-Outs",
-              "Space Reconfiguration",
-              "Custom Modifications",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "accessibility-upgrades",
-        label: "Accessibility Upgrades",
-        sections: [
-          {
-            title: "ADA Compliance",
-            items: [
-              "ADA Ramp Installation",
-              "Handrail Installation",
-              "Doorway Widening",
-              "Accessibility Modifications",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "warehouse-services",
-        label: "Warehouse Services",
-        sections: [
-          {
-            title: "Warehouse Solutions",
-            items: [
-              "Industrial Maintenance",
-              "Shelving Installation",
-              "Warehouse Organization",
-            ],
-          },
-        ],
-      },
-
-      {
-        id: "restaurant-fit-outs",
-        label: "Restaurant Fit-Outs",
-        sections: [
-          {
-            title: "Restaurant Services",
-            items: [
-              "Kitchen Modifications",
-              "Dining Area Updates",
-              "Equipment Installation",
-            ],
-          },
-        ],
-      },
-    ],
-  },
+type MobileMenuStep =
+  | "main"
+  | "services"
+  | "residential"
+  | "commercial"
+  | "repair"
+  
+ const RESIDENTIAL_SERVICES = [
+  { label: "Repair", slug: "home-repair-solutions", icon: "🔧" },
+  { label: "Drywall And Ceiling", slug: "drywall-patching", icon: "🧱" },
+  { label: "Tile Installation", slug: "tile-installation", icon: "🏠" },
+  { label: "Deck & Fence Services", slug: "deck-fence-services", icon: "🪑" },
+  { label: "Painting", slug: "interior-painting-services", icon: "🎨" },
+  { label: "Carpentry Installation And Repair", slug: "carpentry-woodwork", icon: "🪚" },
+  { label: "Plumbing", slug: "plumbing-fixes", icon: "🚰" },
+  { label: "Lighting And Electrical", slug: "electrical-repairs", icon: "💡" },
+  
 ]
 
 
-/* ---------------- HEADER ---------------- */
+const COMMERCIAL_SERVICES = [
+    "Office Maintenance",
+    "Retail Space Improvements",
+    "Commercial Painting",
+    "Facility Repairs",
+    "Tenant Improvements",
+    "Accessibility Upgrades",
+    "Warehouse Services",
+    "Restaurant Fit-Outs",
+]
+
+
+/* ================= HEADER ================= */
 
 export function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false)
-  const [openServices, setOpenServices] = useState(false)
-  const [activeType, setActiveType] = useState<ServiceType | null>(null)
-  const [activeCategory, setActiveCategory] = useState<Category | null>(null)
+  const [isBookOpen, setIsBookOpen] = useState(false)
+  const [serviceType, setServiceType] = useState<"Residential" | "Commercial" | "">("")
+  const [mobileStep, setMobileStep] = useState<MobileMenuStep>("main")
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [activeType, setActiveType] = useState<"residential" | "commercial" | null>(null)
+  useEffect(() => {
+    if (!isNavOpen) setMobileStep("main")
+  }, [isNavOpen])
 
   return (
-    <motion.header
+    <>
+      {/* ================= HEADER BAR ================= */}
+      <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
+        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b shadow-sm"
       >
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+
+          {/* LOGO */}
           <Link href="/" className="flex items-center gap-3">
             <Image src="/logo.png" alt="Logo" width={150} height={40} />
             <span className="font-semibold">Hand and Hand Handyman</span>
           </Link>
 
-        {/* MOBILE MENU BUTTON */}
-        <button
-          className="ml-auto lg:hidden inline-flex items-center justify-center rounded-md border border-neutral-200 h-10 w-10"
-          onClick={() => setIsNavOpen((p) => !p)}
-        >
-          {isNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+          {/* MOBILE MENU BUTTON */}
+          <button
+            className="lg:hidden h-10 w-10 flex items-center justify-center border rounded-md"
+            onClick={() => setIsNavOpen(true)}
+            aria-label="Open Menu"
+          >
+            <Menu />
+          </button>
 
-        {/* DESKTOP NAV */}
-        <nav className="hidden lg:flex items-center gap-10 mx-auto">
-  {/* SERVICES */}
-  <div className="relative"
-    onMouseEnter={() => setOpenServices(true)}
-    onMouseLeave={() => {
-      setOpenServices(false)
-      setActiveType(null)
-      setActiveCategory(null)
-    }}
-  >
-    <button className="text-sm font-semibold text-neutral-800 flex items-center gap-1">
-      Services
-    </button>
+          {/* DESKTOP NAV */}
+          <nav className="hidden lg:flex items-center gap-10 mx-auto">
 
-    {openServices && (
-      <div className="absolute left-1/2 top-full -translate-x-1/2 w-[80vw] rounded-2xl bg-white border-t shadow-xl">
-        <div className="max-w-7xl mx-auto px-6 py-8">
+          {/* SERVICES MEGA MENU */}
+          <div className="relative">
+            <Link
+              href="/services"
+              onMouseEnter={() => {
+                setServicesOpen(true)
+                setActiveType("residential")
+              }}
+              className="text-sm font-semibold text-neutral-800 hover:text-[var(--primary-blue)]"
+            >
+              Services
+            </Link>
 
-          {/* LEVEL 1 – Residential / Commercial */}
-          {!activeType && (
-            <div className="flex gap-6">
-              {SERVICES.map((type) => (
-                <button
-                  key={type.id}
-                  onClick={() => setActiveType(type)}
-                  className="px-6 py-3 rounded-full border font-semibold text-sm hover:bg-red-50 hover:border-red-600"
-                >
-                  {type.label}
-                </button>
-              ))}
-            </div>
-          )}
 
-          {/* LEVEL 2 */}
-          {activeType && !activeCategory && (
-            <>
-              <button
-                onClick={() => setActiveType(null)}
-                className="flex items-center gap-2 mb-6 text-red-600 font-semibold"
+            {servicesOpen && (
+              <div
+                onMouseEnter={() => setServicesOpen(true)}
+                onMouseLeave={() => setServicesOpen(false)}
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[980px] bg-white rounded-2xl shadow-2xl border p-6 flex gap-6 z-50"
               >
-                <ChevronLeft size={16} /> Services
-              </button>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {activeType.categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveCategory(cat)}
-                    className="p-4 rounded-xl border text-left hover:border-red-600 hover:bg-red-50"
+                {/* LEFT COLUMN */}
+                <div className="w-[220px] border-r pr-4">
+                  <div
+                    onMouseEnter={() => setActiveType("residential")}
+                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
+                      activeType === "residential"
+                        ? "bg-red-50 text-red-600"
+                        : "hover:bg-gray-50"
+                    }`}
                   >
-                    <span className="text-sm font-semibold">
-                      {cat.label}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* LEVEL 3 */}
-          {activeType && activeCategory && (
-            <>
-              <button
-                onClick={() => setActiveCategory(null)}
-                className="flex items-center gap-2 mb-6 text-red-600 font-semibold"
-              >
-                <ChevronLeft size={16} /> {activeCategory.label}
-              </button>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                {activeCategory.sections.map((section) => (
-                  <div key={section.title}>
-                    <h4 className="text-sm font-bold text-red-600 mb-3">
-                      {section.title}
-                    </h4>
-                    <ul className="space-y-2">
-                      {section.items.map((item) => (
-                        <li
-                          key={item}
-                          className="text-sm text-neutral-800 hover:text-red-600 cursor-pointer"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+                    Residential
                   </div>
-                ))}
+
+                  <div
+                    onMouseEnter={() => setActiveType("commercial")}
+                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
+                      activeType === "commercial"
+                        ? "bg-red-50 text-red-600"
+                        : "hover:bg-gray-50"
+                    }`}
+                  >
+                    Commercial
+                  </div>
+                </div>
+
+                {/* RIGHT PANEL */}
+                <div className="flex-1">
+
+                  {/* RESIDENTIAL */}
+                  {activeType === "residential" && (
+                    <div className="grid grid-cols-4 gap-6">
+                      {RESIDENTIAL_SERVICES.map((s) => (
+                        <Link
+                          key={s.slug}
+                          href={`/services/residential/${s.slug}`}
+                          className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition"
+                        >
+                          <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-lg">
+                            {s.icon}
+                          </div>
+                          <span className="text-sm font-medium">{s.label}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* COMMERCIAL */}
+                  {activeType === "commercial" && (
+                    <div className="grid grid-cols-3 gap-6">
+                      {COMMERCIAL_SERVICES.map((name) => (
+                        <Link
+                          key={name}
+                          href={`/services/commercial/${name.toLowerCase().replace(/\s+/g, "-")}`}
+                          className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition"
+                        >
+                          <span className="text-red-600 font-bold text-lg">#</span>
+                          <span className="text-sm font-medium">{name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                </div>
               </div>
-            </>
-          )}
+            )}
+          </div>
 
+      
+                <Link
+                  href="/services/locations"
+                  className="hover:text-[var(--primary-blue)]"
+                >
+                  Locations
+                </Link>
+              
+        </nav>
+
+
+          <div className="ml-auto flex items-center gap-3">
+            <Button
+              variant="outline"
+              size="sm"
+              className="hidden md:inline-flex items-center gap-2 border-neutral-300 text-neutral-800"
+              aria-label="Call (703) 296-6409
+"
+            >
+              <Phone className="h-4 w-4" />
+              <span className="leading-none">(703) 296-6409
+              </span>
+            </Button>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                  onClick={() => setIsBookOpen(true)}
+                  size="lg"
+                  className="hidden lg:inline-flex shadow-lg"
+                  aria-label="Book Now"
+                >
+                <Calendar className="h-5 w-5" />
+                <span>Book Now</span>
+              </Button>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    )}
-  </div>
+        </motion.header>
 
-  <Link href="/locations" className="text-sm font-semibold">
-    Locations
-  </Link>
-</nav>
+      {/* ================= MOBILE MENU OVERLAY ================= */}
+      {isNavOpen && (
+        <div className="fixed inset-0 z-[9999] bg-white overflow-y-auto lg:hidden">
 
+          {/* TOP BAR */}
+          <div className="flex items-center justify-between px-6 py-4 border-b">
+            <span className="font-semibold text-lg">MENU</span>
+            <button onClick={() => setIsNavOpen(false)}>
+              <X className="h-6 w-6" />
+            </button>
+          </div>
 
-        {/* CTA */}
-        <div className="ml-auto hidden lg:flex items-center gap-3">
-          <Button variant="outline" size="sm">
-            <Phone className="h-4 w-4" />
-            (703) 296-6409
-          </Button>
-          <Button size="lg">
-            <Calendar className="h-5 w-5" /> Book Now
-          </Button>
+          {/* CTA */}
+          <div className="px-6 py-4 flex gap-3">
+            <Button className="flex-1">Get Started</Button>
+            <Button variant="outline" className="flex-1">
+              <Phone className="h-4 w-4 mr-2" />
+              Call Us
+            </Button>
+          </div>
+
+          {/* MENU CONTENT */}
+          <div className="px-6 py-4">
+
+            {/* MAIN */}
+            {mobileStep === "main" && (
+              <div className="space-y-4">
+                <MenuRow label="Services" onClick={() => setMobileStep("services")} />
+                <MenuRow
+                  label="Locations"
+                  href="/services/locations"
+                  onClick={() => setIsNavOpen(false)}
+                />
+              </div>
+            )}
+
+            {/* SERVICES */}
+            {mobileStep === "services" && (
+              <>
+                <BackRow onClick={() => setMobileStep("main")} />
+                <MenuRow label="Residential" onClick={() => setMobileStep("residential")} />
+                <MenuRow label="Commercial" onClick={() => setMobileStep("commercial")} />
+              </>
+            )}
+
+            {/* RESIDENTIAL */}
+            {mobileStep === "residential" && (
+              <>
+                <BackRow onClick={() => setMobileStep("services")} />
+                <ResidentialGrid onRepair={() => setMobileStep("repair")} />
+              </>
+            )}
+
+            {/* REPAIR */}
+            {mobileStep === "repair" && (
+              <>
+                <BackRow onClick={() => setMobileStep("residential")} />
+                <RepairAccordion />
+              </>
+            )}
+
+            {/* COMMERCIAL */}
+            {mobileStep === "commercial" && (
+              <>
+                <BackRow onClick={() => setMobileStep("services")} />
+                <CommercialList />
+              </>
+            )}
+          </div>
         </div>
-      </div>
-    </motion.header>
+      )}
+
+      {/* BOOK NOW MODAL */}
+      <BookNowModal
+        open={isBookOpen}
+        onClose={() => setIsBookOpen(false)}
+        serviceType={serviceType}
+        setServiceType={setServiceType}
+      />
+    </>
+  )
+}
+
+/* ================= REUSABLE COMPONENTS ================= */
+
+function MenuRow({
+  label,
+  href,
+  onClick,
+}: {
+  label: string
+  href?: string
+  onClick?: () => void
+}) {
+  const content = (
+    <>
+      <span>{label}</span>
+      <ChevronRight className="h-5 w-5" />
+    </>
+  )
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        onClick={onClick}
+        className="w-full flex justify-between items-center text-lg font-medium py-3 border-b"
+      >
+        {content}
+      </Link>
+    )
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      className="w-full flex justify-between items-center text-lg font-medium py-3 border-b"
+    >
+      {content}
+    </button>
+  )
+}
+
+function BackRow({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex items-center gap-2 text-red-600 font-medium mb-4"
+    >
+      <ChevronLeft className="h-5 w-5" />
+      Back
+    </button>
+  )
+}
+
+function ResidentialGrid({ onRepair }: { onRepair: () => void }) {
+  const items = [
+    { label: "Home Repair Solutions", action: onRepair },
+    { label: "Deck & Fence Service" },
+    { label: "Carpentry & Woodwork" },
+    { label: "Tile Installation" },
+    { label: "Plumbing Fixes" },
+    { label: "Interior Painting Services" },
+    { label: "Electrical Repairs" },
+    { label: "Drywall & Patching" },
+  ]
+
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      {items.map((item) => (
+        <button
+          key={item.label}
+          onClick={item.action}
+          className="border rounded-xl p-4 text-center font-medium hover:bg-gray-50"
+        >
+          {item.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function RepairAccordion() {
+  const sections = [
+    "Interior Repair",
+    "Exterior Repair",
+    "Garage Repair",
+    "More Local Repair Services",
+  ]
+
+  return (
+    <div className="space-y-3">
+      {sections.map((s) => (
+        <details key={s} className="border rounded-lg p-4">
+          <summary className="font-medium cursor-pointer flex justify-between">
+            {s}
+            <span>+</span>
+          </summary>
+          <div className="mt-3 text-sm text-gray-600">
+            Service links go here
+          </div>
+        </details>
+      ))}
+    </div>
+  )
+}
+
+function CommercialList() {
+  const items = [
+    "Office Maintenance",
+    "Retail Space Improvements",
+    "Commercial Painting",
+    "Facility Repairs",
+    "Tenant Improvements",
+    "Accessibility Upgrades",
+    "Warehouse Services",
+    "Restaurant Fit-Outs",
+  ]
+
+  return (
+    <div className="space-y-3">
+      {items.map((item) => (
+        <div key={item} className="py-3 border-b font-medium">
+          {item}
+        </div>
+      ))}
+    </div>
   )
 }
