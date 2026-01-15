@@ -11,7 +11,8 @@ import { Phone, Search, Star, CheckCircle2, Facebook, Twitter, Youtube, Linkedin
 import Image from "next/image"
 import { ChatWidget } from "@/components/chat-widget"
 import { ContactForm } from "@/components/contact-form"
-
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 /* ================= ZIP SERVICE AREA ================= */
 
 const SERVICE_ZIPS = new Set([
@@ -110,30 +111,6 @@ export default function MrHandymanPage() {
     el.scrollBy({ left: amount * direction, behavior: 'smooth' })
   }
 
-  const RESIDENTIAL_SERVICES = [
-  { label: "Repair", slug: "home-repair-solutions", icon: "🔧" },
-  { label: "Drywall And Ceiling", slug: "drywall-patching", icon: "🧱" },
-  { label: "Tile Installation", slug: "tile-installation", icon: "🏠" },
-  { label: "Deck & Fence Services", slug: "deck-fence-services", icon: "🪑" },
-  { label: "Painting", slug: "interior-painting-services", icon: "🎨" },
-  { label: "Carpentry Installation And Repair", slug: "carpentry-woodwork", icon: "🪚" },
-  { label: "Plumbing", slug: "plumbing-fixes", icon: "🚰" },
-  { label: "Lighting And Electrical", slug: "electrical-repairs", icon: "💡" },
-  
-]
-
-
-const COMMERCIAL_SERVICES = [
-    "Office Maintenance",
-    "Retail Space Improvements",
-    "Commercial Painting",
-    "Facility Repairs",
-    "Tenant Improvements",
-    "Accessibility Upgrades",
-    "Warehouse Services",
-    "Restaurant Fit-Outs",
-]
-
   const tipsData = [
     { title: "Home Maintenance Checklist", desc: "Essential tasks to keep your home in top condition", image: "home-maintenance.png", category: "Maintenance", readTime: "4 min read" },
     { title: "DIY vs Professional", desc: "When to call a handyman and when to do it yourself", image: "diy.png", category: "DIY", readTime: "5 min read" },
@@ -141,9 +118,6 @@ const COMMERCIAL_SERVICES = [
     { title: "Kitchen Upgrades", desc: "Smart kitchen improvements that add value without breaking the bank", image: "kitchen.png", category: "Upgrades", readTime: "6 min read" },
     { title: "Plumbing Basics", desc: "Simple plumbing fixes you can do before calling the pros", image: "plumbing.png", category: "Plumbing", readTime: "4 min read" },
   ]
-const [servicesOpen, setServicesOpen] = useState(false)
-const [activeType, setActiveType] = useState<"residential" | "commercial" | null>(null)
-
   // autoplay loop for tips slider
   useEffect(() => {
     const el = tipsRef.current
@@ -177,159 +151,8 @@ const [activeType, setActiveType] = useState<"residential" | "commercial" | null
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
+         <Header />
       
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
-      >
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Logo" width={150} height={40} />
-            <span className="font-semibold">Hand and Hand Handyman</span>
-          </Link>
-
-         {/* MOBILE TOGGLE */}
-          <button
-            className="ml-auto lg:hidden h-10 w-10 flex items-center justify-center border rounded-md"
-            onClick={() => setIsNavOpen(true)}
-            aria-label="Open Menu"
-          >
-            <Menu />
-          </button>
-
-          <nav className="hidden lg:flex items-center gap-10 mx-auto">
-
-          {/* SERVICES MEGA MENU */}
-          <div className="relative">
-            <Link
-                  href="/services/"
-                  className="hover:text-[var(--primary-blue)]"
-                >
-        
-            <button
-              onMouseEnter={() => {
-                setServicesOpen(true)
-                setActiveType("residential")
-              }}
-              className="text-sm font-semibold text-neutral-800 flex items-center gap-1"
-            >
-              Services 
-            </button> </Link> 
-
-            {servicesOpen && (
-              <div
-                onMouseEnter={() => setServicesOpen(true)}
-                onMouseLeave={() => setServicesOpen(false)}
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[980px] bg-white rounded-2xl shadow-2xl border p-6 flex gap-6 z-50"
-              >
-
-                {/* LEFT COLUMN */}
-                <div className="w-[220px] border-r pr-4">
-                  <div
-                    onMouseEnter={() => setActiveType("residential")}
-                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
-                      activeType === "residential"
-                        ? "bg-red-50 text-red-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    Residential
-                  </div>
-
-                  <div
-                    onMouseEnter={() => setActiveType("commercial")}
-                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
-                      activeType === "commercial"
-                        ? "bg-red-50 text-red-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    Commercial
-                  </div>
-                </div>
-
-                {/* RIGHT PANEL */}
-                <div className="flex-1">
-
-                  {/* RESIDENTIAL */}
-                  {activeType === "residential" && (
-                    <div className="grid grid-cols-4 gap-6">
-                      {RESIDENTIAL_SERVICES.map((s) => (
-                        <Link
-                          key={s.slug}
-                          href={`/services/residential/${s.slug}`}
-                          className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition"
-                        >
-                          <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-lg">
-                            {s.icon}
-                          </div>
-                          <span className="text-sm font-medium">{s.label}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* COMMERCIAL */}
-                  {activeType === "commercial" && (
-                    <div className="grid grid-cols-3 gap-6">
-                      {COMMERCIAL_SERVICES.map((name) => (
-                        <Link
-                          key={name}
-                          href={`/services/commercial/${name.toLowerCase().replace(/\s+/g, "-")}`}
-                          className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition"
-                        >
-                          <span className="text-red-600 font-bold text-lg">#</span>
-                          <span className="text-sm font-medium">{name}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-
-                </div>
-              </div>
-            )}
-          </div>
-
-      
-                <Link
-                  href="/services/locations"
-                  className="hover:text-[var(--primary-blue)]"
-                >
-                  Locations
-                </Link>
-              
-        </nav>
-
-
-          <div className="ml-auto flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              className="hidden md:inline-flex items-center gap-2 border-neutral-300 text-neutral-800"
-              aria-label="Call (703) 296-6409
-"
-            >
-              <Phone className="h-4 w-4" />
-              <span className="leading-none">(703) 296-6409
-              </span>
-            </Button>
-
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                  onClick={() => setIsBookOpen(true)}
-                  size="lg"
-                  className="hidden lg:inline-flex shadow-lg"
-                  aria-label="Book Now"
-                >
-                <Calendar className="h-5 w-5" />
-                <span>Book Now</span>
-              </Button>
-            </motion.div>
-          </div>
-        </div>
-        </motion.header>
         {isNavOpen && (
           <div className="fixed inset-0 z-[999] bg-white overflow-y-auto lg:hidden">
 
@@ -996,97 +819,10 @@ const [activeType, setActiveType] = useState<"residential" | "commercial" | null
     </motion.div>
   </div>
 )}
-
-
-      {/* Footer */}
-      <footer className="bg-gray-100 text-neutral-900 py-12">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-10 mb-8">
-            <div className="flex flex-col gap-4">
-              <Image src="/logo.png" alt="HnHHandyman" width={300} height={200} className="h-12 w-auto" />
-              <p className="text-sm text-neutral-700">
-                Proudly serving homeowners with reliable, on-time service and workmanship backed by our satisfaction promise.
-              </p>
-              {/* <div className="flex items-center gap-3">
-                {[Facebook, Twitter, Youtube, Linkedin].map((Icon, i) => (
-                  <a
-                    key={i}
-                    href="#"
-                    className="h-10 w-10 rounded-full border border-neutral-300 flex items-center justify-center text-[var(--primary-blue)] hover:border-[var(--primary-blue)] hover:text-[var(--primary-blue)]"
-                  >
-                    <Icon className="h-5 w-5" />
-                  </a>
-                ))}
-              </div> */}
-            </div>
-            <div>
-            <Link
-                  href="/services/"
-                  className="hover:text-[var(--primary-blue)]"
-                > <h3 className="font-bold mb-4">Services</h3></Link>
-            <ul className="space-y-2 text-sm text-neutral-700">
-              <li>
-                <Link
-                  href="/services/residential"
-                  className="hover:text-[var(--primary-blue)]"
-                >
-                  Residential
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/commercial"
-                  className="hover:text-[var(--primary-blue)]"
-                >
-                  Commercial
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-          <h3 className="font-bold mb-4">Company</h3>
-          <ul className="space-y-2 text-sm text-neutral-700">
-            <li>
-              <Link
-                href="/services/about-us"
-                className="hover:text-[var(--primary-blue)]"
-              >
-                About Us
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                href="/services/locations"
-                className="hover:text-[var(--primary-blue)]"
-              >
-                Locations
-              </Link>
-            </li>
-          </ul>
-          </div>
-            <div>
-              <h3 className="font-bold mb-4">Contact</h3>
-              <ul className="space-y-2 text-sm text-neutral-700">
-                <li className="font-semibold text-[var(--primary-blue)]">(703) 296-6409</li>
-                <li>support@hnhhandyman.com</li>
-                <li>123 Service Ave, Suite 200</li>
-                <li>Mon - Sat: 8:00am - 6:00pm</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-neutral-200 pt-6 text-center text-sm text-neutral-600">
-            <p>© {new Date().getFullYear()} HnHHandyman. All rights reserved. Each location is independently owned and operated.</p>
-          </div>
-        </div>
-      </footer>
+  <Footer />
     </div>
   )
 }
-
-
-
 
 function MenuRow({
   label,
