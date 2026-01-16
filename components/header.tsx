@@ -15,6 +15,16 @@ import {
 } from "lucide-react"
 import { BookNowModal } from "@/components/book-now-modal"
 
+/* ================= HELPERS ================= */
+
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "")
+
+
 /* ================= MOBILE MENU STATE ================= */
 
 type MobileMenuStep =
@@ -24,13 +34,26 @@ type MobileMenuStep =
   | "commercial"
   | "repair"
   
- const RESIDENTIAL_SERVICES = [
+type ResidentialService = {
+  label: string
+  slug: string
+  icon: string
+  sections: Record<string, string[]>
+}
+export const REPAIR_SECTION_SLUGS: Record<string, string> = {
+  "Interior Repair": "interior",
+  "Exterior Repair": "exterior",
+  "Garage Repair": "garage",
+  "More Local Repair Services": "other",
+}
+
+const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Repair",
     slug: "repair",
     icon: "/icon/mrh_repair_revised_red_icon_55x55.svg",
     sections: {
-        "Interior Repair": [
+        "Interior Repair":  [
           "TV Wall Mount Installation",
           "Shelving Installation",
           "Ceiling Fan Installation",
@@ -450,44 +473,41 @@ export function Header() {
 
 
             {servicesOpen && (
-              <div
-                onMouseEnter={() => setServicesOpen(true)}
-                onMouseLeave={() => setServicesOpen(false)}
-                
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[1080px] bg-white rounded-2xl shadow-2xl border p-6 flex gap-6"
-              >
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[1100px] bg-white rounded-xl shadow-xl border p-6 flex gap-6">
 
-                {/* LEFT COLUMN */}
-                <div className="w-[200px] border-r pr-4">
-                  <Link
-                    href="/services/residential"
-                    onMouseEnter={() => {
-                      setActiveType("residential")
-                      setActiveResidential(null)
-                    }}
-                    className={`block px-4 py-3 rounded-lg font-semibold ${
-                      activeType === "residential"
-                        ? "bg-red-50 text-red-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    Residential
-                  </Link>
-                  <Link
-                    href="/services/commercial"
-                    onMouseEnter={() => {
-                      setActiveType("commercial")
-                      setActiveResidential(null)
-                    }}
-                    className={`block px-4 py-3 rounded-lg font-semibold ${
-                      activeType === "commercial"
-                        ? "bg-red-50 text-red-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    Commercial
-                  </Link>
-                </div>
+                  {/* LEFT */}
+                  <div className="w-[220px] border-r pr-4">
+                    <Link
+                        href="/services/residential">
+                    <button
+                      onMouseEnter={() => {
+                        setActiveType("residential")
+                        setActiveResidential(null)
+                      }}
+                      className={`block w-full text-left px-4 py-3 rounded ${
+                        activeType === "residential"
+                          ? "bg-red-50 text-red-600"
+                          : ""
+                      }`}
+                    >
+                      Residential
+                    </button></Link>
+                    <Link
+                        href="/services/commercial">
+                    <button
+                      onMouseEnter={() => {
+                        setActiveType("commercial")
+                        setActiveResidential(null)
+                      }}
+                      className={`block w-full text-left px-4 py-3 rounded ${
+                        activeType === "commercial"
+                          ? "bg-red-50 text-red-600"
+                          : ""
+                      }`}
+                    >
+                      Commercial
+                    </button></Link>
+                  </div>
 
                 {/* RIGHT PANEL */}
                 <div className="flex-1">
@@ -516,39 +536,33 @@ export function Header() {
                   )}
                   {/* RESIDENTIAL SUB SERVICES */}
                     {activeResidential && (
-                    <div className="flex flex-col h-[320px]">
-
-                      {/* FIXED HEADER */}
-                      <div className="pb-4 border-b">
+                      <div>
                         <button
                           onClick={() => setActiveResidential(null)}
-                          className="text-sm font-semibold text-red-600 flex items-center gap-1"
+                          className="text-red-600 mb-4 flex items-center gap-2"
                         >
-                          ← {activeResidential.label}
+                          <ChevronLeft /><Link
+                                  href={`/services/residential/${activeResidential.slug}/`}
+                                  className="text-red-600 font-semibold block mb-3"
+                                >{activeResidential.label}</Link>
                         </button>
-                      </div>
 
-                      {/* SCROLLABLE CONTENT */}
-                      <div className="flex-1 overflow-y-auto pr-6 mt-4 mega-scroll">
+                        <div className="grid grid-cols-4 gap-10">
+                          {Object.entries(activeResidential.sections ?? {}).map(
+                            ([section, items]) => (
+                              <div key={section}>
+                                <Link
+                                  href={`/services/residential/${activeResidential.slug}/${slugify(section)}`}
+                                  className="text-red-600 font-semibold block mb-3"
+                                >
+                                  {section}
+                                </Link>
 
-                        <div className="grid grid-cols-4 gap-12">
-                          {Object.entries(activeResidential.sections).map(
-                            ([title, items]) => (
-                              <div key={title} className="max-w-[220px] w-full" >
-
-                                {/* SECTION HEADING */}
-                                <h4 className="text-red-600 font-semibold mb-3 flex items-center gap-1">
-                                  {title}
-                                  <ChevronRight className="h-4 w-4" />
-                                </h4>
-
-                                {/* SERVICE LIST */}
                                 <ul className="space-y-2 text-sm">
                                   {items.map((item) => (
-                                    <li key={item} className="flex gap-2">
-                                      <span className="text-red-600 leading-none">•</span>
+                                    <li key={item}>
                                       <Link
-                                        href={`/services/residential/${activeResidential.slug}`}
+                                        href={`/services/residential/${activeResidential.slug}/${slugify(section)}/${slugify(item)}`}
                                         className="hover:text-red-600"
                                       >
                                         {item}
@@ -556,16 +570,12 @@ export function Header() {
                                     </li>
                                   ))}
                                 </ul>
-
                               </div>
                             )
                           )}
                         </div>
-
                       </div>
-                    </div>
-                  )}
-
+                    )}
 
                   {/* COMMERCIAL */}
                   {activeType === "commercial" && (
