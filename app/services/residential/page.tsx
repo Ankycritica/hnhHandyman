@@ -43,37 +43,41 @@ export default function ResidentialServicesPage() {
       <Header />
       <div className="pt-24">
         {/* Hero Section */}
-        <section className="py-16 bg-gradient-to-b from-white to-gray-50">
-          <div className="container mx-auto px-6">
-            <div className="grid md:grid-cols-2 gap-12 items-start">
-              <FadeIn>
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[var(--primary-blue)]">
-                    Residential Services
-                  </h1>
-                  <p className="text-lg text-neutral-700 mb-6">
-                    Trusted professionals delivering quality home repairs and
-                    improvements. From small fixes to major projects, we handle
-                    it all with expertise and care.
-                  </p>
-                  <p className="text-neutral-600">
-                    Our experienced technicians are licensed, insured, and
-                    background-checked. We stand behind our work with a
-                    satisfaction guarantee.
-                  </p>
-                </div>
-              </FadeIn>
-              <FadeIn delay={0.2}>
-                <div className="bg-white rounded-lg shadow-lg p-6">
-                  <h2 className="text-2xl font-bold mb-4 text-[var(--primary-blue)]">
-                    Let Us Call You
-                  </h2>
-                  <ContactForm serviceType="Residential" />
-                </div>
-              </FadeIn>
+      <section className="bg-[#B21E23] pt-16 pb-32 relative">
+        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+          {/* LEFT CONTENT */}
+          <FadeIn>
+            <div className="text-white">
+              <h1 className="text-4xl md:text-4xl text-white/90 font-bold mb-4 leading-tight">
+                Hand and Hand Handyman For All Your Home Repair Needs
+              </h1>
+
+              <h2 className="text-xl text-white/90 font-bold mb-6">
+                Residential Hand and Hand Handyman Services
+              </h2>
+
+              <p className="text-white/90 leading-relaxed max-w-xl">
+                Whether it’s a small repair job or a home renovation, our local
+                professionals combine years of experience with affordable handyman
+                services to get the job done right. Homeowners trust us for reliable
+                repairs, remodels, and more.
+              </p>
             </div>
-          </div>
-        </section>
+          </FadeIn>
+
+          {/* RIGHT IMAGE */}
+          <FadeIn delay={0.2}>
+            <div className="relative">
+              <img
+                src="/icon/mrh_tech_ipad_desktop_res-index-624x322_rs.webp"
+                alt="Mr Handyman technician"
+                className="rounded-xl shadow-xl object-cover"
+              />
+            </div>
+          </FadeIn>
+        </div>    
+      </section>
 
         {/* Services Grid */}
         <section className="py-16 bg-white">

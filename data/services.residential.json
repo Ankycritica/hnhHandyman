@@ -1,51 +1,74 @@
 [
   {
-    "title": "Home Repair Solutions",
-    "shortDescription": "Expert repairs for common household issues including drywall, doors, windows, and general maintenance tasks.",
-    "iconName": "Wrench",
-    "slug": "home-repair-solutions"
+    "title": "Repair",
+    "shortDescription": "Professional home repair services including interior, exterior, and garage repairs to keep your home safe and functional.",
+    "iconName": "Werench",
+    "slug": "repair"
   },
   {
-    "title": "Interior Painting Services",
-    "shortDescription": "Professional interior painting with quality materials and attention to detail for lasting results.",
-    "iconName": "Paintbrush",
-    "slug": "interior-painting-services"
-  },
-  {
-    "title": "Carpentry & Woodwork",
-    "shortDescription": "Custom carpentry projects including built-ins, shelving, trim work, and furniture assembly.",
-    "iconName": "Hammer",
-    "slug": "carpentry-woodwork"
-  },
-  {
-    "title": "Electrical Repairs",
-    "shortDescription": "Safe electrical work including outlet installation, fixture replacement, and basic wiring updates.",
-    "iconName": "Zap",
-    "slug": "electrical-repairs"
-  },
-  {
-    "title": "Plumbing Fixes",
-    "shortDescription": "Reliable plumbing services for leaks, clogs, fixture installation, and minor pipe repairs.",
-    "iconName": "Droplet",
-    "slug": "plumbing-fixes"
-  },
-  {
-    "title": "Drywall & Patching",
-    "shortDescription": "Seamless drywall repair, patching, and texturing to restore walls to like-new condition.",
+    "title": "Drywall and Ceiling",
+    "shortDescription": "Drywall repair, patching, finishing, ceiling repairs, and replacements for smooth, polished walls and ceilings.",
     "iconName": "Square",
-    "slug": "drywall-patching"
+    "slug": "drywall-and-ceiling"
   },
   {
-    "title": "Tile Installation",
-    "shortDescription": "Professional tile work for bathrooms, kitchens, and floors with precision and quality craftsmanship.",
-    "iconName": "Grid",
-    "slug": "tile-installation"
+    "title": "Remodel",
+    "shortDescription": "Expert remodeling services for kitchens, bathrooms, basements, and living spaces designed for comfort and style.",
+    "iconName": "Home",
+    "slug": "remodel"
   },
   {
-    "title": "Deck & Fence Services",
-    "shortDescription": "Deck construction, repair, and fence installation to enhance your outdoor living space.",
-    "iconName": "Trees",
-    "slug": "deck-fence-services"
+    "title": "Window and Door Services",
+    "shortDescription": "Installation, repair, and replacement of windows and doors to improve energy efficiency and security.",
+    "iconName": "DoorOpen",
+    "slug": "window-and-door-services"
+  },
+  {
+    "title": "Safety and Mobility Services",
+    "shortDescription": "Home safety upgrades including grab bars, ramps, railings, and accessibility modifications.",
+    "iconName": "Shield",
+    "slug": "safety-and-mobility-services"
+  },
+  {
+    "title": "Assembly Service",
+    "shortDescription": "Furniture, fitness equipment, patio items, and more assembled quickly and correctly.",
+    "iconName": "Package",
+    "slug": "assembly-service"
+  },
+  {
+    "title": "Floor Installation and Repair",
+    "shortDescription": "Professional installation and repair of tile, vinyl, laminate, and wood flooring.",
+    "iconName": "Layers",
+    "slug": "floor-installation-and-repair"
+  },
+  {
+    "title": "Painting",
+    "shortDescription": "Interior and exterior painting services including walls, ceilings, trim, decks, and fences.",
+    "iconName": "Paintbrush",
+    "slug": "painting"
+  },
+  {
+    "title": "Carpentry Installation and Repair",
+    "shortDescription": "Custom carpentry services including trim, shelving, doors, stairs, decks, and wood repairs.",
+    "iconName": "Hammer",
+    "slug": "carpentry-installation-and-repair"
+  },
+  {
+    "title": "Plumbing",
+    "shortDescription": "Plumbing repairs and installations including faucets, toilets, sinks, and minor pipe work.",
+    "iconName": "Droplet",
+    "slug": "plumbing"
+  },
+  {
+    "title": "Lighting and Electrical",
+    "shortDescription": "Electrical repairs, lighting installation, outlet replacement, and smart home upgrades.",
+    "iconName": "Zap",
+    "slug": "lighting-and-electrical"
+  },
+  {
+    "title": "Other Services",
+    "shortDescription": "Additional handyman services including pressure washing, appliance installation, and seasonal projects.",
+    "iconName": "MoreHorizontal",
+    "slug": "other-services"
   }
 ]
-

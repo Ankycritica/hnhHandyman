@@ -13,6 +13,7 @@ import { ChatWidget } from "@/components/chat-widget"
 import { ContactForm } from "@/components/contact-form"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { getIcon } from "@/lib/icon-map"
 /* ================= ZIP SERVICE AREA ================= */
 
 const SERVICE_ZIPS = new Set([
@@ -110,6 +111,40 @@ export default function MrHandymanPage() {
     const amount = el.clientWidth * 0.95
     el.scrollBy({ left: amount * direction, behavior: 'smooth' })
   }
+  const SERVICE_CARDS = [
+  {
+    title: "Repair Services",
+    description:
+      "Homes break. Whether you need your gutters or garage shelving fixed, Mr. Handyman has you covered.",
+    image: "/icon/mrh_ceiling_repair_desktop_260x185.webp",
+    icon: "Wrench",
+    href: "/services/residential/repair",
+  },
+  {
+    title: "Commercial Services",
+    description:
+      "Don’t wait on urgent handyman service for your business. We work with organizations of all sizes.",
+    image: "/icon/mrh_hotel_lobby_commercial_desktop_260x185.webp",
+    icon: "Building",
+    href: "/services/commercial",
+  },
+  {
+    title: "Carpentry Services",
+    description:
+      "Custom project? Our carpenters get to work right away to develop the perfect product for your spot.",
+    image: "/icon/mrh_door_molding_carpentry_desktop_260x185.webp",
+    icon: "Hammer",
+    href: "/services/residential/carpentry-installation-and-repair",
+  },
+  {
+    title: "Remodeling Services",
+    description:
+      "Looking for help with a new kitchen or bathroom remodel? Mr. Handyman’s experts can make it happen.",
+    image: "/icon/mrh_consult5_remodel_desktop_260x185.webp",
+    icon: "Layout",
+    href: "/services/residential/remodel",
+  },
+]
 
   const tipsData = [
     { title: "Home Maintenance Checklist", desc: "Essential tasks to keep your home in top condition", image: "home-maintenance.png", category: "Maintenance", readTime: "4 min read" },
@@ -447,51 +482,69 @@ export default function MrHandymanPage() {
       </section>
 
       {/* Professional Handyman Services */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[var(--primary-blue)]">Our Professional Handyman Services</h2>
-            <p className="text-center text-neutral-700 max-w-2xl mx-auto mb-12">Trusted technicians delivering reliable, on-time work for every project in your home.</p>
-          </FadeIn>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {[
-              { title: "Home Repairs", image: "home-repairs.jpg", icon: "🔧", delay: 0 },
-              { title: "Painting Services", image: "painting-services.jpg", icon: "🎨", delay: 0.1 },
-              { title: "Carpentry Work", image: "carpentry-work.jpg", icon: "🪚", delay: 0.2 },
-              { title: "Electrical Services", image: "electrical-services.jpg", icon: "⚡", delay: 0.3 },
-            ].map((service, i) => (
-              <FadeIn key={i} delay={service.delay}>
-                <motion.div
-                  whileHover={{ y: -10, scale: 1.03 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Card className="overflow-hidden border border-neutral-200 hover:border-[var(--primary-blue)]/30 transition-all duration-300 shadow-md hover:shadow-xl">
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
-                      className="relative h-48 overflow-hidden"
-                    >
-                      <Image
-                        src={`/${service.image}`}
-                        alt={service.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </motion.div>
-                    <CardContent className="p-6">
-                      <div className="w-12 h-12 rounded-full bg-[var(--primary-green)] flex items-center justify-center text-white text-2xl mb-4 shadow-md">
-                        {service.icon}
-                      </div>
-                      <h3 className="font-bold text-lg mb-2 text-[var(--primary-blue)]">{service.title}</h3>
-                      <p className="text-gray-700 text-sm">Professional and reliable service for all your home needs</p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </FadeIn>
-            ))}
-          </div>
+      <section className="py-20 bg-white">
+      <div className="container mx-auto px-6">
+
+        {/* Heading */}
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-[var(--primary-red)] mb-4">
+            Our Professional Handyman Services
+          </h2>
+          <p className="text-neutral-700 max-w-3xl">
+            At Hand and Hand Handyman, our goal is to bring your ideas to life. We offer
+            comprehensive handyman services to meet all your needs. Some of our
+            most popular services include the following:
+          </p>
         </div>
-      </section>
+        
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {SERVICE_CARDS.map((service) => {
+            const Icon = getIcon(service.icon)
+
+            return (
+              <Link
+                key={service.title}
+                href={service.href}
+                className="group"
+              >
+                <article className="relative bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden h-full">
+
+                  {/* Image */}
+                  <div className="relative h-48">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 pb-14">
+                    <h3 className="text-lg font-semibold mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-neutral-600 mb-4">
+                      {service.description}
+                    </p>
+
+                    <span className="text-sm font-semibold text-[var(--primary-red)]">
+                      Learn More
+                    </span>
+                  </div>
+
+                  {/* Icon Badge */}
+                  <div className="absolute bottom-4 right-4 w-14 h-14 rounded-full bg-[var(--primary-red)] flex items-center justify-center shadow-lg">
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                </article>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </section>
 
       {/* Neighborhood Section */}
      <section className="relative h-[360px] md:h-[480px] overflow-hidden">
@@ -771,7 +824,7 @@ export default function MrHandymanPage() {
       </section>
 
       {/* Get Our Team Section */}
-      <section className="py-16 bg-[var(--primary-red)] text-white">
+      <section className="py-16 bg-[var(--primary-red-dark)] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-xl mb-8">Contact us today for a free estimate</p>

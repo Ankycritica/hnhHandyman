@@ -61,7 +61,7 @@ type MobileMenuStep =
   },
   {
     label: "Drywall And Ceiling",
-    slug: "drywall-patching",
+    slug: "drywall-and-ceiling",
     icon: "/icon/mrh_drywall_red_icon.svg",
     sections: {
       "Walls and Ceilings": [
@@ -112,7 +112,7 @@ type MobileMenuStep =
   },
   {
     label: "Window and Door Services",
-    slug: "window-door-services",
+    slug: "window-and-door-services",
     icon: "/icon/mrh_window_door_red_icon_55x55.svg",
     sections: {
       "Doors": [
@@ -141,7 +141,7 @@ type MobileMenuStep =
   },
   {
     label: "Safety and Mobility Services",
-    slug: "safety-mobility-services",
+    slug: "safety-and-mobility-services",
     icon: "/icon/mrh_shield_red_icon_55x55.svg",
     sections: {
       "Bath and Bedroom": [
@@ -181,7 +181,7 @@ type MobileMenuStep =
   },
   {
     label: "Floor Installation and Repair",
-    slug: "floor-installation-repair",
+    slug: "floor-installation-and-repair",
     icon: "/icon/mrh_floor_install_repair_red_icon_55x55.svg",
     sections: {
       "Tile and Vinyl": [
@@ -234,7 +234,7 @@ type MobileMenuStep =
   },
   {
     label: "Carpentry Installation and Repair",
-    slug: "carpentry-installation-repair",
+    slug: "carpentry-installation-and-repair",
     icon: "/icon/mrh_handsaw_red_icon_55x55.svg",
     sections: {
       "Exterior Carpentry": [
@@ -286,7 +286,7 @@ type MobileMenuStep =
   },
   {
     label: "Lighting And Electrical",
-    slug: "electrical-repairs",
+    slug: "lighting-and-electrical",
     icon: "/icon/mrh_lighting_electrical_red_icon_55x55.svg",
     sections: {
       "Lighting": [
@@ -352,15 +352,40 @@ type MobileMenuStep =
             
 
 const COMMERCIAL_SERVICES = [
-    "Financial Institution and Banks",
-    "Healthcare Facilities Hospital",
-    "Hotels and Hospitality",
-    "Manufacturing",
-    "Municipal and Government",
-    "Restaurants and Food Services",
-    "Retail and Shopping Malls",
-    "Small Business and Corporate Offices",
+  {
+    title: "Financial Institutions and Banks",
+    slug: "financial-institutions-banks",
+  },
+  {
+    title: "Healthcare Facilities & Hospitals",
+    slug: "healthcare-facilities-hospitals",
+  },
+  {
+    title: "Hotels and Hospitality",
+    slug: "hotels-hospitality",
+  },
+  {
+    title: "Manufacturing",
+    slug: "manufacturing",
+  },
+  {
+    title: "Municipal and Government",
+    slug: "municipal-government",
+  },
+  {
+    title: "Restaurants and Food Services",
+    slug: "restaurants-food-services",
+  },
+  {
+    title: "Retail and Shopping Malls",
+    slug: "retail-shopping-malls",
+  },
+  {
+    title: "Small Business and Corporate Offices",
+    slug: "small-business-corporate-offices",
+  },
 ]
+
 
 
 /* ================= HEADER ================= */
@@ -429,34 +454,39 @@ export function Header() {
                 onMouseEnter={() => setServicesOpen(true)}
                 onMouseLeave={() => setServicesOpen(false)}
                 
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[1080px] bg-white rounded-2xl shadow-2xl border p-6 flex gap-6 z-50"
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[1080px] bg-white rounded-2xl shadow-2xl border p-6 flex gap-6"
               >
 
                 {/* LEFT COLUMN */}
                 <div className="w-[200px] border-r pr-4">
-                  <div
-                    onMouseEnter={() => {setActiveType("residential")
-                      setActiveResidential(null)}}
-                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
+                  <Link
+                    href="/services/residential"
+                    onMouseEnter={() => {
+                      setActiveType("residential")
+                      setActiveResidential(null)
+                    }}
+                    className={`block px-4 py-3 rounded-lg font-semibold ${
                       activeType === "residential"
                         ? "bg-red-50 text-red-600"
                         : "hover:bg-gray-50"
                     }`}
                   >
                     Residential
-                  </div>
-
-                  <div
-                    onMouseEnter={() => {setActiveType("commercial")
-                      setActiveResidential(null)}}
-                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
+                  </Link>
+                  <Link
+                    href="/services/commercial"
+                    onMouseEnter={() => {
+                      setActiveType("commercial")
+                      setActiveResidential(null)
+                    }}
+                    className={`block px-4 py-3 rounded-lg font-semibold ${
                       activeType === "commercial"
                         ? "bg-red-50 text-red-600"
                         : "hover:bg-gray-50"
                     }`}
                   >
                     Commercial
-                  </div>
+                  </Link>
                 </div>
 
                 {/* RIGHT PANEL */}
@@ -540,16 +570,17 @@ export function Header() {
                   {/* COMMERCIAL */}
                   {activeType === "commercial" && (
                     <div className="grid grid-cols-3 gap-6">
-                      {COMMERCIAL_SERVICES.map((name) => (
+                      {COMMERCIAL_SERVICES.map((service) => (
                         <Link
-                          key={name}
-                          href={`/services/commercial/${name.toLowerCase().replace(/\s+/g, "-")}`}
+                          key={service.slug}
+                          href={`/services/commercial/${service.slug}`}
                           className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition"
                         >
                           <span className="text-red-600 font-bold text-lg">#</span>
-                          <span className="text-sm font-medium">{name}</span>
+                          <span className="text-sm font-medium">{service.title}</span>
                         </Link>
                       ))}
+
                     </div>
                   )}
 
@@ -568,31 +599,18 @@ export function Header() {
               
         </nav>
 
-
-          <div className="ml-auto flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              className="hidden md:inline-flex items-center gap-2 border-neutral-300 text-neutral-800"
-              aria-label="Call (703) 296-6409
-"
-            >
-              <Phone className="h-4 w-4" />
-              <span className="leading-none">(703) 296-6409
-              </span>
+          <div className="flex gap-3 items-center">
+            <Button variant="outline" size="sm">
+              <Phone className="h-4 w-4" /> (703) 296-6409
             </Button>
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                  onClick={() => setIsBookOpen(true)}
-                  size="lg"
-                  className="hidden lg:inline-flex shadow-lg"
-                  aria-label="Book Now"
-                >
-                <Calendar className="h-5 w-5" />
-                <span>Book Now</span>
-              </Button>
-            </motion.div>
+            <Button onClick={() => setIsBookOpen(true)} size="lg">
+              <Calendar className="h-5 w-5" /> Book Now
+            </Button>
+
+            <button className="lg:hidden" onClick={() => setIsNavOpen(true)}>
+              <Menu />
+            </button>
           </div>
         </div>
         </motion.header>
