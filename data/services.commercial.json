@@ -1,51 +1,50 @@
 [
   {
-    "title": "Office Maintenance",
-    "shortDescription": "Comprehensive maintenance services for office spaces including repairs, updates, and ongoing facility care.",
-    "iconName": "Building",
-    "slug": "office-maintenance"
+    "title": "Financial Institutions and Banks",
+    "shortDescription": "Professional handyman services for banks and financial institutions including repairs, security-focused upgrades, and facility maintenance.",
+    "iconName": "Landmark",
+    "slug": "financial-institutions-banks"
   },
   {
-    "title": "Retail Space Improvements",
-    "shortDescription": "Storefront enhancements, display installation, and retail space modifications to improve customer experience.",
-    "iconName": "Store",
-    "slug": "retail-space-improvements"
+    "title": "Healthcare Facilities and Hospitals",
+    "shortDescription": "Specialized handyman services for healthcare facilities, hospitals, and clinics with a focus on safety, compliance, and minimal disruption.",
+    "iconName": "Hospital",
+    "slug": "healthcare-facilities-hospitals"
   },
   {
-    "title": "Commercial Painting",
-    "shortDescription": "Large-scale commercial painting projects with minimal disruption to your business operations.",
-    "iconName": "Paintbrush",
-    "slug": "commercial-painting"
+    "title": "Hotels and Hospitality",
+    "shortDescription": "Hospitality-focused repair and maintenance services for hotels, resorts, and lodging facilities to maintain guest-ready standards.",
+    "iconName": "Hotel",
+    "slug": "hotels-hospitality"
   },
   {
-    "title": "Facility Repairs",
-    "shortDescription": "Quick response repairs for commercial facilities including HVAC, electrical, and structural issues.",
-    "iconName": "Settings",
-    "slug": "facility-repairs"
+    "title": "Manufacturing Facilities",
+    "shortDescription": "Maintenance and repair services for manufacturing environments including structural repairs, safety upgrades, and workspace improvements.",
+    "iconName": "Factory",
+    "slug": "manufacturing"
   },
   {
-    "title": "Tenant Improvements",
-    "shortDescription": "Custom build-outs and modifications to meet specific tenant needs and lease requirements.",
-    "iconName": "Layout",
-    "slug": "tenant-improvements"
+    "title": "Municipal and Government Buildings",
+    "shortDescription": "Reliable handyman services for municipal and government properties including offices, public buildings, and community facilities.",
+    "iconName": "Building2",
+    "slug": "municipal-government"
   },
   {
-    "title": "Accessibility Upgrades",
-    "shortDescription": "ADA-compliant modifications and accessibility improvements for commercial properties.",
-    "iconName": "Accessibility",
-    "slug": "accessibility-upgrades"
-  },
-  {
-    "title": "Warehouse Services",
-    "shortDescription": "Industrial space maintenance, shelving installation, and warehouse organization solutions.",
-    "iconName": "Package",
-    "slug": "warehouse-services"
-  },
-  {
-    "title": "Restaurant Fit-Outs",
-    "shortDescription": "Specialized services for restaurant spaces including kitchen modifications and dining area updates.",
+    "title": "Restaurants and Food Services",
+    "shortDescription": "Commercial repair services for restaurants and food service businesses including dining areas, kitchens, and customer-facing spaces.",
     "iconName": "Utensils",
-    "slug": "restaurant-fit-outs"
+    "slug": "restaurants-food-services"
+  },
+  {
+    "title": "Retail and Shopping Malls",
+    "shortDescription": "Retail property maintenance services for shopping centers and malls including storefront repairs, signage, and interior improvements.",
+    "iconName": "ShoppingBag",
+    "slug": "retail-shopping-malls"
+  },
+  {
+    "title": "Small Business and Corporate Offices",
+    "shortDescription": "Flexible handyman services for small businesses and corporate offices covering repairs, upgrades, and ongoing maintenance needs.",
+    "iconName": "Briefcase",
+    "slug": "small-business-corporate-offices"
   }
 ]
-

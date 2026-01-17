@@ -11,7 +11,9 @@ import { Phone, Search, Star, CheckCircle2, Facebook, Twitter, Youtube, Linkedin
 import Image from "next/image"
 import { ChatWidget } from "@/components/chat-widget"
 import { ContactForm } from "@/components/contact-form"
-
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { getIcon } from "@/lib/icon-map"
 /* ================= ZIP SERVICE AREA ================= */
 
 const SERVICE_ZIPS = new Set([
@@ -39,14 +41,22 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   )
 }
 
+type MobileMenuStep =
+  | "main"
+  | "services"
+  | "residential"
+  | "commercial"
+  | "repair"
+
 
 export default function MrHandymanPage() {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isNavOpen, setIsNavOpen] = useState(false)
   const [isBookOpen, setIsBookOpen] = useState(false)
-  const [serviceType, setServiceType] = useState<
-    "Residential" | "Commercial" | ""
-  >("")
+  const [mobileStep, setMobileStep] = useState<MobileMenuStep>("main")
+  // const [serviceType, setServiceType] = useState<
+  //   "Residential" | "Commercial" | ""
+  // >("")
 
   
   /* ---------- ZIP FLOW ---------- */
@@ -101,29 +111,39 @@ export default function MrHandymanPage() {
     const amount = el.clientWidth * 0.95
     el.scrollBy({ left: amount * direction, behavior: 'smooth' })
   }
-
-  const RESIDENTIAL_SERVICES = [
-  { label: "Repair", slug: "home-repair-solutions", icon: "🔧" },
-  { label: "Drywall And Ceiling", slug: "drywall-patching", icon: "🧱" },
-  { label: "Tile Installation", slug: "tile-installation", icon: "🏠" },
-  { label: "Deck & Fence Services", slug: "deck-fence-services", icon: "🪑" },
-  { label: "Painting", slug: "interior-painting-services", icon: "🎨" },
-  { label: "Carpentry Installation And Repair", slug: "carpentry-woodwork", icon: "🪚" },
-  { label: "Plumbing", slug: "plumbing-fixes", icon: "🚰" },
-  { label: "Lighting And Electrical", slug: "electrical-repairs", icon: "💡" },
-  
-]
-
-
-const COMMERCIAL_SERVICES = [
-  "Healthcare Facilities",
-  "Hotels And Hospitality",
-  "Retail Stores",
-  "Restaurants",
-  "Corporate Offices",
-  "Manufacturing",
-  "Municipal Buildings",
-  "Property Management",
+  const SERVICE_CARDS = [
+  {
+    title: "Repair Services",
+    description:
+      "Homes break. Whether you need your gutters or garage shelving fixed, Mr. Handyman has you covered.",
+    image: "/icon/mrh_ceiling_repair_desktop_260x185.webp",
+    icon: "Wrench",
+    href: "/services/residential/repair",
+  },
+  {
+    title: "Commercial Services",
+    description:
+      "Don’t wait on urgent handyman service for your business. We work with organizations of all sizes.",
+    image: "/icon/mrh_hotel_lobby_commercial_desktop_260x185.webp",
+    icon: "Building",
+    href: "/services/commercial",
+  },
+  {
+    title: "Carpentry Services",
+    description:
+      "Custom project? Our carpenters get to work right away to develop the perfect product for your spot.",
+    image: "/icon/mrh_door_molding_carpentry_desktop_260x185.webp",
+    icon: "Hammer",
+    href: "/services/residential/carpentry-installation-and-repair",
+  },
+  {
+    title: "Remodeling Services",
+    description:
+      "Looking for help with a new kitchen or bathroom remodel? Mr. Handyman’s experts can make it happen.",
+    image: "/icon/mrh_consult5_remodel_desktop_260x185.webp",
+    icon: "Layout",
+    href: "/services/residential/remodel",
+  },
 ]
 
   const tipsData = [
@@ -133,9 +153,6 @@ const COMMERCIAL_SERVICES = [
     { title: "Kitchen Upgrades", desc: "Smart kitchen improvements that add value without breaking the bank", image: "kitchen.png", category: "Upgrades", readTime: "6 min read" },
     { title: "Plumbing Basics", desc: "Simple plumbing fixes you can do before calling the pros", image: "plumbing.png", category: "Plumbing", readTime: "4 min read" },
   ]
-const [servicesOpen, setServicesOpen] = useState(false)
-const [activeType, setActiveType] = useState<"residential" | "commercial" | null>(null)
-
   // autoplay loop for tips slider
   useEffect(() => {
     const el = tipsRef.current
@@ -163,183 +180,95 @@ const [activeType, setActiveType] = useState<"residential" | "commercial" | null
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
 
 
+ useEffect(() => {
+    if (!isNavOpen) setMobileStep("main")
+  }, [isNavOpen])
+
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
+         <Header />
       
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
-      >
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Logo" width={150} height={40} />
-            <span className="font-semibold">Hand and Hand Handyman</span>
-          </Link>
+        {isNavOpen && (
+          <div className="fixed inset-0 z-[999] bg-white overflow-y-auto lg:hidden">
 
-          <button
-            className="ml-auto lg:hidden inline-flex items-center justify-center rounded-md border border-neutral-200 h-10 w-10"
-            aria-label="Toggle navigation"
-            onClick={() => setIsNavOpen((prev) => !prev)}
-          >
-            {isNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+            {/* TOP BAR */}
+            <div className="flex items-center justify-between px-6 py-4 border-b">
+              <span className="font-semibold text-lg">MENU</span>
+              <button onClick={() => setIsNavOpen(false)}>
+                <X className="h-6 w-6" />
+              </button>
+            </div>
 
-          <nav className="hidden lg:flex items-center gap-10 mx-auto">
+            {/* CTA BUTTONS */}
+            <div className="px-6 py-4 flex gap-3">
+              <Button className="flex-1">Get Started</Button>
+              <Button variant="outline" className="flex-1">
+                <Phone className="h-4 w-4 mr-2" />
+                Call Us
+              </Button>
+            </div>
 
-          {/* SERVICES MEGA MENU */}
-          <div className="relative">
-            <Link
-                  href="/services/"
-                  className="hover:text-[var(--primary-blue)]"
-                >
-        
-            <button
-              onMouseEnter={() => {
-                setServicesOpen(true)
-                setActiveType("residential")
-              }}
-              className="text-sm font-semibold text-neutral-800 flex items-center gap-1"
-            >
-              Services 
-            </button> </Link> 
+            {/* MENU CONTENT */}
+            <div className="px-6 py-4">
 
-            {servicesOpen && (
-              <div
-                onMouseEnter={() => setServicesOpen(true)}
-                onMouseLeave={() => setServicesOpen(false)}
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[980px] bg-white rounded-2xl shadow-2xl border p-6 flex gap-6 z-50"
-              >
-
-                {/* LEFT COLUMN */}
-                <div className="w-[220px] border-r pr-4">
-                  <div
-                    onMouseEnter={() => setActiveType("residential")}
-                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
-                      activeType === "residential"
-                        ? "bg-red-50 text-red-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    Residential
-                  </div>
-
-                  <div
-                    onMouseEnter={() => setActiveType("commercial")}
-                    className={`px-4 py-3 rounded-lg cursor-pointer font-semibold ${
-                      activeType === "commercial"
-                        ? "bg-red-50 text-red-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    Commercial
-                  </div>
-                </div>
-
-                {/* RIGHT PANEL */}
-                <div className="flex-1">
-
-                  {/* RESIDENTIAL */}
-                  {activeType === "residential" && (
-                    <div className="grid grid-cols-4 gap-6">
-                      {RESIDENTIAL_SERVICES.map((s) => (
-                        <Link
-                          key={s.slug}
-                          href={`/services/residential/${s.slug}`}
-                          className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition"
-                        >
-                          <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-lg">
-                            {s.icon}
-                          </div>
-                          <span className="text-sm font-medium">{s.label}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* COMMERCIAL */}
-                  {activeType === "commercial" && (
-                    <div className="grid grid-cols-3 gap-6">
-                      {COMMERCIAL_SERVICES.map((name) => (
-                        <Link
-                          key={name}
-                          href={`/services/commercial/${name.toLowerCase().replace(/\s+/g, "-")}`}
-                          className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition"
-                        >
-                          <span className="text-red-600 font-bold text-lg">#</span>
-                          <span className="text-sm font-medium">{name}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-
-                </div>
+              {/* MAIN */}
+              {mobileStep === "main" && (
+              <div className="space-y-4">
+                <MenuRow
+                  label="Services"
+                  onClick={() => setMobileStep("services")}
+                />
+                <MenuRow 
+                  href="/services/locations" label="Locations" onClick={() => setIsNavOpen(false)}
+                 />
               </div>
             )}
-          </div>
 
-      
-                <Link
-                  href="/services/locations"
-                  className="hover:text-[var(--primary-blue)]"
-                >
-                  Locations
-                </Link>
-              
-        </nav>
+              {mobileStep === "services" && (
+                <>
+                  <BackRow onClick={() => setMobileStep("main")} />
+                  <div className="space-y-4">
+                    <MenuRow
+                      label="Residential"
+                      onClick={() => setMobileStep("residential")}
+                    />
+                    <MenuRow
+                      label="Commercial"
+                      onClick={() => setMobileStep("commercial")}
+                    />
+                  </div>
+                </>
+              )}
 
+              {/* RESIDENTIAL GRID */}
+              {mobileStep === "residential" && (
+                <>
+                  <BackRow onClick={() => setMobileStep("services")} />
+                  <ResidentialGrid
+                    onRepair={() => setMobileStep("repair")}
+                  />
+                </>
+              )}
 
-          <div className="ml-auto flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              className="hidden md:inline-flex items-center gap-2 border-neutral-300 text-neutral-800"
-              aria-label="Call (703) 296-6409
-"
-            >
-              <Phone className="h-4 w-4" />
-              <span className="leading-none">(703) 296-6409
-              </span>
-            </Button>
+              {/* REPAIR ACCORDION */}
+              {mobileStep === "repair" && (
+                <>
+                  <BackRow onClick={() => setMobileStep("residential")} />
+                  <RepairAccordion />
+                </>
+              )}
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                  onClick={() => setIsBookOpen(true)}
-                  size="lg"
-                  className="hidden lg:inline-flex shadow-lg"
-                  aria-label="Book Now"
-                >
-                <Calendar className="h-5 w-5" />
-                <span>Book Now</span>
-              </Button>
-            </motion.div>
-          </div>
-        </div>
-
-        {isNavOpen && (
-          <div className="lg:hidden border-t border-neutral-200 bg-white px-6 pb-4">
-            <div className="flex flex-col gap-3 pt-3">
-              {["Services", "Locations"].map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="text-sm font-semibold text-neutral-900 hover:text-[var(--primary-blue)]"
-                >
-                  {item}
-                </a>
-              ))}
-              <Button className="w-full" size="lg">
-                Book Now
-              </Button>
-              <Button variant="outline" className="w-full">
-                <Phone className="h-4 w-4" />
-                Call (703) 296-6409
-              </Button>
+              {/* COMMERCIAL LIST */}
+              {mobileStep === "commercial" && (
+                <>
+                  <BackRow onClick={() => setMobileStep("services")} />
+                  <CommercialList />
+                </>
+              )}
             </div>
           </div>
         )}
-      </motion.header>
+
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -553,51 +482,69 @@ const [activeType, setActiveType] = useState<"residential" | "commercial" | null
       </section>
 
       {/* Professional Handyman Services */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[var(--primary-blue)]">Our Professional Handyman Services</h2>
-            <p className="text-center text-neutral-700 max-w-2xl mx-auto mb-12">Trusted technicians delivering reliable, on-time work for every project in your home.</p>
-          </FadeIn>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {[
-              { title: "Home Repairs", image: "home-repairs.jpg", icon: "🔧", delay: 0 },
-              { title: "Painting Services", image: "painting-services.jpg", icon: "🎨", delay: 0.1 },
-              { title: "Carpentry Work", image: "carpentry-work.jpg", icon: "🪚", delay: 0.2 },
-              { title: "Electrical Services", image: "electrical-services.jpg", icon: "⚡", delay: 0.3 },
-            ].map((service, i) => (
-              <FadeIn key={i} delay={service.delay}>
-                <motion.div
-                  whileHover={{ y: -10, scale: 1.03 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Card className="overflow-hidden border border-neutral-200 hover:border-[var(--primary-blue)]/30 transition-all duration-300 shadow-md hover:shadow-xl">
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
-                      className="relative h-48 overflow-hidden"
-                    >
-                      <Image
-                        src={`/${service.image}`}
-                        alt={service.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </motion.div>
-                    <CardContent className="p-6">
-                      <div className="w-12 h-12 rounded-full bg-[var(--primary-green)] flex items-center justify-center text-white text-2xl mb-4 shadow-md">
-                        {service.icon}
-                      </div>
-                      <h3 className="font-bold text-lg mb-2 text-[var(--primary-blue)]">{service.title}</h3>
-                      <p className="text-gray-700 text-sm">Professional and reliable service for all your home needs</p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </FadeIn>
-            ))}
-          </div>
+      <section className="py-20 bg-white">
+      <div className="container mx-auto px-6">
+
+        {/* Heading */}
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-[var(--primary-red)] mb-4">
+            Our Professional Handyman Services
+          </h2>
+          <p className="text-neutral-700 max-w-3xl">
+            At Hand and Hand Handyman, our goal is to bring your ideas to life. We offer
+            comprehensive handyman services to meet all your needs. Some of our
+            most popular services include the following:
+          </p>
         </div>
-      </section>
+        
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {SERVICE_CARDS.map((service) => {
+            const Icon = getIcon(service.icon)
+
+            return (
+              <Link
+                key={service.title}
+                href={service.href}
+                className="group"
+              >
+                <article className="relative bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden h-full">
+
+                  {/* Image */}
+                  <div className="relative h-48">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 pb-14">
+                    <h3 className="text-lg font-semibold mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-neutral-600 mb-4">
+                      {service.description}
+                    </p>
+
+                    <span className="text-sm font-semibold text-[var(--primary-red)]">
+                      Learn More
+                    </span>
+                  </div>
+
+                  {/* Icon Badge */}
+                  <div className="absolute bottom-4 right-4 w-14 h-14 rounded-full bg-[var(--primary-red)] flex items-center justify-center shadow-lg">
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                </article>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </section>
 
       {/* Neighborhood Section */}
      <section className="relative h-[360px] md:h-[480px] overflow-hidden">
@@ -721,53 +668,6 @@ const [activeType, setActiveType] = useState<"residential" | "commercial" | null
           
         </div>
       </section>
-
-      {/* Find a Handyman Form
-      <section className="py-16 bg-[var(--primary-red)] text-white relative overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute top-0 right-0 w-96 h-96 bg-[var(--primary-red-dark)]/30 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            rotate: [0, -90, 0],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--primary-red-dark)]/30 rounded-full blur-3xl"
-        />
-        <div className="container mx-auto px-4 relative z-10">
-          <FadeIn>
-            <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">Find a Handyman Near Me</h2>
-              <p className="mb-8">Enter your ZIP code to find qualified handyman services in your area</p>
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-lg p-6 shadow-2xl"
-              >
-                <div className="flex gap-4">
-                  <Input placeholder="Enter ZIP Code" className="flex-1 text-gray-900" />
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button className="bg-[var(--primary-red)] hover:bg-[var(--primary-red-dark)] text-white shadow-lg">FIND NOW</Button>
-                  </motion.div>
-                </div>
-              </motion.div>
-            </div>
-          </FadeIn>
-        </div>
-      </section> */}
 
       {/* Why Choose Us */}
       <section className="py-16 bg-white">
@@ -924,7 +824,7 @@ const [activeType, setActiveType] = useState<"residential" | "commercial" | null
       </section>
 
       {/* Get Our Team Section */}
-      <section className="py-16 bg-[var(--primary-red)] text-white">
+      <section className="py-16 bg-[var(--primary-red-dark)] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-xl mb-8">Contact us today for a free estimate</p>
@@ -933,157 +833,186 @@ const [activeType, setActiveType] = useState<"residential" | "commercial" | null
         </div>
       </section>
       {isBookOpen && (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center">
-          
-          {/* Overlay */}
-          <div
-            className="absolute inset-0 bg-black/60"
-            onClick={() => setIsBookOpen(false)}
+  <div className="fixed inset-0 z-[999] flex items-center justify-center">
+
+    {/* Overlay */}
+    <div
+      className="absolute inset-0 bg-black/60"
+      onClick={() => setIsBookOpen(false)}
+    />
+
+    {/* Modal */}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95, y: 40 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.25 }}
+      className="relative bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 p-6 z-10"
+    >
+      {/* Close */}
+      <button
+        onClick={() => setIsBookOpen(false)}
+        className="absolute top-4 right-4 text-gray-500 hover:text-black"
+      >
+        ✕
+      </button>
+
+      <FadeIn delay={0.2}>
+        <div className="bg-white rounded-lg">
+          <h2 className="text-2xl font-bold mb-4 text-[var(--primary-blue)]">
+            Let Us Call You
+          </h2>
+
+          {/* CONTACT FORM – NO SERVICE SELECTION */}
+          <ContactForm
+            serviceType="Residential"
+            onSubmit={() => setIsBookOpen(false)}
           />
-
-          {/* Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 40 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.25 }}
-            className="relative bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 p-6 z-10"
-          >
-            {/* Close */}
-            <button
-              onClick={() => setIsBookOpen(false)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-black"
-            >
-              ✕
-            </button>
-
-            {/* YOUR EXISTING CONTENT */}
-            <FadeIn delay={0.2}>
-              <div className="bg-white rounded-lg">
-                <h2 className="text-2xl font-bold mb-4 text-[var(--primary-blue)]">
-                  Let Us Call You
-                </h2>
-
-                {/* Service Type Selector */}
-                <div className="mb-6">
-                  <p className="text-sm font-medium text-gray-600 mb-2">
-                    Select Service
-                  </p>
-
-                  <div className="flex gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setServiceType("Residential")}
-                      className={`flex-1 py-3 rounded-lg border font-semibold transition ${
-                        serviceType === "Residential"
-                          ? "bg-[var(--primary-blue)] text-white border-[var(--primary-blue)]"
-                          : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50"
-                      }`}
-                    >
-                      Residential
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setServiceType("Commercial")}
-                      className={`flex-1 py-3 rounded-lg border font-semibold transition ${
-                        serviceType === "Commercial"
-                          ? "bg-[var(--primary-blue)] text-white border-[var(--primary-blue)]"
-                          : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50"
-                      }`}
-                    >
-                      Commercial
-                    </button>
-                  </div>
-                </div>
-
-                {serviceType ? (
-                    <ContactForm serviceType={serviceType} />
-                  ) : (
-                    <p className="text-sm text-gray-500">
-                      Please select a service type to continue.
-                    </p>
-                  )}
-
-
-              </div>
-            </FadeIn>
-          </motion.div>
         </div>
-      )}
+      </FadeIn>
+    </motion.div>
+  </div>
+)}
+  <Footer />
+    </div>
+  )
+}
 
-      {/* Footer */}
-      <footer className="bg-gray-100 text-neutral-900 py-12">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-10 mb-8">
-            <div className="flex flex-col gap-4">
-              <Image src="/logo.png" alt="HnHHandyman" width={300} height={200} className="h-12 w-auto" />
-              <p className="text-sm text-neutral-700">
-                Proudly serving homeowners with reliable, on-time service and workmanship backed by our satisfaction promise.
-              </p>
-              {/* <div className="flex items-center gap-3">
-                {[Facebook, Twitter, Youtube, Linkedin].map((Icon, i) => (
-                  <a
-                    key={i}
-                    href="#"
-                    className="h-10 w-10 rounded-full border border-neutral-300 flex items-center justify-center text-[var(--primary-blue)] hover:border-[var(--primary-blue)] hover:text-[var(--primary-blue)]"
-                  >
-                    <Icon className="h-5 w-5" />
-                  </a>
-                ))}
-              </div> */}
-            </div>
-            <div>
-            <Link
-                  href="/services/"
-                  className="hover:text-[var(--primary-blue)]"
-                > <h3 className="font-bold mb-4">Services</h3></Link>
-            <ul className="space-y-2 text-sm text-neutral-700">
-              <li>
-                <Link
-                  href="/services/residential"
-                  className="hover:text-[var(--primary-blue)]"
-                >
-                  Residential
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services/commercial"
-                  className="hover:text-[var(--primary-blue)]"
-                >
-                  Commercial
-                </Link>
-              </li>
-            </ul>
+function MenuRow({
+  label,
+  href,
+  onClick,
+}: {
+  label: string
+  href?: string
+  onClick?: () => void
+}) {
+  const content = (
+    <>
+      <span>{label}</span>
+      <ChevronRight className="h-5 w-5" />
+    </>
+  )
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className="w-full flex justify-between items-center text-lg font-medium py-3 border-b"
+        onClick={onClick}
+      >
+        {content}
+      </Link>
+    )
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      className="w-full flex justify-between items-center text-lg font-medium py-3 border-b"
+    >
+      {content}
+    </button>
+  )
+}
+
+function BackRow({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex items-center gap-2 text-red-600 font-medium mb-4"
+    >
+      <ChevronLeft className="h-5 w-5" />
+      Back
+    </button>
+  )
+}
+
+function ResidentialGrid({
+  onRepair,
+}: {
+  onRepair: () => void
+}) {
+  const items = [
+    { label: "Repair", action: onRepair },
+    { label: "Drywall and Ceiling" },
+    { label: "Remodel" },
+    { label: "Window and Door Services" },
+    { label: "Safety and Mobility Services" },
+    { label: "Assembly Service" },
+    { label: "Floor Installation and Repair" },
+    { label: "Painting" },
+    { label: "Carpentry Installation and Repair" },
+    { label: "Plumbing" },
+    { label: "Lighting and Electrical" },
+    { label: "Other Services" },
+  ]
+
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      {items.map((item) => (
+        <button
+          key={item.label}
+          onClick={item.action}
+          className="border rounded-xl p-4 text-center font-medium hover:bg-gray-50"
+        >
+          {item.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function RepairAccordion() {
+  const sections = [
+    "Interior Repair",
+    "Exterior Repair",
+    "Garage Repair",
+    "More Local Repair Services",
+  ]
+
+  return (
+    <div className="space-y-3">
+      {sections.map((s) => (
+        <details
+          key={s}
+          className="border rounded-lg p-4"
+        >
+          <summary className="font-medium flex justify-between items-center cursor-pointer">
+            {s}
+            <span>+</span>
+          </summary>
+          <div className="mt-3 text-sm text-gray-600">
+            {/* Replace with real links */}
+            Service links go here
           </div>
-          
-          <div>
-              <h3 className="font-bold mb-4">Company</h3>
-              <ul className="space-y-2 text-sm text-neutral-700">
-                {["About Us", "Locations"].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="hover:text-[var(--primary-blue)]">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-bold mb-4">Contact</h3>
-              <ul className="space-y-2 text-sm text-neutral-700">
-                <li className="font-semibold text-[var(--primary-blue)]">(703) 296-6409</li>
-                <li>support@hnhhandyman.com</li>
-                <li>123 Service Ave, Suite 200</li>
-                <li>Mon - Sat: 8:00am - 6:00pm</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-neutral-200 pt-6 text-center text-sm text-neutral-600">
-            <p>© 2025 HnHHandyman. All rights reserved. Each location is independently owned and operated.</p>
-          </div>
+        </details>
+      ))}
+    </div>
+  )
+}
+
+function CommercialList() {
+  const items = [
+    "Healthcare Facilities",
+    "Hotels and Hospitality",
+    "Retail Stores",
+    "Restaurants",
+    "Corporate Offices",
+    "Manufacturing",
+    "Municipal Buildings",
+    "Property Management",
+  ]
+
+  return (
+    <div className="space-y-3">
+      {items.map((item) => (
+        <div
+          key={item}
+          className="py-3 border-b font-medium"
+        >
+          {item}
         </div>
-      </footer>
+      ))}
     </div>
   )
 }

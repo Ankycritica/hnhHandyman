@@ -43,37 +43,37 @@ export default function CommercialServicesPage() {
       <Header />
       <div className="pt-24">
         {/* Hero Section */}
-        <section className="py-16 bg-gradient-to-b from-white to-gray-50">
-          <div className="container mx-auto px-6">
-            <div className="grid md:grid-cols-2 gap-12 items-start">
-              <FadeIn>
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[var(--primary-blue)]">
-                    Commercial Services
-                  </h1>
-                  <p className="text-lg text-neutral-700 mb-6">
-                    Reliable commercial maintenance and improvement services for
-                    businesses of all sizes. We minimize disruption while
-                    delivering quality results.
-                  </p>
-                  <p className="text-neutral-600">
-                    Our team understands the unique needs of commercial
-                    properties and works efficiently to keep your business
-                    running smoothly.
-                  </p>
-                </div>
-              </FadeIn>
-              <FadeIn delay={0.2}>
-                <div className="bg-white rounded-lg shadow-lg p-6">
-                  <h2 className="text-2xl font-bold mb-4 text-[var(--primary-blue)]">
-                    Let Us Call You
-                  </h2>
-                  <ContactForm serviceType="Commercial" />
-                </div>
-              </FadeIn>
+        <section className="bg-[#B21E23] pt-16 pb-32 relative">
+        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+          {/* LEFT CONTENT */}
+          <FadeIn>
+            <div className="text-white">
+              <h1 className="text-4xl md:text-3xl text-white/90 font-bold mb-4 leading-tight">
+                Commercial Hand and Hand Handyman Services
+              </h1>
+
+              <p className="text-white/90 leading-relaxed max-w-xl">
+                Is your building dealing with leaks or cracks in the walls and floors? 
+                Perhaps your office needs some desk upgrades. No matter the need, 
+                HnHHandyman®’s trusted local commercial service providers can help with a wide range of repairs 
+                and building improvements to keep your business running smoothly
+              </p>
             </div>
-          </div>
-        </section>
+          </FadeIn>
+
+          {/* RIGHT IMAGE */}
+          <FadeIn delay={0.2}>
+            <div className="relative">
+              <img
+                src="/icon/mrh_store_consult_desktop_624x322_rs-(1).webp"
+                alt="Mr Handyman technician"
+                className="rounded-xl shadow-xl object-cover"
+              />
+            </div>
+          </FadeIn>
+        </div>    
+      </section>
 
         {/* Services Grid */}
         <section className="py-16 bg-white">
@@ -89,7 +89,7 @@ export default function CommercialServicesPage() {
             </FadeIn>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {commercialServices.map((service, i) => {
-                const Icon = getIcon(service.iconName)
+                // const Icon = getIcon(service.iconName)
                 return (
                   <FadeIn key={service.slug} delay={i * 0.1}>
                     <Link href={`/services/commercial/${service.slug}`}>
@@ -97,7 +97,7 @@ export default function CommercialServicesPage() {
                         className="bg-white rounded-md shadow-md p-6 hover:shadow-lg transition cursor-pointer h-full"
                         aria-labelledby={`service-${service.slug}`}
                       >
-                        <Icon className="w-10 h-10 text-[var(--primary-blue)] mb-4" />
+                        {/* <Icon className="w-10 h-10 text-[var(--primary-blue)] mb-4" /> */}
                         <h3
                           id={`service-${service.slug}`}
                           className="text-[var(--primary-blue)] font-semibold text-lg mb-2"

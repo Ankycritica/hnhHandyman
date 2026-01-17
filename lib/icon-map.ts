@@ -1,5 +1,6 @@
 import {
   Wrench,
+  Home,
   Paintbrush,
   Hammer,
   Zap,
@@ -7,6 +8,9 @@ import {
   Square,
   Grid,
   Trees,
+  DoorOpen,
+  Layers,
+  MoreHorizontal,
   Building,
   Store,
   Settings,
@@ -19,6 +23,10 @@ import {
 
 const iconMap: Record<string, LucideIcon> = {
   Wrench,
+  Home,
+  Layers,
+  MoreHorizontal,
+  DoorOpen,
   Paintbrush,
   Hammer,
   Zap,

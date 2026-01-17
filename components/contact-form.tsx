@@ -5,12 +5,17 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 
+type ServiceType = "Residential" | "Commercial"
+
 interface ContactFormProps {
-  serviceType: string
+  serviceType?: ServiceType
   onSubmit?: () => void
 }
 
-export function ContactForm({ serviceType, onSubmit }: ContactFormProps) {
+export function ContactForm({ serviceType = "Residential", onSubmit }: ContactFormProps) {
+  const [selectedService, setSelectedService] =
+    useState<ServiceType>(serviceType)
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -19,8 +24,10 @@ export function ContactForm({ serviceType, onSubmit }: ContactFormProps) {
     zip: "",
     smsOptIn: false,
   })
+
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
+  const [submitStatus, setSubmitStatus] =
+    useState<"idle" | "success" | "error">("idle")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,7 +39,7 @@ export function ContactForm({ serviceType, onSubmit }: ContactFormProps) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          serviceType,
+          serviceType: selectedService,
           ...formData,
         }),
       })
@@ -47,12 +54,12 @@ export function ContactForm({ serviceType, onSubmit }: ContactFormProps) {
           zip: "",
           smsOptIn: false,
         })
-        if (onSubmit) onSubmit()
+        onSubmit?.()
       } else {
         setSubmitStatus("error")
       }
     } catch (error) {
-      console.error("Error submitting form:", error)
+      console.error(error)
       setSubmitStatus("error")
     } finally {
       setIsSubmitting(false)
@@ -60,25 +67,39 @@ export function ContactForm({ serviceType, onSubmit }: ContactFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
+      {/* ================= SERVICE TYPE ================= */}
       <div>
-        <label htmlFor="serviceType" className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
           Service Type
         </label>
-        <Input
-          id="serviceType"
-          value={serviceType}
-          readOnly
-          className="bg-gray-50"
-        />
+
+        <div className="grid grid-cols-2 gap-3">
+          <Button
+            type="button"
+            variant={selectedService === "Residential" ? "default" : "outline"}
+            className="h-12"
+            onClick={() => setSelectedService("Residential")}
+          >
+            Residential
+          </Button>
+
+          <Button
+            type="button"
+            variant={selectedService === "Commercial" ? "default" : "outline"}
+            className="h-12"
+            onClick={() => setSelectedService("Commercial")}
+          >
+            Commercial
+          </Button>
+        </div>
       </div>
+
+      {/* ================= NAME ================= */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-            First Name *
-          </label>
+          <label className="block text-sm font-medium mb-1">First Name *</label>
           <Input
-            id="firstName"
             required
             value={formData.firstName}
             onChange={(e) =>
@@ -86,12 +107,10 @@ export function ContactForm({ serviceType, onSubmit }: ContactFormProps) {
             }
           />
         </div>
+
         <div>
-          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-            Last Name *
-          </label>
+          <label className="block text-sm font-medium mb-1">Last Name *</label>
           <Input
-            id="lastName"
             required
             value={formData.lastName}
             onChange={(e) =>
@@ -100,30 +119,32 @@ export function ContactForm({ serviceType, onSubmit }: ContactFormProps) {
           />
         </div>
       </div>
+
+      {/* ================= CONTACT ================= */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-          Email *
-        </label>
+        <label className="block text-sm font-medium mb-1">Email *</label>
         <Input
-          id="email"
           type="email"
           required
           value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, email: e.target.value })
+          }
         />
       </div>
+
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-          Phone *
-        </label>
+        <label className="block text-sm font-medium mb-1">Phone *</label>
         <Input
-          id="phone"
           type="tel"
           required
           value={formData.phone}
-          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, phone: e.target.value })
+          }
         />
       </div>
+
       <div>
         <label htmlFor="zip" className="block text-sm font-medium text-gray-700 mb-1">
           ZIP Code *
@@ -150,24 +171,30 @@ export function ContactForm({ serviceType, onSubmit }: ContactFormProps) {
           I agree to receive SMS updates about my service request
         </label>
       </div>
+
+
+
+      {/* ================= STATUS ================= */}
       {submitStatus === "success" && (
         <div className="p-3 bg-green-50 text-green-800 rounded-md text-sm">
           Thank you! We'll contact you shortly.
         </div>
       )}
+
       {submitStatus === "error" && (
         <div className="p-3 bg-red-50 text-red-800 rounded-md text-sm">
-          There was an error submitting your form. Please try again.
+          Something went wrong. Please try again.
         </div>
       )}
+
+      {/* ================= SUBMIT ================= */}
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full h-12 rounded-md font-semibold bg-[var(--primary-red)] text-white hover:bg-[var(--primary-red-dark)]"
+        className="w-full h-12 bg-[var(--primary-red)] text-white font-semibold"
       >
         {isSubmitting ? "Submitting..." : "Let Us Call You"}
       </Button>
     </form>
   )
 }
-
