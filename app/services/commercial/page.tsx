@@ -42,6 +42,21 @@ export default function CommercialServicesPage() {
     <div className="min-h-screen bg-white">
       <Header />
       <div className="pt-24">
+        <div className="pt-24 border-b">
+        <div className="container mx-auto px-6 py-4 text-sm text-neutral-600 flex gap-2 items-center">
+          <Link href="/" className="hover:text-red-600 flex items-center">
+          <span className="w-8 h-8 bg-neutral-100 rounded-md flex items-center justify-center text-black shadow-sm">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 11.5L12 4l9 7.5" />
+            <path d="M9 21V12h6v9" />
+            </svg>
+            <span className="sr-only">Home</span>
+          </span>
+          </Link>
+          <span>/</span>
+          <span className="text-red-600 font-semibold">Commercial</span>
+        </div>
+      </div>
         {/* Hero Section */}
         <section className="bg-[#B21E23] pt-16 pb-32 relative">
         <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
