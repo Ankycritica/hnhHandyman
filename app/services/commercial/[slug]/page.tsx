@@ -68,7 +68,7 @@ export default async function CommercialServiceDetailPage({ params }: PageProps)
                 <h2 className="text-2xl font-bold mb-4 text-[var(--primary-blue)]">
                   Let Us Call You
                 </h2>
-                <ContactForm  serviceType="Commercial"/>
+                <ContactForm serviceType="Commercial" />
               </div>
             </div>
           </div>
