@@ -15,6 +15,16 @@ import {
 } from "lucide-react"
 import { BookNowModal } from "@/components/book-now-modal"
 
+/* ================= HELPERS ================= */
+
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "")
+
+
 /* ================= MOBILE MENU STATE ================= */
 
 type MobileMenuStep =
@@ -24,13 +34,26 @@ type MobileMenuStep =
   | "commercial"
   | "repair"
   
- const RESIDENTIAL_SERVICES = [
+type ResidentialService = {
+  label: string
+  slug: string
+  icon: string
+  sections: Record<string, string[]>
+}
+export const REPAIR_SECTION_SLUGS: Record<string, string> = {
+  "Interior Repair": "interior-repair",
+  "Exterior Repair": "exterior-repair",
+  "Garage Repair": "garage-repair",
+  "More Local Repair Services": "other",
+}
+
+const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Repair",
     slug: "repair",
     icon: "/icon/mrh_repair_revised_red_icon_55x55.svg",
     sections: {
-        "Interior Repair": [
+        "Interior Repair":  [
           "TV Wall Mount Installation",
           "Shelving Installation",
           "Ceiling Fan Installation",
@@ -430,64 +453,103 @@ export function Header() {
             <Menu />
           </button>
 
-          {/* DESKTOP NAV */}
-          <nav className="hidden lg:flex items-center gap-10 mx-auto">
+            {/* DESKTOP NAV */}
+            <nav className="hidden lg:flex items-center gap-10 mx-auto">
 
-          {/* SERVICES MEGA MENU */}
-          <div className="relative">
-            <Link
-              href="/services"
-              onMouseEnter={() => {
-                setServicesOpen(true)
-                setActiveType("residential")
-                setActiveResidential(null)
-                
-              }}
-              className="text-sm font-semibold text-neutral-800 hover:text-[var(--primary-blue)]"
+            {/* SERVICES MEGA MENU */}
+            <div
+            className="relative"
+            onPointerEnter={() => {
+                          // cancel any pending close and open + reset state
+                          clearTimeout((globalThis as any).__servicesCloseTimer)
+                          ;(globalThis as any).__servicesCloseTimer = undefined
+                          setServicesOpen(true)
+                          setActiveType("residential")
+                          setActiveResidential(null)
+                        }}
+            onPointerLeave={() => {
+                          // delay closing to avoid flicker when moving between trigger and panel
+                          clearTimeout((globalThis as any).__servicesCloseTimer)
+                          ;(globalThis as any).__servicesCloseTimer = setTimeout(() => {
+                          // only close if the menu is not "pinned" by a click
+                          if (!(globalThis as any).__servicesSticky) {
+                            setServicesOpen(false)
+                            setActiveType(null)
+                          }
+                          (globalThis as any).__servicesCloseTimer = undefined
+                          }, 150)
+                        }}
             >
-              Services
-            </Link>
+            <Link
+  href="/services"
+  aria-expanded={servicesOpen}
+  onMouseEnter={() => {
+    setServicesOpen(true)
+    setActiveType("residential")
+    setActiveResidential(null)
+  }}
+  onMouseLeave={() => {
+    if (!(globalThis as any).__servicesSticky) {
+      setServicesOpen(true)
+      setActiveType(null)
+    }
+  }}
+  onClick={() => {
+    // allow navigation
+    ;(globalThis as any).__servicesSticky = false
+    setServicesOpen(false)
+    setActiveType(null)
+  }}
+  onKeyDown={(e) => {
+    if (e.key === "Escape") {
+      ;(globalThis as any).__servicesSticky = false
+      setServicesOpen(false)
+      setActiveType(null)
+    }
+  }}
+  className="text-sm font-semibold text-neutral-800 hover:text-[var(--primary-blue)]"
+>
+  Services
+</Link>
+
 
 
             {servicesOpen && (
-              <div
-                onMouseEnter={() => setServicesOpen(true)}
-                onMouseLeave={() => setServicesOpen(false)}
-                
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[1080px] bg-white rounded-2xl shadow-2xl border p-6 flex gap-6"
-              >
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[1100px] bg-white rounded-xl shadow-xl border p-6 flex gap-6">
 
-                {/* LEFT COLUMN */}
-                <div className="w-[200px] border-r pr-4">
-                  <Link
-                    href="/services/residential"
-                    onMouseEnter={() => {
-                      setActiveType("residential")
-                      setActiveResidential(null)
-                    }}
-                    className={`block px-4 py-3 rounded-lg font-semibold ${
-                      activeType === "residential"
-                        ? "bg-red-50 text-red-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    Residential
-                  </Link>
-                  <Link
-                    href="/services/commercial"
-                    onMouseEnter={() => {
-                      setActiveType("commercial")
-                      setActiveResidential(null)
-                    }}
-                    className={`block px-4 py-3 rounded-lg font-semibold ${
-                      activeType === "commercial"
-                        ? "bg-red-50 text-red-600"
-                        : "hover:bg-gray-50"
-                    }`}
-                  >
-                    Commercial
-                  </Link>
-                </div>
+                  {/* LEFT */}
+                  <div className="w-[220px] border-r pr-4">
+                    <Link
+                        href="/services/residential">
+                    <button
+                      onMouseEnter={() => {
+                        setActiveType("residential")
+                        setActiveResidential(null)
+                      }}
+                      className={`block w-full text-left px-4 py-3 rounded ${
+                        activeType === "residential"
+                          ? "bg-red-50 text-red-600"
+                          : ""
+                      }`}
+                    >
+                      Residential
+                    </button></Link>
+                    <Link
+                        href="/services/commercial">
+                    <button
+                      onMouseEnter={() => {
+                        setActiveType("commercial")
+                        setActiveResidential(null)
+                      }}
+                      className={`block w-full text-left px-4 py-3 rounded ${
+                        activeType === "commercial"
+                          ? "bg-red-50 text-red-600"
+                          : ""
+                      }`}
+                    >
+                      Commercial
+                    </button></Link>
+                  </div>
 
                 {/* RIGHT PANEL */}
                 <div className="flex-1">
@@ -516,39 +578,33 @@ export function Header() {
                   )}
                   {/* RESIDENTIAL SUB SERVICES */}
                     {activeResidential && (
-                    <div className="flex flex-col h-[320px]">
-
-                      {/* FIXED HEADER */}
-                      <div className="pb-4 border-b">
+                      <div>
                         <button
                           onClick={() => setActiveResidential(null)}
-                          className="text-sm font-semibold text-red-600 flex items-center gap-1"
+                          className="text-red-600 mb-4 flex items-center gap-2"
                         >
-                          ← {activeResidential.label}
+                          <ChevronLeft /><Link
+                                  href={`/services/residential/${activeResidential.slug}/`}
+                                  className="text-red-600 font-semibold block mb-3"
+                                >{activeResidential.label}</Link>
                         </button>
-                      </div>
 
-                      {/* SCROLLABLE CONTENT */}
-                      <div className="flex-1 overflow-y-auto pr-6 mt-4 mega-scroll">
+                        <div className="grid grid-cols-4 gap-10">
+                          {Object.entries(activeResidential.sections ?? {}).map(
+                            ([section, items]) => (
+                              <div key={section}>
+                                <Link
+                                  href={`/services/residential/${activeResidential.slug}/${slugify(section)}`}
+                                  className="text-red-600 font-semibold block mb-3"
+                                >
+                                  {section}
+                                </Link>
 
-                        <div className="grid grid-cols-4 gap-12">
-                          {Object.entries(activeResidential.sections).map(
-                            ([title, items]) => (
-                              <div key={title} className="max-w-[220px] w-full" >
-
-                                {/* SECTION HEADING */}
-                                <h4 className="text-red-600 font-semibold mb-3 flex items-center gap-1">
-                                  {title}
-                                  <ChevronRight className="h-4 w-4" />
-                                </h4>
-
-                                {/* SERVICE LIST */}
                                 <ul className="space-y-2 text-sm">
                                   {items.map((item) => (
-                                    <li key={item} className="flex gap-2">
-                                      <span className="text-red-600 leading-none">•</span>
+                                    <li key={item}>
                                       <Link
-                                        href={`/services/residential/${activeResidential.slug}`}
+                                        href={`/services/residential/${activeResidential.slug}/${slugify(section)}/${slugify(item)}`}
                                         className="hover:text-red-600"
                                       >
                                         {item}
@@ -556,16 +612,12 @@ export function Header() {
                                     </li>
                                   ))}
                                 </ul>
-
                               </div>
                             )
                           )}
                         </div>
-
                       </div>
-                    </div>
-                  )}
-
+                    )}
 
                   {/* COMMERCIAL */}
                   {activeType === "commercial" && (
@@ -607,10 +659,6 @@ export function Header() {
             <Button onClick={() => setIsBookOpen(true)} size="lg">
               <Calendar className="h-5 w-5" /> Book Now
             </Button>
-
-            <button className="lg:hidden" onClick={() => setIsNavOpen(true)}>
-              <Menu />
-            </button>
           </div>
         </div>
         </motion.header>
@@ -629,63 +677,81 @@ export function Header() {
 
           {/* CTA */}
           <div className="px-6 py-4 flex gap-3">
-            <Button className="flex-1">Get Started</Button>
-            <Button variant="outline" className="flex-1">
-              <Phone className="h-4 w-4 mr-2" />
-              Call Us
+            <Button
+              className="flex-1"
+              onClick={() => {
+                setIsNavOpen(false)
+                setIsBookOpen(true)
+              }}
+              aria-label="Open booking modal"
+            >
+              <Calendar className="h-5 w-5 mr-2" /> Book Now
+            </Button>
+
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => {
+                setIsNavOpen(false)
+                window.location.href = "tel:+17032966409"
+              }}
+              aria-label="Call us"
+            >
+              <Phone className="h-4 w-4 mr-2" /> (703) 296-6409
             </Button>
           </div>
 
-          {/* MENU CONTENT */}
-          <div className="px-6 py-4">
+          {/* ================= MENU CONTENT ================= */}
+      <div className="px-6 py-4">
 
-            {/* MAIN */}
-            {mobileStep === "main" && (
-              <div className="space-y-4">
-                <MenuRow label="Services" onClick={() => setMobileStep("services")} />
-                <MenuRow
-                  label="Locations"
-                  href="/services/locations"
-                  onClick={() => setIsNavOpen(false)}
-                />
-              </div>
-            )}
-
-            {/* SERVICES */}
-            {mobileStep === "services" && (
-              <>
-                <BackRow onClick={() => setMobileStep("main")} />
-                <MenuRow label="Residential" onClick={() => setMobileStep("residential")} />
-                <MenuRow label="Commercial" onClick={() => setMobileStep("commercial")} />
-              </>
-            )}
-
-            {/* RESIDENTIAL */}
-            {mobileStep === "residential" && (
-              <>
-                <BackRow onClick={() => setMobileStep("services")} />
-                <ResidentialGrid onRepair={() => setMobileStep("repair")} />
-              </>
-            )}
-
-            {/* REPAIR */}
-            {mobileStep === "repair" && (
-              <>
-                <BackRow onClick={() => setMobileStep("residential")} />
-                <RepairAccordion />
-              </>
-            )}
-
-            {/* COMMERCIAL */}
-            {mobileStep === "commercial" && (
-              <>
-                <BackRow onClick={() => setMobileStep("services")} />
-                <CommercialList />
-              </>
-            )}
+        {/* MAIN */}
+        {mobileStep === "main" && (
+          <div className="space-y-4">
+            <MenuRow label="Services" onClick={() => setMobileStep("services")} />
+            <MenuRow
+              label="Locations"
+              href="/services/locations"
+              onClick={() => setIsNavOpen(false)}
+            />
           </div>
-        </div>
-      )}
+        )}
+
+        {/* SERVICES */}
+        {mobileStep === "services" && (
+          <>
+            <BackRow onClick={() => setMobileStep("main")} />
+            <MenuRow label="Residential" onClick={() => setMobileStep("residential")} />
+            <MenuRow label="Commercial" onClick={() => setMobileStep("commercial")} />
+          </>
+        )}
+
+        {/* RESIDENTIAL */}
+        {mobileStep === "residential" && (
+          <>
+            <BackRow onClick={() => setMobileStep("services")} />
+            <ResidentialGrid onRepair={() => setMobileStep("repair")} />
+          </>
+        )}
+
+        {/* REPAIR */}
+        {mobileStep === "repair" && (
+          <>
+            <BackRow onClick={() => setMobileStep("residential")} />
+            <RepairAccordion />
+          </>
+        )}
+
+        {/* COMMERCIAL */}
+        {mobileStep === "commercial" && (
+          <>
+            <BackRow onClick={() => setMobileStep("services")} />
+            <CommercialList />
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
 
       {/* BOOK NOW MODAL */}
       <BookNowModal
@@ -738,6 +804,7 @@ function MenuRow({
   )
 }
 
+
 function BackRow({ onClick }: { onClick: () => void }) {
   return (
     <button
@@ -749,135 +816,259 @@ function BackRow({ onClick }: { onClick: () => void }) {
     </button>
   )
 }
-function ResidentialGrid({ onRepair }: { onRepair: () => void }) {
-  const items = [
-    {
-      label: "Repair",
-      icon: "/icon/mrh_repair_revised_red_icon_55x55.svg",
-      action: onRepair,
-    },
-    {
-      label: "Drywall & Ceiling",
-      icon: "/icon/mrh_drywall_red_icon.svg",
-    },
-    {
-      label: "Remodel",
-      icon: "/icon/mrh_remodel_red_icon_55x55.svg",
-    },
-    {
-      label: "Window and Door Services",
-      icon: "/icon/mrh_window_door_red_icon_55x55.svg",
-    },
-    {
-      label: "Safety and Mobility Services",
-      icon: "/icon/mrh_shield_red_icon_55x55.svg",
-    },
-    {
-      label: "Assembly Service",
-      icon: "/icon/mrh_assembly_service_red_icon_55x55.svg",
-    },
-    {
-      label: "Floor Installation and Repair",
-      icon: "/icon/mrh_floor_install_repair_red_icon_55x55.svg",
-    },
-    {
-      label: "Painting",
-      icon: "/icon/mrh_paint_roller_red_icon_55x55.svg",
-    },
-    {
-      label: "Carpentry Installation and Repair",
-      icon: "/icon/mrh_handsaw_red_icon_55x55.svg",
-    },
-    {
-      label: "Plumbing",
-      icon: "/icon/mrh_plumbing_revised_red_icon_55x55.svg",
-    },
-    {
-      label: "Lighting And Electrical",
-      icon: "/icon/mrh_lighting_electrical_red_icon_55x55.svg",
-    },
-    {
-      label: "Other Services",
-      icon: "/icon/mrh_other_services_red_icon_55x55.svg",
-    },
-    
-  ]
 
-
+function ResidentialGrid({
+  onRepair,
+  onOpenService,
+}: Readonly<{
+  onRepair: () => void
+  onOpenService?: (slug: string) => void
+}>) {
   return (
     <div className="grid grid-cols-2 gap-4">
-      {items.map((item) => (
-        <button
-          key={item.label}
-          onClick={item.action}
-          className="border rounded-xl p-4 text-center font-medium hover:bg-gray-50"
-        >
-          <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center">
-            <Image
-              src={item.icon}
-              alt={item.label}
-              width={32}
-              height={32}
-              className="block"
-            /></div>
-            {/* LABEL */}
-          <span>{item.label}</span>
-        </button>
-      ))}
+      {RESIDENTIAL_SERVICES.map((s) => {
+        const content = (
+          <>
+            <div className="mx-auto mb-2 w-12 h-12 rounded-full bg-red-50 flex items-center justify-center">
+              <Image src={s.icon} alt={s.label} width={28} height={28} />
+            </div>
+            <span className="block text-sm">{s.label}</span>
+          </>
+        )
+
+        const hasSections = Object.keys(s.sections ?? {}).length > 0
+
+        // If a generic open handler was provided, use it for ALL residential services.
+        if (onOpenService) {
+          return (
+            <button
+              key={s.slug}
+              onClick={() => {
+                // expose label + slug so the mobile UI can show the service name
+                ;(globalThis as any).__mobileResidentialLabel = s.label
+                onOpenService(s.slug)
+              }}
+              aria-label={s.label}
+              className="border rounded-xl p-4 text-center font-medium hover:bg-gray-50"
+            >
+              {content}
+            </button>
+          )
+        }
+
+        // If the service has sub-sections, open it in the mobile "subservice" view.
+        // We keep backward-compatible behaviour by reusing the existing `onRepair`
+        // mobile-step (no other code changes required in the parent).
+        if (hasSections) {
+          return (
+            <button
+              key={s.slug}
+              onClick={() => {
+                // expose the desired slug + label for the mobile panel and trigger the
+                // existing repair-step (the RepairAccordion will read these).
+                ;(globalThis as any).__mobileResidentialSlug = s.slug
+                ;(globalThis as any).__mobileResidentialLabel = s.label
+                if (onRepair) onRepair()
+              }}
+              aria-label={s.label}
+              className="border rounded-xl p-4 text-center font-medium hover:bg-gray-50"
+            >
+              {content}
+            </button>
+          )
+        }
+
+        // Backward-compatible: keep existing special-case for "repair"
+        if (s.slug === "repair") {
+          return (
+            <button
+              key={s.slug}
+              onClick={onRepair}
+              aria-label={s.label}
+              className="border rounded-xl p-4 text-center font-medium hover:bg-gray-50"
+            >
+              {content}
+            </button>
+          )
+        }
+
+        // Default (legacy) behaviour — navigate to service page
+        return (
+          <Link
+            key={s.slug}
+            href={`/services/residential/${s.slug}`}
+            aria-label={s.label}
+            className="border rounded-xl p-4 text-center font-medium hover:bg-gray-50"
+          >
+            {content}
+          </Link>
+        )
+      })}
     </div>
+  )
+}
+
+function ResidentialAccordion({
+  service,
+}: Readonly<{
+  service: ResidentialService
+}>) {
+  const [open, setOpen] = useState<string | null>(null)
+
+  return (
+    <div className="space-y-2">
+      {Object.entries(service.sections ?? {}).map(([section, items]) => {
+        const isOpen = open === section
+        const sectionSlug = slugify(section || "overview")
+        const sectionHref = `/services/residential/${service.slug}/${sectionSlug}`
+
+        return (
+          <div key={section || "__root__"} className="border rounded-lg">
+            <div className="w-full flex justify-between items-center px-4 py-4 font-medium">
+              {/* section link (always clickable) */}
+              <Link href={sectionHref} className="text-left flex-1">
+                {section || "Overview"}
+              </Link>
+
+              {/* toggle (separate control so link stays clickable) */}
+              <button
+                aria-expanded={isOpen}
+                onClick={() => setOpen(isOpen ? null : section)}
+                className="ml-4 text-xl w-8 h-8 flex items-center justify-center rounded-md"
+              >
+                {isOpen ? "−" : "+"}
+              </button>
+            </div>
+
+            {/* when opened, render clickable items; also ensure items are links */}
+            {isOpen && (
+              <div className="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                {items.length === 0 ? (
+                  <div className="text-gray-500">No items listed — view the section page.</div>
+                ) : (
+                  items.map((item) => {
+                    const href =
+                      item.toLowerCase() === "overview"
+                        ? sectionHref
+                        : `${sectionHref}/${slugify(item)}`
+                    return (
+                      <Link
+                        key={item}
+                        href={href}
+                        className="block py-2 hover:text-red-600"
+                      >
+                        {item}
+                      </Link>
+                    )
+                  })
+                )}
+              </div>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function ServiceAccordion({ slug }: Readonly<{ slug: string }>) {
+  // Always derive UI from the canonical RESIDENTIAL_SERVICES data.
+  const service = RESIDENTIAL_SERVICES.find((s) => s.slug === slug)
+
+  const titleCase = (text: string) =>
+    text
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+      .trim()
+
+  if (service)
+    return (
+      <>
+        <div className="mb-4 text-lg font-semibold">{titleCase(service.label)}</div>
+        <ResidentialAccordion service={service} />
+      </>
+    )
+
+  // Generic fallback (keeps behavior predictable if slug is missing/mistyped).
+  const fallbackService: ResidentialService = {
+    label: slug ? slug.replaceAll("-", " ") : "Service",
+    slug: slug || "service",
+    icon: "/icon/mrh_repair_revised_red_icon_55x55.svg",
+    sections: {
+      Overview: ["Overview"],
+    },
+  }
+
+  return (
+    <>
+      <div className="mb-4 text-lg font-semibold">{titleCase(fallbackService.label)}</div>
+      <ResidentialAccordion service={fallbackService} />
+    </>
   )
 }
 
 function RepairAccordion() {
-  const sections = [
-    "Interior Repair",
-    "Exterior Repair",
-    "Garage Repair",
-    "More Local Repair Services",
-  ]
+  // Support two behaviours:
+  // - default: render the built-in "repair" service
+  // - when triggered from the mobile ResidentialGrid for any service that has
+  //   sub-sections, a temporary global `__mobileResidentialSlug` is set and
+  //   we render that service's accordion instead (then clean it up on unmount).
+  const mobileOverride = (globalThis as any).__mobileResidentialSlug as
+    | string
+    | undefined
 
-  return (
-    <div className="space-y-3">
-      {sections.map((s) => (
-        <details key={s} className="border rounded-lg p-4">
-          <summary className="font-medium cursor-pointer flex justify-between">
-            {s}
-            <span>+</span>
-          </summary>
-          <div className="mt-3 text-sm text-gray-600">
-              Overview <br/>
-              TV Wall Mount Installation <br/>
-              Shelving Installation<br/>
-              Ceiling Fan Installation and Replacement<br/>
-              Child Proofing<br/>
-              Picture Hanging<br/>
-              Closet Shelving <br/>
-          </div>
-        </details>
-      ))}
-    </div>
-  )
+  useEffect(() => {
+    return () => {
+      if ((globalThis as any).__mobileResidentialSlug) {
+        delete (globalThis as any).__mobileResidentialSlug
+      }
+      if ((globalThis as any).__mobileResidentialLabel) {
+        delete (globalThis as any).__mobileResidentialLabel
+      }
+    }
+  }, [])
+
+  return <ServiceAccordion slug={mobileOverride ?? "repair"} />
 }
 
+
 function CommercialList() {
-  const items = [
-    "Office Maintenance",
-    "Retail Space Improvements",
-    "Commercial Painting",
-    "Facility Repairs",
-    "Tenant Improvements",
-    "Accessibility Upgrades",
-    "Warehouse Services",
-    "Restaurant Fit-Outs",
-  ]
+  const close = (globalThis as any).__closeMobileNav as (() => void) | undefined
+  const active = (globalThis as any).__mobileCommercialSlug as string | undefined
 
   return (
     <div className="space-y-3">
-      {items.map((item) => (
-        <div key={item} className="py-3 border-b font-medium">
-          {item}
-        </div>
-      ))}
+      {/* top pill (matches screenshot) */}
+      <Link
+        href="/services/commercial"
+        className="block w-full px-4 py-2 rounded-md text-red-700 font-semibold bg-red-50 text-left underline border-red-700"
+        onClick={() => close?.()}
+        aria-label="Commercial overview"
+      >
+        Commercial
+      </Link>
+
+      <div className="space-y-0">
+        {COMMERCIAL_SERVICES.map(({ title, slug }) => {
+          const isActive = active === slug
+          return (
+            <Link
+              key={slug}
+              href={`/services/commercial/${slug}`}
+              className={`w-full block py-3 border-b font-medium hover:text-red-600 ${
+                isActive ? "text-red-600 bg-red-50" : ""
+              }`}
+              aria-label={title}
+              aria-current={isActive ? "page" : undefined}
+              onClick={() => {
+                if (typeof close === "function") close()
+              }}
+            >
+              {title}
+            </Link>
+          )
+        })}
+      </div>
     </div>
   )
 }
