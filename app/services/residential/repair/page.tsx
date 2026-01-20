@@ -141,7 +141,7 @@ export default function RepairPage() {
         {
             title: "More Local Repair Services",
             desc: "Additional repair services may be available in your area. Contact us for a customized on-site assessment.",
-            slug: "other-repair-services",
+            slug: "more-local-repair-services",
         },
         ].map((item) => (
         <section key={item.slug} className="container mx-auto px-6 py-10">

@@ -351,7 +351,9 @@ export default function MrHandymanPage() {
                 size="lg"
                 className="w-full sm:w-auto border-[var(--primary-blue)] text-[var(--primary-blue)] hover:text-white hover:border-[var(--primary-blue)]"
               >
+              <Link href="/services">
                 Learn More
+              </Link>
               </Button>
             </motion.div>
           </motion.div>

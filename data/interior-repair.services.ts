@@ -66,3 +66,52 @@ export const interiorRepairServices = [
       "Improve privacy and light control with precise blind installation and replacement services.",
   },
 ]
+
+export const ExteriorRepairServices = [
+  {
+    title: "Window Frame Repair",
+    slug: "window-frame-repair",
+    desc:
+      "Windows face the elements, so check for wood rot and cracked caulk each season. Drafty windows can increase heating bills. Our professionals will restore your frames to an air-tight condition, and we can assist with new frame installations if needed.",
+  },
+  {
+    title: "Weather Proofing",
+    slug: "weatherproofing",
+    desc:
+      "Weatherproofing your windows is a simple way to enhance your home's energy efficiency. Contact your local Mr. Handyman to explore weatherstripping, caulking, insulation, and shrink film options. We can also weatherproof exterior doors and garages!",
+  },
+  {
+    title: "Debris Removal",
+    slug: "debris-removal",
+    desc:
+      "Dealing with the debris left over from yard work or construction can be a hassle. Instead of hauling it to the dump yourself, contact Mr. Handyman. We will remove and dispose of all types of debris, including yard waste and construction materials..",
+  },
+  {
+    title: "Gutter Installation and Repair",
+    slug: "gutter-installation-and-repair",
+    desc:
+      "Tired of getting wet when you walk out the door? Installing beautiful new gutters or gutter guards can improve your home’s appearance and help you stay dry at the same time. Find out more by calling our service professionals today.",
+  },
+  {
+    title: "Masonry and Concrete Services",
+    slug: "masonry-and-concrete-services",
+    desc:
+      "Whether your concrete steps are cracked or your retaining wall is crumbling, count on Mr. Handyman’s masonry and concrete services to get them back in shape. We’ll mix the mortar, patch the holes, and make repairs so the it lasts for years to come..",
+  },
+]
+
+
+export const GarageRepairServices = [
+  {
+    title: "Garage Storage and Organization",
+    slug: "garage-storage-and-organization",
+    desc:
+      "Clear clutter and maximize space with garage storage solutions like shelving, cabinets, and ceiling-mounted racks. With our garage organization and storage services, we install store-bought or custom-built options to fit your space and requirements.",
+  },
+  {
+    title: "Garage Shelving",
+    slug: "garage-shelving",
+    desc:
+      "HnHHandyman specializes in professional garage shelving services customized to your needs. Our expert team is ready to help maximize your storage space and organize your garage efficiently. Contact us to start your garage shelving project today!",
+  },
+]

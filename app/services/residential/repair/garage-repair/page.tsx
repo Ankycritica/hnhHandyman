@@ -7,7 +7,7 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { ContactForm } from "@/components/contact-form"
 import { motion } from "framer-motion"
-import { interiorRepairServices }from "@/data/interior-repair.services"
+import { GarageRepairServices }from "@/data/interior-repair.services"
 
 export default function InteriorRepairPage() {
   return (
@@ -32,7 +32,7 @@ export default function InteriorRepairPage() {
           <span>/</span>
           <Link href="/services/residential/repair" className="hover:text-red-600">Repair</Link>
           <span>/</span>
-          <span className="text-red-600 font-semibold">Interior Repair</span>
+          <span className="text-red-600 font-semibold">Garage Repair</span>
         </div>
       </div>
 
@@ -41,15 +41,12 @@ export default function InteriorRepairPage() {
       <div className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
         <div className="text-white">
         <h1 className="text-4xl text-white/90 md:text-3xl font-bold mb-4">
-          Interior Services
+          Garage Services
         </h1>
         <p className="text-white/90 leading-relaxed max-w-xl">
-          Whether you need a TV mounted, wall repairs, or child-proofing,
-          HnHHandyman’s interior repair services help keep your home safe,
-          functional, and beautiful.
-          Interior home repairs address your home’s structure and aesthetic elements, 
-          ensuring a safe, functional, and appealing environment. Whether you need minor adjustments or comprehensive solutions,
-          nearby professional home repair services from Hand and Hand Handyman® can save time and offer high-quality results.
+          Looking to enhance your garage's functionality and appearance? Trust the expertise of Hand and Hand Handyman®
+          for all your garage repair needs. From minor fixes to storage installations, our service professionals
+          can provide top-notch solutions to make your garage a safe, organized, and attractive space
         </p>
         </div>
 
@@ -74,7 +71,7 @@ export default function InteriorRepairPage() {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-3xl font-bold text-[#B21E23] mb-4"
           >
-            Interior Repair and Installation Services
+            Garage Services
           </motion.h2>
 
           <motion.p
@@ -84,11 +81,8 @@ export default function InteriorRepairPage() {
             transition={{ delay: 0.08, duration: 0.5 }}
             className="text-neutral-700 max-w-3xl leading-relaxed mb-10"
           >
-            Whether you need a TV mounted, a wall crack repaired, or child‑proofing for
-            your little one, HnHHandyman’s interior repair and installation services
-            can help. Our experts will repair, replace, and install nearly anything
-            you need inside your home — quickly, safely, and with great attention to
-            detail.
+            Transform your garage into a functional, organized space with Hand and Hand Handyman’s expert services. Whether you need to clear out clutter, repair shelving, or install cabinets and ceiling-mounted storage, we’ve got you covered. Our skilled professionals are ready to clean, repair, 
+            and install whatever your garage requires, helping you make the most of this essential part of your home.
           </motion.p>
 
           <div className="grid md:grid-cols-2 gap-8 items-start">
@@ -156,7 +150,7 @@ export default function InteriorRepairPage() {
       transition={{ duration: 0.6 }}
       className="text-3xl md:text-4xl font-bold text-[#B21E23] text-center mb-4"
       >
-      Great Interior Repair Services We Offer!
+      Garage Services We Offer!
       </motion.h2>
 
       <motion.p
@@ -166,8 +160,11 @@ export default function InteriorRepairPage() {
       transition={{ delay: 0.15 }}
       className="text-center text-neutral-700 max-w-3xl mx-auto mb-14"
       >
-      HnHHandyman is one of the largest and fastest-growing handyman service
-      companies, serving thousands of residential and commercial customers daily.
+      HnHHandyman is one of the largest and fastest-growing handyman services companies. 
+      Each day, we serve the service and repair needs of thousands of residential and commercial customers.
+   
+
+
       </motion.p>
       {/* IMAGE (place the screenshot-like banner here) */}
       <motion.div
@@ -192,7 +189,7 @@ export default function InteriorRepairPage() {
       </motion.div>
       {/* CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {interiorRepairServices.map((item, i) => (
+      {GarageRepairServices.map((item, i) => (
         <motion.div
         key={item.slug}
         initial={{ opacity: 0, y: 30 }}
