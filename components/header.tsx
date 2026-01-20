@@ -642,12 +642,18 @@ export function Header() {
           </div>
 
       
-                <Link
-                  href="/services/locations"
-                  className="hover:text-[var(--primary-blue)]"
-                >
-                  Locations
-                </Link>
+          <Link
+            href="/services/locations"
+            className="hover:text-[var(--primary-blue)]"
+          >
+            Locations
+          </Link>
+          <Link
+            href="/how-we-work"
+            className="hover:text-[var(--primary-blue)]"
+          >
+            How We Work
+          </Link>
               
         </nav>
 

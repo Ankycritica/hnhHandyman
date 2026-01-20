@@ -7,7 +7,7 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { ContactForm } from "@/components/contact-form"
 import { motion } from "framer-motion"
-import { interiorRepairServices }from "@/data/interior-repair.services"
+import { ExteriorRepairServices }from "@/data/interior-repair.services"
 
 export default function InteriorRepairPage() {
   return (
@@ -32,7 +32,7 @@ export default function InteriorRepairPage() {
           <span>/</span>
           <Link href="/services/residential/repair" className="hover:text-red-600">Repair</Link>
           <span>/</span>
-          <span className="text-red-600 font-semibold">Interior Repair</span>
+          <span className="text-red-600 font-semibold">Exterior Repair</span>
         </div>
       </div>
 
@@ -41,13 +41,13 @@ export default function InteriorRepairPage() {
       <div className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
         <div className="text-white">
         <h1 className="text-4xl text-white/90 md:text-3xl font-bold mb-4">
-          Interior Services
+          Exterior Services
         </h1>
         <p className="text-white/90 leading-relaxed max-w-xl">
           Whether you need a TV mounted, wall repairs, or child-proofing,
-          HnHHandyman’s interior repair services help keep your home safe,
+          HnHHandyman’s exterior repair services help keep your home safe,
           functional, and beautiful.
-          Interior home repairs address your home’s structure and aesthetic elements, 
+          Exterior home repairs address your home’s structure and aesthetic elements, 
           ensuring a safe, functional, and appealing environment. Whether you need minor adjustments or comprehensive solutions,
           nearby professional home repair services from Hand and Hand Handyman® can save time and offer high-quality results.
         </p>
@@ -55,7 +55,7 @@ export default function InteriorRepairPage() {
 
         <Image
         src="/icon/mrh_caulking_desktop_272x180_rs.webp"
-        alt="Interior repair"
+        alt="Exterior repair"
         width={620}
         height={340}
         className="rounded-xl shadow-xl"
@@ -74,7 +74,7 @@ export default function InteriorRepairPage() {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-3xl font-bold text-[#B21E23] mb-4"
           >
-            Interior Repair and Installation Services
+            Exterior Repair Services
           </motion.h2>
 
           <motion.p
@@ -85,7 +85,7 @@ export default function InteriorRepairPage() {
             className="text-neutral-700 max-w-3xl leading-relaxed mb-10"
           >
             Whether you need a TV mounted, a wall crack repaired, or child‑proofing for
-            your little one, HnHHandyman’s interior repair and installation services
+            your little one, HnHHandyman’s exterior repair and installation services
             can help. Our experts will repair, replace, and install nearly anything
             you need inside your home — quickly, safely, and with great attention to
             detail.
@@ -156,7 +156,7 @@ export default function InteriorRepairPage() {
       transition={{ duration: 0.6 }}
       className="text-3xl md:text-4xl font-bold text-[#B21E23] text-center mb-4"
       >
-      Great Interior Repair Services We Offer!
+      Great Exterior Repair Services We Offer!
       </motion.h2>
 
       <motion.p
@@ -192,7 +192,7 @@ export default function InteriorRepairPage() {
       </motion.div>
       {/* CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {interiorRepairServices.map((item, i) => (
+      {ExteriorRepairServices.map((item, i) => (
         <motion.div
         key={item.slug}
         initial={{ opacity: 0, y: 30 }}
@@ -201,7 +201,7 @@ export default function InteriorRepairPage() {
         transition={{ delay: i * 0.05 }}
         >
         <Link
-          href={`/services/residential/repair/interior-repair/${item.slug}`}
+          href={`/services/residential/repair/exterior-repair/${item.slug}`}
           className="block h-full"
         >
           <div className="relative bg-white rounded-xl border shadow-md hover:shadow-lg transition p-6 h-full">
@@ -239,11 +239,11 @@ export default function InteriorRepairPage() {
       <section className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
         <div>
           <h2 className="text-3xl md:text-3xl font-bold text-red-700 mb-4">
-            Interior Home Repairs Near You
+            Exterior Home Repairs Near You
           </h2>
           <div className="h-[2px] w-150 bg-red-700 mb-6" />
           <p className="text-neutral-700 leading-relaxed mb-4">
-            Transform your home’s interior with professional repair and installation
+            Transform your home’s exterior with professional repair and installation
             services from Hand and Hand Handyman. From shelving and picture hanging
             to exhaust fan installation and caulking, we do it all.
           </p>
@@ -304,15 +304,15 @@ export default function InteriorRepairPage() {
       {/* FAQ */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-6 max-w-4xl">
-          <h2 className="text-3xl font-bold text-red-700 mb-6">FAQs About Interior Repair</h2>
+          <h2 className="text-3xl font-bold text-red-700 mb-6">FAQs About Exterior Repair</h2>
 
           {[
             {
-              q: "What interior repair services do you offer?",
+              q: "What exterior repair services do you offer?",
               a: "We handle drywall repair, shelving, TV mounting, caulking, exhaust fans, and more.",
             },
             {
-              q: "How long do interior repairs take?",
+              q: "How long do exterior repairs take?",
               a: "Most projects are completed in a single day.",
             },
             {

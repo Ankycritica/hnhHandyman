@@ -72,6 +72,14 @@ export function Footer() {
                 Locations
               </Link>
             </li>
+            <li>
+              <Link
+                href="/how-we-work"
+                className="hover:text-[var(--primary-blue)]"
+              >
+                How We Work
+              </Link>
+            </li>
           </ul>
           </div>
           <div>
