@@ -3,6 +3,7 @@ export type ResidentialService = {
   slug: string
   icon: string
   image:string,
+  desc:string,
   sections: Record<string, string[]>
 }
 
@@ -11,6 +12,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Repair",
     slug: "repair",
     image:"/icon/mrh-sheetrock-repair-desktop-624x322-rs.webp",
+    desc:"Homes that aren't maintained can quickly degrade, bringing down their aesthetic and value. From the exterior of your home to your closets, keeping up with home repairs is easy with HnHHandyman® by your side. Our convenient, one-call solution for house repair jobs makes getting it all done easier.",
     icon: "/icon/mrh_repair_revised_red_icon_55x55.svg",
     sections: {
         "Interior Repair":  [
@@ -46,6 +48,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Drywall And Ceiling",
     slug: "drywall-and-ceiling",
     image:"/icon/mrh_drywall-ceiling-service_sheetrock_hero_desktop_1440x634.webp",
+    desc:"Keeping your walls and ceilings in great condition is easy with HnHHandyman®. Whether you're building out a new space or upgrading your home's interior, our skilled professionals deliver smooth, seamless drywall and ceiling installations tailored to your needs. From basic wall finishing to custom ceiling features, we provide high-quality workmanship you can trust.",
     icon: "/icon/mrh_drywall_red_icon.svg",
     sections: {
       "Walls and Ceilings": [
@@ -61,6 +64,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Remodel",
     slug: "remodel",
     image:"/icon/mrh-sheetrock-repair-desktop-624x322-rs.webp",
+    desc:"Don't just dream about your perfect home—bring it to life with HnHHandyman®'s professional home remodeling services. For over 25 years, we've been the trusted choice for homeowners looking to upgrade their kitchens, bathrooms, basements, and more.",
     icon: "/icon/mrh_remodel_red_icon_55x55.svg",
     sections: {
       "Bathroom": [
@@ -99,6 +103,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Window and Door Services",
     slug: "window-and-door-services",
     image:"/icon/mrh-frontdoor-entrance-windows-desktop-624x322-rs.webp",
+    desc:"Damaged or outdated windows and doors can lead to drafts, higher energy bills, and reduced home value. With HnHHandyman® by your side, keeping them in the best condition is easy. We ensure expert repairs, replacements, and installations so you can maintain a functional property.",
     icon: "/icon/mrh_window_door_red_icon_55x55.svg",
     sections: {
       "Doors": [
@@ -129,6 +134,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Safety and Mobility Services",
     slug: "safety-and-mobility-services",
     image:"/icon/mrh-wheelchairramp-modern-building-desktop-624x322-rs.webp",
+    desc:"Everyone deserves a home that is safe, comfortable, and easy to navigate. Whether you need grab bars, wheelchair ramps, or other accessibility modifications, HnHHandyman® is here to help. Our trusted professionals provide expert installations to improve independence.",
     icon: "/icon/mrh_shield_red_icon_55x55.svg",
     sections: {
       "Bath and Bedroom": [
@@ -152,6 +158,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Assembly Service",
     slug: "assembly-service",
     image:"/icon/mrh-screws-paper-tool-desktop-624x322-rs.webp",
+    desc:"Successful furniture assembly shouldn't require a background in construction or take hours of your time to complete. There is an easier way to get your furniture assembled while saving your time for more enjoyable endeavors—HnHHandyman®!",
     icon: "/icon/mrh_assembly_service_red_icon_55x55.svg",
     sections: {
       "Sports Equipment": [
@@ -171,6 +178,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Floor Installation and Repair",
     slug: "floor-installation-and-repair",
     image:"/icon/mrh-employee-laying-woodenpanel-desktop-624x322-rs.webp",
+    desc:"Could your floors use an upgrade? Whether you want to install new flooring or repair what you have, the experts at your local Mr. Handyman® can help. Our team of experienced local professionals has the expertise and tools needed to install a brand-new floor or repair the one you already have.",
     icon: "/icon/mrh_floor_install_repair_red_icon_55x55.svg",
     sections: {
       "Tile and Vinyl": [
@@ -191,6 +199,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Painting",
     slug: "painting",
     image:"/icon/mrh-employeehand-painting-woodenwall-desktop-624x322-rs.webp",
+    desc:"A fresh coat of paint can breathe life into any room, exterior, or piece of furniture. Whether you have an indoor or outdoor paint job, Mr. Handyman® can help. We know what makes a great paint job. And it's our mission to deliver the level of detail and professionalism that you expect and deserve.",
     icon: "/icon/mrh_paint_roller_red_icon_55x55.svg",
     sections: {
       "Exterior Painting": [
@@ -226,6 +235,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Carpentry Installation and Repair",
     slug: "carpentry-installation-and-repair",
     image:"/icon/mrh-door-molding-desktop-624x322-rs.webp",
+    desc:"HnHHandyman® is the perfect choice for the best handyman carpentry services near you. When you need custom carpentry repair or installation, we can help you get it done right the first time. Our expert service professionals can build, construct, and install various carpentry projects.",
     icon: "/icon/mrh_handsaw_red_icon_55x55.svg",
     sections: {
       "Exterior Carpentry": [
@@ -259,6 +269,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Plumbing",
     slug: "plumbing",
     image:"/icon/mrh-faucet-waterdrop-desktop-624x322-rs.webp",
+    desc:"Leaky pipes and faucets can waste a lot of water–and money–if left alone. A professional plumber handyman from HnHHandyman® provides crucial services, including faucet repair, toilet replacement, pipe insulation, and more. No job is too big or too small for your local HnHHandyman.",
     icon: "/icon/mrh_plumbing_revised_red_icon_55x55.svg",
     sections: {
       "Repair and Replace": [
@@ -280,6 +291,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Lighting And Electrical",
     slug: "lighting-and-electrical",
     image:"/icon/mrh-employee-repairing-outdoor-desktop-624x322-rs.webp",
+    desc:"HnHHandyman® is your one-stop resource for electrical repairs, installations, and upgrades. Looking to update your electric panel or add smart home wiring and devices? No matter your electrical needs, your local HnHHandyman has the expertise and experience to do the job right the first time.",
     icon: "/icon/mrh_lighting_electrical_red_icon_55x55.svg",
     sections: {
       "Lighting": [
@@ -326,6 +338,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
     label: "Other Services",
     slug: "other-services",
     image:"/icon/mrh-stoneslab-cleaning-pressurecleaner-desktop-624x322-rs.webp",
+    desc:"Need siding repairs, landscape design, dryer vent cleaning, garage door fixes, glass work, shelving installation, power washing, attic insulation, or fire and water damage solutions? HnHHandyman® offers a wide range of home services specially designed for your needs—and added comfort.",
     icon: "/icon/mrh_other_services_red_icon_55x55.svg",
     sections: {
       "Other": [
