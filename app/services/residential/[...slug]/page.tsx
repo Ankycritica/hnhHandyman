@@ -45,6 +45,7 @@ function resolveSlug(rawSlug?: string[] | string) {
       description: `Professional ${category.label.toLowerCase()} services for your home.`,
       icon: category.icon,
       image:category.image,
+      desc: category.desc,
       categorySlug: category.slug,
       sections: category.sections,
     }
@@ -73,6 +74,7 @@ for (const [sectionName, services] of Object.entries(category.sections)) {
           description: `Professional ${service.toLowerCase()} services for residential properties.`,
           icon: category.icon,
           image:category.image,
+          desc: category.desc,
           category: category.label,
           categorySlug: category.slug,
         }
@@ -96,6 +98,7 @@ for (const [sectionName, services] of Object.entries(category.sections)) {
       description: `Expert ${category.label.toLowerCase()} services you can trust.`,
       icon: category.icon,
       image: category.image,
+      desc: category.desc,
       categorySlug: category.slug,
       sectionSlug,
       services,
@@ -114,6 +117,7 @@ for (const [sectionName, services] of Object.entries(category.sections)) {
       description: `Professional ${service.toLowerCase()} services for residential properties.`,
       icon: category.icon,
       image: category.image,
+      desc: category.desc,
       category: category.label,
       categorySlug: category.slug,
       section: sectionName,
@@ -268,14 +272,13 @@ export default async function ResidentialSlugPage(
 
         {data.type === "service" && data.section && (
           <>
-            Part of {data.section} Services
+            {data.description}
           </>
         )}
       </h2>
 
       <p className="leading-relaxed text-white/90 max-w-xl">
-        Trusted home repair solutions delivered by experienced
-        Hand and Hand Handyman professionals.
+        {data.desc}
       </p>
     </div>
 
@@ -417,31 +420,67 @@ export default async function ResidentialSlugPage(
       {/* SECTION PAGE */}
       {data.type === "section" && (
         <section className="py-20">
-          <div className="container mx-auto">
-            <h2 className="text-4xl font-bold text-center text-red-600 mb-12">
-              {data.title} Services We Offer
-            </h2>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {data.services.map(service => (
-                <div
-                  key={service}
-                  className="bg-white rounded-xl shadow-md p-6 border-l-4 border-red-600"
-                >
-                  <h3 className="font-bold text-lg mb-3">{service}</h3>
-                  <p className="text-neutral-600 mb-4">
-                    Professional service delivered by experts.
-                  </p>
-                  <Link
-                    href={`/services/residential/${data.categorySlug}/${data.sectionSlug}/${slugify(service)}`}
-                    className="text-red-600 font-semibold"
-                  >
-                    Read More →
-                  </Link>
-                </div>
-              ))}
+          <div className="container mx-auto px-6 py-20">
+            {/* Heading */}
+            <div className="text-center max-w-4xl mx-auto mb-14">
+              <p className="text-4xl font-bold text-red-700 mb-4">
+                Professional {data.title} Services We Offer
+              </p>
+              <p className="text-neutral-600">
+                HnHHandyman is one of the largest and fastest-growing handyman service
+                companies. Each day, we serve the service and repair needs of thousands of
+                residential and commercial customers.
+              </p>
             </div>
+
+            {/* Cards */}
+            <div className="grid md:grid-cols-3 gap-8">
+                {data.services.map((service) => {
+                  const href = `/services/residential/${data.categorySlug}/${data.sectionSlug}/${slugify(service)}`
+
+                  return (
+                    <Link
+                      key={service}
+                      href={href}
+                      className="group relative bg-white rounded-xl
+                                border border-transparent
+                                shadow-md hover:shadow-lg
+                                hover:border-red-700
+                                transition-all duration-200
+                                overflow-hidden"
+                    >
+                      {/* Red Accent Bar */}
+                      <div className="absolute left-0 top-0 h-full w-1 bg-red-700" />
+
+                      {/* Content */}
+                      <div className="p-6 pr-14">
+                        <h3 className="font-bold text-lg mb-3 leading-snug">
+                          {service}
+                        </h3>
+
+                        <p className="text-neutral-600 text-sm leading-relaxed line-clamp-3">
+                          Professional service delivered by trusted experts to improve
+                          functionality, safety, and comfort in your home or business.
+                        </p>
+                      </div>
+
+                      {/* Arrow Button */}
+                      <div className="absolute top-1/2 right-4 -translate-y-1/2">
+                        <span
+                          className="flex items-center justify-center w-9 h-9 rounded-full
+                                    border-2 border-red-700 text-red-700
+                                    group-hover:bg-red-700 group-hover:text-white
+                                    transition"
+                        >
+                          →
+                        </span>
+                      </div>
+                    </Link>
+                  )
+                })}
+              </div>
           </div>
+
         </section>
       )}
 
@@ -553,9 +592,11 @@ export default async function ResidentialSlugPage(
             <p className="text-white underline underline-offset-4">
                 Let us know how we can help you today.
             </p>
-            <Button className="bg-blue-500 text-black hover:bg-yellow-500 font-semibold px-6">
-                      Book Now
-            </Button>
+            <Link href="/request-service">
+              <Button className="bg-blue-500 text-black hover:bg-yellow-500 font-semibold px-6">
+                        Book Now
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

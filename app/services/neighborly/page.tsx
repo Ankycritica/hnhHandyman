@@ -122,10 +122,12 @@ export default function HowWeWorkPage() {
             <h2 className="text-white text-xl font-bold">
               Service You Can Trust!
             </h2>
-
-            <Link href="/get-started">
+            <p className="text-white">
+                Let us know how we can help you today.
+            </p>
+            <Link href="/request-service">
               <Button className="bg-yellow-400 text-black hover:bg-yellow-500 font-semibold">
-                Get Started
+                Book Now
               </Button>
             </Link>
           </div>
