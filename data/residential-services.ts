@@ -2,6 +2,7 @@ export type ResidentialService = {
   label: string
   slug: string
   icon: string
+  image:string,
   sections: Record<string, string[]>
 }
 
@@ -9,6 +10,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
    {
     label: "Repair",
     slug: "repair",
+    image:"/icon/mrh-sheetrock-repair-desktop-624x322-rs.webp",
     icon: "/icon/mrh_repair_revised_red_icon_55x55.svg",
     sections: {
         "Interior Repair":  [
@@ -43,6 +45,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Drywall And Ceiling",
     slug: "drywall-and-ceiling",
+    image:"/icon/mrh_drywall-ceiling-service_sheetrock_hero_desktop_1440x634.webp",
     icon: "/icon/mrh_drywall_red_icon.svg",
     sections: {
       "Walls and Ceilings": [
@@ -57,6 +60,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Remodel",
     slug: "remodel",
+    image:"/icon/mrh-sheetrock-repair-desktop-624x322-rs.webp",
     icon: "/icon/mrh_remodel_red_icon_55x55.svg",
     sections: {
       "Bathroom": [
@@ -94,6 +98,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Window and Door Services",
     slug: "window-and-door-services",
+    image:"/icon/mrh-frontdoor-entrance-windows-desktop-624x322-rs.webp",
     icon: "/icon/mrh_window_door_red_icon_55x55.svg",
     sections: {
       "Doors": [
@@ -123,6 +128,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Safety and Mobility Services",
     slug: "safety-and-mobility-services",
+    image:"/icon/mrh-wheelchairramp-modern-building-desktop-624x322-rs.webp",
     icon: "/icon/mrh_shield_red_icon_55x55.svg",
     sections: {
       "Bath and Bedroom": [
@@ -145,6 +151,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Assembly Service",
     slug: "assembly-service",
+    image:"/icon/mrh-screws-paper-tool-desktop-624x322-rs.webp",
     icon: "/icon/mrh_assembly_service_red_icon_55x55.svg",
     sections: {
       "Sports Equipment": [
@@ -163,6 +170,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Floor Installation and Repair",
     slug: "floor-installation-and-repair",
+    image:"/icon/mrh-employee-laying-woodenpanel-desktop-624x322-rs.webp",
     icon: "/icon/mrh_floor_install_repair_red_icon_55x55.svg",
     sections: {
       "Tile and Vinyl": [
@@ -182,6 +190,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Painting",
     slug: "painting",
+    image:"/icon/mrh-employeehand-painting-woodenwall-desktop-624x322-rs.webp",
     icon: "/icon/mrh_paint_roller_red_icon_55x55.svg",
     sections: {
       "Exterior Painting": [
@@ -216,6 +225,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Carpentry Installation and Repair",
     slug: "carpentry-installation-and-repair",
+    image:"/icon/mrh-door-molding-desktop-624x322-rs.webp",
     icon: "/icon/mrh_handsaw_red_icon_55x55.svg",
     sections: {
       "Exterior Carpentry": [
@@ -248,6 +258,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Plumbing",
     slug: "plumbing",
+    image:"/icon/mrh-faucet-waterdrop-desktop-624x322-rs.webp",
     icon: "/icon/mrh_plumbing_revised_red_icon_55x55.svg",
     sections: {
       "Repair and Replace": [
@@ -268,6 +279,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Lighting And Electrical",
     slug: "lighting-and-electrical",
+    image:"/icon/mrh-employee-repairing-outdoor-desktop-624x322-rs.webp",
     icon: "/icon/mrh_lighting_electrical_red_icon_55x55.svg",
     sections: {
       "Lighting": [
@@ -313,9 +325,10 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Other Services",
     slug: "other-services",
+    image:"/icon/mrh-stoneslab-cleaning-pressurecleaner-desktop-624x322-rs.webp",
     icon: "/icon/mrh_other_services_red_icon_55x55.svg",
     sections: {
-      "": [
+      "Other": [
         "Appliance Repair and Service",
         "Landscape Design and Installation",
         "Dryer Vent Service and Repair",

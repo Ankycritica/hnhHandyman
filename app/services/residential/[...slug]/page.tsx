@@ -44,6 +44,7 @@ function resolveSlug(rawSlug?: string[] | string) {
       title: category.label,
       description: `Professional ${category.label.toLowerCase()} services for your home.`,
       icon: category.icon,
+      image:category.image,
       categorySlug: category.slug,
       sections: category.sections,
     }
@@ -71,6 +72,7 @@ for (const [sectionName, services] of Object.entries(category.sections)) {
           title: service,
           description: `Professional ${service.toLowerCase()} services for residential properties.`,
           icon: category.icon,
+          image:category.image,
           category: category.label,
           categorySlug: category.slug,
         }
@@ -93,6 +95,7 @@ for (const [sectionName, services] of Object.entries(category.sections)) {
       category: category.label,
       description: `Expert ${category.label.toLowerCase()} services you can trust.`,
       icon: category.icon,
+      image: category.image,
       categorySlug: category.slug,
       sectionSlug,
       services,
@@ -110,6 +113,7 @@ for (const [sectionName, services] of Object.entries(category.sections)) {
       title: service,
       description: `Professional ${service.toLowerCase()} services for residential properties.`,
       icon: category.icon,
+      image: category.image,
       category: category.label,
       categorySlug: category.slug,
       section: sectionName,
@@ -189,9 +193,11 @@ export default async function ResidentialSlugPage(
                 <span className="sr-only">Home</span>
               </span>
             </Link>
-
             <span>/</span>
-
+            <Link href="/services" className="hover:text-red-600">
+                Services
+            </Link>
+            <span>/</span>
             {/* RESIDENTIAL */}
             <Link href="/services/residential" className="hover:text-red-600">
               Residential
@@ -276,7 +282,7 @@ export default async function ResidentialSlugPage(
     {/* RIGHT IMAGE */}
     <div className="flex justify-center md:justify-end">
       <Image
-        src="/icon/mrh-sheetrock-repair-desktop-624x322-rs.webp"
+        src={data.image}
         alt={data.title}
         width={620}
         height={340}
@@ -328,7 +334,7 @@ export default async function ResidentialSlugPage(
                     The HnHHandyman team has been offering {data.title} services
                     since 1996, with our service professionals boasting an average of
                     10 years of experience.
-                    <Link href="/book" className="text-red-600 underline ml-1">
+                    <Link href="/request-service" className="text-red-600 underline ml-1">
                     Book an appointment
                     </Link>{" "}
                     and learn why homeowners trust our professionals over an unknown
@@ -521,7 +527,7 @@ export default async function ResidentialSlugPage(
                 {/* RIGHT IMAGE */}
                 <div className="relative h-[360px] md:h-[420px] rounded-xl overflow-hidden shadow-lg">
                   <Image
-                    src="/icon/mrh_tech_van2_desktop_660x639_rs.webp"  // 👈 replace with your image
+                    src="/handyman.png"  // 👈 replace with your image
                     alt="Lighting Services"
                     fill
                     className="object-cover"
@@ -611,7 +617,7 @@ export default async function ResidentialSlugPage(
           </div>
         </section>
         <FloatingChatButton />
-
+      <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
       <Footer />
     </div>
   )

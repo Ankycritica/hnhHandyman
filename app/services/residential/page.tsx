@@ -56,6 +56,10 @@ export default function ResidentialServicesPage() {
           </span>
           </Link>
           <span>/</span>
+          <Link href="/services" className="hover:text-red-600">
+              Services
+          </Link>
+          <span>/</span>
           <span className="text-red-600 font-semibold">Residential</span>
         </div>
       </div>
@@ -63,7 +67,7 @@ export default function ResidentialServicesPage() {
         <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
           {/* LEFT CONTENT */}
-          <FadeIn>
+          <FadeIn> 
             <div className="text-white">
               <h1 className="text-4xl md:text-4xl text-white/90 font-bold mb-4 leading-tight">
                 Hand and Hand Handyman For All Your Home Repair Needs
@@ -136,6 +140,7 @@ export default function ResidentialServicesPage() {
           </div>
         </section>
       </div>
+      <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
       <Footer />
       <script
         type="application/ld+json"

@@ -327,7 +327,7 @@ export default function InteriorRepairPage() {
           ))}
         </div>
       </section>
-
+      <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
       <Footer />
     </div>
   )

@@ -24,6 +24,10 @@ export default function RepairPage() {
         </span>
         </Link>
         <span>/</span>
+          <Link href="/services" className="hover:text-red-600">
+              Services
+          </Link>
+        <span>/</span>
         <Link href="/services/residential" className="hover:text-red-600">Residential</Link>
           <span>/</span>
           <span className="text-red-600 font-semibold">Repair</span>
@@ -263,9 +267,7 @@ export default function RepairPage() {
             </div>
         </div>
         </section>
-
-
-
+      <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
       <Footer />
     </div>
   )

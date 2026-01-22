@@ -357,7 +357,7 @@ const RESIDENTIAL_SERVICES: ResidentialService[] = [
     slug: "other-services",
     icon: "/icon/mrh_other_services_red_icon_55x55.svg",
     sections: {
-      "": [
+      "Other": [
       "Appliance Repair and Service",
       "Landscape Design and Installation",
       "Dryer Vent Service and Repair",

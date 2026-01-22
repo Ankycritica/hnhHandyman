@@ -54,6 +54,10 @@ export default function CommercialServicesPage() {
           </span>
           </Link>
           <span>/</span>
+          <Link href="/services" className="hover:text-red-600">
+              Services
+          </Link>
+          <span>/</span>
           <span className="text-red-600 font-semibold">Commercial</span>
         </div>
       </div>
@@ -131,6 +135,7 @@ export default function CommercialServicesPage() {
           </div>
         </section>
       </div>
+      <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
       <Footer />
       <script
         type="application/ld+json"
