@@ -128,7 +128,7 @@ export default function HowWeWorkPage() {
         <div className="container mx-auto px-6 grid md:grid-cols-2 gap-14 items-start">
           <div className="relative h-[440px] rounded-lg overflow-hidden">
             <Image
-              src="/icon/mrh_tech_van2_desktop_660x639_rs.webp"
+              src="/handyman.png"
               alt="Why Choose Us"
               fill
               className="object-cover"
@@ -177,7 +177,8 @@ export default function HowWeWorkPage() {
             <div className="h-[2px] w-150 bg-red-700 mb-6" />
             <p className="text-neutral-700 leading-relaxed max-w-xl">
               Working with us is easy. We are fully insured, and our work is backed by our
-              satisfaction guarantee. After we leave your home, if you find a problem with
+              <Link href="/services/neighborly" className="text-red-600 underline ml-1">
+              Neighborly Done Right Promise®.</Link>{" "}After we leave your home, if you find a problem with
               the workmanship, simply call us.
             </p>
           </div>
@@ -223,11 +224,26 @@ export default function HowWeWorkPage() {
           </ul>
         </div>
       </section>
+      {/* ================= BRAND FOOTER ================= */}
+        <div className="bg-neutral-20 border-t">
+          <div className="container mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-center gap-8">
+            <Image
+              src="/icon/ndrp-logo-desktop.svg"
+              alt="Neighborly"
+              width={100}
+              height={40}
+            />
+            <p className="text-sm text-neutral-800 text-center max-w-xl">
+              The Neighborly Done Right Promise® delivered by <br/>Hand and Hand Handyman ®, a proud Neighborly company.
+            </p>
+          </div>
+        </div>
       <TrustBar />
 
       {/* ================= RESIDENTIAL SERVICES ================= */}
       
       <ResidentialServicesAccordion />
+      <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
       <Footer />
     </>
   )

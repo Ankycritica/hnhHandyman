@@ -5,7 +5,8 @@ import { Footer } from "@/components/footer"
 import { ContactForm } from "@/components/contact-form"
 import { getIcon } from "@/lib/icon-map"
 import commercialServices from "@/data/services.commercial.json"
-
+import Image from "next/image" 
+import { Button } from "@/components/ui/button"
 interface PageProps {
   params: Promise<{ slug: string }>
 }
@@ -101,6 +102,28 @@ export default async function CommercialServiceDetailPage({ params }: PageProps)
           </div>
         </section>
       </div>
+      {/* ================= JOIN OUR TEAM ================= */}
+      <section className="container mx-auto px-6 py-20 grid lg:grid-cols-2 gap-14 items-center">
+        <Image
+          src="/handyman-closeup.png"
+          alt=""
+          width={620}
+          height={420}
+          className="rounded-md"
+        />
+
+        <div>
+          <h2 className="text-2xl text-red-700 font-bold mb-4">Join Our Team</h2>
+          <p className="text-gray-600 mb-6">
+            We’re always looking for skilled professionals to join our team.
+            
+          </p>
+          <Button className="bg-[#C8102E] hover:bg-[#9E0B22]">
+            View Careers
+          </Button>
+        </div>
+      </section>
+      <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
       <Footer />
     </div>
   )

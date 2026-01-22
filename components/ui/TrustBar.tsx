@@ -25,7 +25,7 @@ export function TrustBar() {
           </p>
         </div>
 
-        <Link href="/get-started">
+        <Link href="/request-service">
           <Button className="bg-yellow-400 text-black hover:bg-yellow-500 font-semibold shadow-md">
             Book Now
           </Button>

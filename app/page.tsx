@@ -67,17 +67,35 @@ export default function MrHandymanPage() {
   const [phone, setPhone] = useState("")
   const [address, setAddress] = useState("")
   const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState<{
+    zip?: string
+    email?: string
+    phone?: string
+    address?: string
+  }>({})
+  
+const isValidZip = (zip: string) => /^\d{5}$/.test(zip)
+const isValidEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+const isValidPhone = (phone: string) =>
+phone.replace(/\D/g, "").length === 10
 
-  function checkZip() {
-    if (SERVICE_ZIPS.has(zip.trim())) {
-      setStep("form")
-    } else {
-      setStep("not-available")
-
-      // auto reset after 6 seconds (optional but recommended)
-      setTimeout(() => resetZipFlow(), 6000)
-    }
+function checkZip() {
+  if (!isValidZip(zip)) {
+    setErrors({ zip: "Enter a valid 5-digit ZIP code" })
+    return
   }
+
+  if (SERVICE_ZIPS.has(zip.trim())) {
+    setErrors({})
+    setStep("form")
+  } else {
+    setErrors({})
+    setStep("not-available")
+    setTimeout(() => resetZipFlow(), 1000)
+  }
+}
+
 
   function resetZipFlow() {
     setZip("")
@@ -88,17 +106,53 @@ export default function MrHandymanPage() {
   }
 
   async function submitBooking() {
-    setLoading(true)
+  const newErrors: typeof errors = {}
 
+  if (!isValidEmail(email)) {
+    newErrors.email = "Enter a valid email address"
+  }
+
+  if (!isValidPhone(phone)) {
+    newErrors.phone = "Enter a valid 10-digit phone number"
+  }
+
+  if (!address.trim()) {
+    newErrors.address = "Service address is required"
+  }
+
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors)
+    return
+  }
+
+  setErrors({})
+  setLoading(true)
+
+  try {
     await fetch("/api/zip-booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ zip, email, phone, address }),
     })
 
-    setLoading(false)
     setStep("success")
+  } catch (error) {
+    alert("Something went wrong. Please try again.")
+  } finally {
+    setLoading(false)
   }
+}
+
+  useEffect(() => {
+  if (step === "success") {
+    const timer = setTimeout(() => {
+      resetZipFlow()
+    }, 1500) // auto reset after 4.5s
+
+    return () => clearTimeout(timer)
+  }
+}, [step])
+
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -366,14 +420,15 @@ export default function MrHandymanPage() {
           <FadeIn>
             <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow">
 
-              <h2 className="text-3xl font-bold text-center mb-6">
+              <h2 className="text-3xl font-bold text-[var(--primary-red)] text-center mb-6">
                 Book Your Handyman Today
               </h2>
-              <p className="text-gray-600 text-center mb-8">
-                  Enter your ZIP code to find qualified professionals in your area
-                </p>
 
-              {/* STEP 1 */}
+              <p className="text-gray-600 text-center mb-8">
+                Enter your ZIP code to find qualified professionals in your area
+              </p>
+
+              {/* STEP 1 : ZIP */}
               {step === "zip" && (
                 <div className="flex gap-4">
                   <Input
@@ -381,35 +436,76 @@ export default function MrHandymanPage() {
                     value={zip}
                     onChange={(e) => setZip(e.target.value)}
                   />
-                  <Button  onClick={checkZip}><Search className="mr-2 h-5 w-5" />SEARCH</Button>
+                  {errors.zip && <p className="text-red-700 text-sm">{errors.zip}</p>}
+
+                  <Button onClick={checkZip}>
+                    <Search className="mr-2 h-5 w-5" />
+                    SEARCH
+                  </Button>
                 </div>
               )}
 
-              {/* STEP 2 */}
+              {/* STEP 2 : FORM */}
               {step === "form" && (
                 <div className="space-y-4">
-                  <p className="text-green-600 font-semibold text-center">
-                    ✔ Professionals available in your area
-                  </p>
+                  <Input
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  {errors.email && <p className="text-red-600 text-sm">{errors.email}</p>}
 
-                  <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-                  <Input placeholder="Phone Number" value={phone} onChange={e => setPhone(e.target.value)} />
-                  <Input placeholder="Service Address" value={address} onChange={e => setAddress(e.target.value)} />
+                  <Input
+                    placeholder="Phone Number"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                  {errors.phone && <p className="text-red-600 text-sm">{errors.phone}</p>}
 
-                  <Button onClick={submitBooking} disabled={loading} className="w-full">
+                  <Input
+                    placeholder="Service Address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                  {errors.address && (
+                    <p className="text-red-600 text-sm">{errors.address}</p>
+                  )}
+
+                  <Button
+                    onClick={submitBooking}
+                    disabled={loading}
+                    className="w-full"
+                  >
                     {loading ? "Submitting..." : "Book Service"}
                   </Button>
                 </div>
               )}
 
-              {/* SUCCESS */}
+              {/* STEP 3 : SUCCESS */}
               {step === "success" && (
-                <p className="text-center text-green-700 font-bold">
-                  ✅ Thank you! Our service partner will contact you shortly.
-                </p>
+                <div className="flex flex-col items-center text-center space-y-4 py-6">
+
+                  <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
+                    <span className="text-red-700 text-2xl font-bold">✓</span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-red-700">
+                    Booking Confirmed
+                  </h3>
+
+                  <p className="text-gray-600 max-w-md">
+                    Thank you! Our service partner will contact you shortly to
+                    confirm your appointment details.
+                  </p>
+
+                  <p className="text-sm text-gray-400">
+                    You can book another service in a few seconds…
+                  </p>
+
+                </div>
               )}
 
-              {/* NOT AVAILABLE */}
+              {/* STEP 4 : NOT AVAILABLE */}
               {step === "not-available" && (
                 <div className="text-center space-y-4">
                   <p className="text-red-600 font-semibold">
@@ -430,6 +526,7 @@ export default function MrHandymanPage() {
           </FadeIn>
         </div>
       </section>
+
 
       {/* Customer Reviews */}
       <section className="py-16 bg-gray-50">
@@ -828,10 +925,10 @@ export default function MrHandymanPage() {
       {/* Get Our Team Section */}
       <section className="py-16 bg-[var(--primary-red-dark)] text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+          <h2 className="text-3xl font-bold mb-4 text-white">Ready to Get Started?</h2>
           <p className="text-xl mb-8">Contact us today for a free estimate</p>
-          <Button onClick={() => setIsChatOpen(true)}
-                className="bg-white text-[var(--primary-red)] hover:bg-gray-100">REQUEST A QUOTE</Button>
+          <Link href="/request-service"><Button 
+                className="bg-white text-[var(--primary-red)] hover:bg-gray-100">REQUEST A SERVICE</Button> </Link>
         </div>
       </section>
       {isBookOpen && (

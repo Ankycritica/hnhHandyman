@@ -56,9 +56,9 @@ export const SECTION_IMAGE_MAP: Record<string, string> = {
   "electrical-services-and-installation": "/icon/mrh_ladder_highlight_bulb_desktop_272x180_rs.webp",
 
   //other services
-  "services": "/icon/mrh_dryer_vent3_other-cat_desktop_656x371.webp",
+  "other-services": "/icon/mrh_dryer_vent3_other-cat_desktop_656x371.webp",
   // DEFAULT
-  default: "/images/services/default-service.jpg",
+  default: "/icon/mrh_dryer_vent3_other-cat_desktop_656x371.webp",
 }
 
 export function getSectionImage(sectionName: string) {

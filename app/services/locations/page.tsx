@@ -283,6 +283,7 @@ export default function LocationsPage() {
       </motion.div>
 
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+        <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
       <Footer />
     </div>
   )

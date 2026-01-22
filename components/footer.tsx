@@ -11,11 +11,11 @@ export function Footer() {
             <Image
               src="/logo.png"
               alt="HnHHandyman"
-              width={400}
-              height={200}
-              className="h-12 w-auto"
+              width={500}
+              height={500}
+              className="object-contain"
             />
-            <p className="text-sm text-neutral-700">
+            <p className="text-sm text-neutral-700 leading-relaxed max-w-xs">
               Proudly serving homeowners with reliable, on-time service and
               workmanship backed by our satisfaction promise.
             </p>
