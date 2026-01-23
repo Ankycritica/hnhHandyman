@@ -90,7 +90,7 @@ export default function ResidentialServicesPage() {
           <FadeIn delay={0.2}>
             <div className="relative">
               <img
-                src="/icon/mrh_tech_ipad_desktop_res-index-624x322_rs.webp"
+                src="/icon/home.jpg"
                 alt="Mr Handyman technician"
                 className="rounded-xl shadow-xl object-cover"
               />

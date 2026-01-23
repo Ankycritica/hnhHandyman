@@ -1,12 +1,18 @@
 export type ResidentialService = {
-  label: string
-  slug: string
-  icon: string
+  label: string,
+  slug: string,
+  icon: string,
   image:string,
   desc:string,
-  sections: Record<string, string[]>
+  sections: Record<string, string[]>,
 }
 
+export type CommercialServices ={
+  title:string,
+  shortDescription:string,
+  iconName:string,
+  slug:string,
+}
 export const RESIDENTIAL_SERVICES: ResidentialService[] = [
    {
     label: "Repair",
@@ -63,7 +69,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
   {
     label: "Remodel",
     slug: "remodel",
-    image:"/icon/mrh-sheetrock-repair-desktop-624x322-rs.webp",
+    image:"/icon/mrh-employee-client-kitchen-talking-desktop-624x322-rs.webp",
     desc:"Don't just dream about your perfect home—bring it to life with HnHHandyman®'s professional home remodeling services. For over 25 years, we've been the trusted choice for homeowners looking to upgrade their kitchens, bathrooms, basements, and more.",
     icon: "/icon/mrh_remodel_red_icon_55x55.svg",
     sections: {
@@ -354,4 +360,55 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
         "Holiday Lighting Installation",],
     },
   },
+]
+
+export const COMMERCIEAL_SERVICES: CommercialServices[] = [
+  {
+    title: "Financial Institutions and Banks",
+    shortDescription: "Professional handyman services for banks and financial institutions including repairs, security-focused upgrades, and facility maintenance.",
+    iconName: "/icon/mrh_drywall_red_icon.svg",
+    slug: "financial-institutions-banks"
+  },
+  {
+    title: "Healthcare Facilities and Hospitals",
+    shortDescription: "Specialized handyman services for healthcare facilities, hospitals, and clinics with a focus on safety, compliance, and minimal disruption.",
+    iconName: "/icon/mrh_drywall_red_icon.svg",
+    slug: "healthcare-facilities-hospitals"
+  },
+  {
+    title: "Hotels and Hospitality",
+    shortDescription: "Hospitality-focused repair and maintenance services for hotels, resorts, and lodging facilities to maintain guest-ready standards.",
+    iconName: "/icon/mrh_drywall_red_icon.svg",
+    slug: "hotels-hospitality"
+  },
+  {
+    title: "Manufacturing Facilities",
+    shortDescription: "Maintenance and repair services for manufacturing environments including structural repairs, safety upgrades, and workspace improvements.",
+    iconName: "/icon/mrh_drywall_red_icon.svg",
+    slug: "manufacturing"
+  },
+  {
+    title: "Municipal and Government Buildings",
+    shortDescription: "Reliable handyman services for municipal and government properties including offices, public buildings, and community facilities.",
+    iconName: "/icon/mrh_drywall_red_icon.svg",
+    slug: "municipal-government"
+  },
+  {
+    title: "Restaurants and Food Services",
+    shortDescription: "Commercial repair services for restaurants and food service businesses including dining areas, kitchens, and customer-facing spaces.",
+    iconName: "/icon/mrh_drywall_red_icon.svg",
+    slug: "restaurants-food-services"
+  },
+  {
+    title: "Retail and Shopping Malls",
+    shortDescription: "Retail property maintenance services for shopping centers and malls including storefront repairs, signage, and interior improvements.",
+    iconName: "/icon/mrh_drywall_red_icon.svg",
+    slug: "retail-shopping-malls"
+  },
+  {
+    title: "Small Business and Corporate Offices",
+    shortDescription: "Flexible handyman services for small businesses and corporate offices covering repairs, upgrades, and ongoing maintenance needs.",
+    iconName: "/icon/mrh_drywall_red_icon.svg",
+    slug: "small-business-corporate-offices"
+  }
 ]

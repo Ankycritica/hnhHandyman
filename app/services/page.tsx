@@ -72,7 +72,7 @@ export default function ServicesPage() {
           <FadeIn delay={0.2}>
             <div className="relative">
               <img
-                src="/service.png"
+                src="/icon/istockphoto-1840352884-612x612.jpg"
                 alt="Mr Handyman technician"
                 className="rounded-xl shadow-xl object-cover"
               />

@@ -7,6 +7,7 @@ import { getIcon } from "@/lib/icon-map"
 import commercialServices from "@/data/services.commercial.json"
 import Image from "next/image" 
 import { Button } from "@/components/ui/button"
+import { TrustBar } from "@/components/ui/TrustBar"
 interface PageProps {
   params: Promise<{ slug: string }>
 }
@@ -102,6 +103,7 @@ export default async function CommercialServiceDetailPage({ params }: PageProps)
           </div>
         </section>
       </div>
+            <TrustBar/>
       {/* ================= JOIN OUR TEAM ================= */}
       <section className="container mx-auto px-6 py-20 grid lg:grid-cols-2 gap-14 items-center">
         <Image
@@ -123,6 +125,7 @@ export default async function CommercialServiceDetailPage({ params }: PageProps)
           </Button>
         </div>
       </section>
+      
       <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
       <Footer />
     </div>
