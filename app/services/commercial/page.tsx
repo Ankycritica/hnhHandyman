@@ -108,7 +108,7 @@ export default function CommercialServicesPage() {
             </FadeIn>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {commercialServices.map((service, i) => {
-                // const Icon = getIcon(service.iconName)
+                const Icon = getIcon(service.iconName)
                 return (
                   <FadeIn key={service.slug} delay={i * 0.1}>
                     <Link href={`/services/commercial/${service.slug}`}>
@@ -116,7 +116,7 @@ export default function CommercialServicesPage() {
                         className="bg-white rounded-md shadow-md p-6 hover:shadow-lg transition cursor-pointer h-full"
                         aria-labelledby={`service-${service.slug}`}
                       >
-                        {/* <Icon className="w-10 h-10 text-[var(--primary-blue)] mb-4" /> */}
+                        <Icon className="w-10 h-10 text-[var(--primary-blue)] mb-4" />
                         <h3
                           id={`service-${service.slug}`}
                           className="text-[var(--primary-blue)] font-semibold text-lg mb-2"
@@ -136,6 +136,7 @@ export default function CommercialServicesPage() {
         </section>
       </div>
       <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
+      
       <Footer />
       <script
         type="application/ld+json"
