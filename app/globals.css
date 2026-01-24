@@ -162,3 +162,11 @@
   --sidebar-border: rgba(255,255,255,0.06);
   --sidebar-ring: rgba(11,99,208,0.12);
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -8,29 +8,31 @@ import { Button } from "@/components/ui/button"
 
 export default function RepairPage() {
   return (
-    <div className="bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       <Header />
 
       {/* BREADCRUMB */}
+      <div className="pt-24">
       <div className="pt-24 border-b">
-      <div className="container mx-auto px-6 py-4 text-sm text-neutral-600 flex gap-2 items-center">
-        <Link href="/" className="hover:text-red-600 flex items-center">
-        <span className="w-8 h-8 bg-neutral-100 rounded-md flex items-center justify-center text-black shadow-sm">
-          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M3 11.5L12 4l9 7.5" />
-          <path d="M9 21V12h6v9" />
-          </svg>
-          <span className="sr-only">Home</span>
-        </span>
-        </Link>
-        <span>/</span>
-          <Link href="/services" className="hover:text-red-600">
-              Services
-          </Link>
-        <span>/</span>
-        <Link href="/services/residential" className="hover:text-red-600">Residential</Link>
-          <span>/</span>
-          <span className="text-red-600 font-semibold">Repair</span>
+        <div className="container mx-auto px-6 py-4 text-sm text-neutral-600 flex gap-2 items-center">
+            <Link href="/" className="hover:text-red-600 flex items-center">
+            <span className="w-8 h-8 bg-neutral-100 rounded-md flex items-center justify-center text-black shadow-sm">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 11.5L12 4l9 7.5" />
+            <path d="M9 21V12h6v9" />
+            </svg>
+            <span className="sr-only">Home</span>
+            </span>
+            </Link>
+            <span>/</span>
+            <Link href="/services" className="hover:text-red-600">
+                Services
+            </Link>
+            <span>/</span>
+            <Link href="/services/residential" className="hover:text-red-600">Residential</Link>
+            <span>/</span>
+            <span className="text-red-600 font-semibold">Repair</span>
+        </div>
       </div>
       </div>
 

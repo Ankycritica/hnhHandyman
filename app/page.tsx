@@ -241,7 +241,7 @@ function checkZip() {
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
          <Header />
-      
+        <div>
         {isNavOpen && (
           <div className="fixed inset-0 z-[999] bg-white overflow-y-auto lg:hidden">
 
@@ -322,7 +322,7 @@ function checkZip() {
             </div>
           </div>
         )}
-
+      </div>
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -705,7 +705,7 @@ function checkZip() {
                 className="relative h-[400px] rounded-lg overflow-hidden shadow-2xl"
               >
                 <Image
-                  src="/two-handymen-in-red-shirts-working-in-modern-kitch.jpg"
+                  src="/img/0 (6).jpeg"
                   alt="Professional handymen at work"
                   fill
                   className="object-cover"

@@ -168,82 +168,115 @@ export default async function ResidentialSlugPage(
   // const Icon = data.icon ? getIcon(data.icon) : null
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       <Header />
+      <div className="pt-20 lg:pt-24"/>
       
-      <div className="pt-24">
-        
+      <div className="pt-24 border-b">
         {/* HERO / BREADCRUMB */}
-        <div className="pt-24 border-b">
-          <div className="container mx-auto px-6 py-4 text-sm text-neutral-600 flex gap-2 items-center">
+        <div className="pt-24 border-b bg-white">
+          <div className="container mx-auto px-4 py-3">
 
-            {/* HOME */}
-            <Link href="/" className="hover:text-red-600 flex items-center">
-              <span className="w-8 h-8 bg-neutral-100 rounded-md flex items-center justify-center text-black shadow-sm">
-                <svg
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+            {/* MOBILE: horizontal scroll */}
+            <nav
+              className="
+                flex items-center gap-2 text-xs
+                overflow-x-auto whitespace-nowrap
+                scrollbar-hide
+                md:hidden
+              "
+            >
+              <Link href="/" className="text-neutral-600 hover:text-red-600 flex items-center gap-1">
+                <span className="w-8 h-8 bg-neutral-100 rounded-md flex items-center justify-center text-black shadow-sm">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M3 11.5L12 4l9 7.5" />
                   <path d="M9 21V12h6v9" />
-                </svg>
-                <span className="sr-only">Home</span>
-              </span>
-            </Link>
-            <span>/</span>
-            <Link href="/services" className="hover:text-red-600">
-                Services
-            </Link>
-            <span>/</span>
-            {/* RESIDENTIAL */}
-            <Link href="/services/residential" className="hover:text-red-600">
-              Residential
-            </Link>
+                  </svg>
+                  <span className="sr-only">Home</span>
+                </span>
+              </Link>
 
-            {/* CATEGORY */}
-            {data.category && (
-              <>
-                <span>/</span>
-                <Link
-                  href={`/services/residential/${data.categorySlug}`}
-                  className="hover:text-red-600"
-                >
-                  {data.category}
-                </Link>
-              </>
-            )}
+              <span>/</span>
+              <Link href="/services" className="hover:text-red-600">Services</Link>
+              <span>/</span>
+              <Link href="/services/residential" className="hover:text-red-600">Residential</Link>
 
-            {/* SECTION */}
-            {data.section && (
-              <>
-                <span>/</span>
-                <Link
-                  href={`/services/residential/${data.categorySlug}/${data.sectionSlug}`}
-                  className="hover:text-red-600"
-                >
-                  {data.section}
-                </Link>
-              </>
-            )}
+              {data.category && (
+                <>
+                  <span>/</span>
+                  <Link
+                    href={`/services/residential/${data.categorySlug}`}
+                    className="hover:text-red-600"
+                  >
+                    {data.category}
+                  </Link>
+                </>
+              )}
 
-            {/* CURRENT PAGE */}
-            <span>/</span>
-            <span className="text-red-600 font-semibold">
-              {data.title}
-            </span>
+              {data.section && (
+                <>
+                  <span>/</span>
+                  <Link
+                    href={`/services/residential/${data.categorySlug}/${data.sectionSlug}`}
+                    className="hover:text-red-600"
+                  >
+                    {data.section}
+                  </Link>
+                </>
+              )}
+
+              <span>/</span>
+              <span className="text-red-600 font-semibold">{data.title}</span>
+            </nav>
+
+            {/* DESKTOP: normal breadcrumb */}
+            <nav className="hidden md:flex items-center gap-2 text-sm text-neutral-600">
+              <Link href="/" className="hover:text-red-600 flex items-center">
+                <span className="w-8 h-8 bg-neutral-100 rounded-md flex items-center justify-center text-black shadow-sm">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 11.5L12 4l9 7.5" />
+                  <path d="M9 21V12h6v9" />
+                  </svg>
+                  <span className="sr-only">Home</span>
+                </span>
+              </Link>
+              <span>/</span>
+              <Link href="/services" className="hover:text-red-600">Services</Link>
+              <span>/</span>
+              <Link href="/services/residential" className="hover:text-red-600">Residential</Link>
+
+              {data.category && (
+                <>
+                  <span>/</span>
+                  <Link
+                    href={`/services/residential/${data.categorySlug}`}
+                    className="hover:text-red-600"
+                  >
+                    {data.category}
+                  </Link>
+                </>
+              )}
+
+              {data.section && (
+                <>
+                  <span>/</span>
+                  <Link
+                    href={`/services/residential/${data.categorySlug}/${data.sectionSlug}`}
+                    className="hover:text-red-600"
+                  >
+                    {data.section}
+                  </Link>
+                </>
+              )}
+
+              <span>/</span>
+              <span className="text-red-600 font-semibold">{data.title}</span>
+            </nav>
 
           </div>
-        </div>
-
-      <section className="bg-[#B21E23]">
-  <div className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
+    </div>
+    <section className="bg-[#B21E23]">
+    <div className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
 
     {/* LEFT CONTENT */}
     <div className="text-white">
@@ -566,7 +599,7 @@ export default async function ResidentialSlugPage(
                 {/* RIGHT IMAGE */}
                 <div className="relative h-[360px] md:h-[420px] rounded-xl overflow-hidden shadow-lg">
                   <Image
-                    src="/handyman.png"  // 👈 replace with your image
+                    src="/img/0 (6).jpeg"  // 👈 replace with your image
                     alt="Lighting Services"
                     fill
                     className="object-cover"
