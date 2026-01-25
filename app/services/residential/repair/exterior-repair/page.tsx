@@ -11,9 +11,9 @@ import { ExteriorRepairServices }from "@/data/interior-repair.services"
 
 export default function InteriorRepairPage() {
   return (
-    <div className="bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       <Header />
-
+      <div className="pt-20 lg:pt-24"/>
       {/* BREADCRUMB */}
       <div className="pt-24 border-b">
         <div className="container mx-auto px-6 py-4 text-sm text-neutral-600 flex gap-2 items-center">

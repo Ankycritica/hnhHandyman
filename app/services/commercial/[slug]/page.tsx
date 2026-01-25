@@ -107,7 +107,7 @@ export default async function CommercialServiceDetailPage({ params }: PageProps)
       {/* ================= JOIN OUR TEAM ================= */}
       <section className="container mx-auto px-6 py-20 grid lg:grid-cols-2 gap-14 items-center">
         <Image
-          src="/handyman-closeup.png"
+          src="/img/0 (5).jpeg"
           alt=""
           width={620}
           height={420}

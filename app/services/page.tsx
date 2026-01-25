@@ -34,6 +34,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      <div className="pt-24"/>
       <div className="pt-24 border-b">
         <div className="container mx-auto px-6 py-4 text-sm text-neutral-600 flex gap-2 items-center">
           <Link href="/" className="hover:text-red-600 flex items-center">
@@ -149,7 +150,7 @@ export default function ServicesPage() {
           {/* CARD 3 */}
           <div className="bg-white border rounded-xl shadow-sm hover:shadow-md transition relative overflow-hidden">
             <img
-              src="/icon/mrh_door_molding_carpentry_desktop_260x185.webp"
+              src="/img/0 (9).jpeg"
               alt="Carpentry Services"
               className="w-full h-44 object-cover"
             />
@@ -371,7 +372,7 @@ export default function ServicesPage() {
           </p>
 
           <Image
-            src="/icon/mrh_measuring_sink_desktop_1280x400.webp"
+            src="/img/0 (1).jpeg"
             alt=""
             width={1100}
             height={500}
@@ -421,7 +422,7 @@ export default function ServicesPage() {
              <div className="container mx-auto px-6 grid md:grid-cols-2 gap-14 items-start">
                <div className="relative h-[440px] rounded-lg overflow-hidden">
                  <Image
-                   src="/handyman.png"
+                   src="/img/0 (3).jpeg"
                    alt="Why Choose Us"
                    fill
                    className="object-cover"
@@ -537,7 +538,7 @@ export default function ServicesPage() {
             {/* Third Post */}
             <div>
               <img
-                src="/icon/mrh-blog-door-installation-cost-hero.webp"
+                src="/img/0 (7).jpeg"
                 alt=""
                 className="rounded-md w-full mb-4"
               />
@@ -660,7 +661,7 @@ export default function ServicesPage() {
       {/* ================= JOIN OUR TEAM ================= */}
       <section className="container mx-auto px-6 py-20 grid lg:grid-cols-2 gap-14 items-center">
         <Image
-          src="/handyman-closeup.png"
+          src="/img/0 (8).jpeg"
           alt=""
           width={620}
           height={420}

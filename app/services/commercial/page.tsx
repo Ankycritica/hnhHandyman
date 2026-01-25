@@ -40,7 +40,7 @@ export default function CommercialServicesPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <Header/>
       <div className="pt-24">
         <div className="pt-24 border-b">
         <div className="container mx-auto px-6 py-4 text-sm text-neutral-600 flex gap-2 items-center">
@@ -85,7 +85,7 @@ export default function CommercialServicesPage() {
           <FadeIn delay={0.2}>
             <div className="relative">
               <img
-                src="/icon/mrh_store_consult_desktop_624x322_rs-(1).webp"
+                src="/img/0 (4).jpeg"
                 alt="Mr Handyman technician"
                 className="rounded-xl shadow-xl object-cover"
               />

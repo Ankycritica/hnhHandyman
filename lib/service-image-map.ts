@@ -40,10 +40,10 @@ export const SECTION_IMAGE_MAP: Record<string, string> = {
   "wallpaper": "/icon/mrh_house_men_livingarea_desktop_272x180_rs.webp",
 
   //carpentry insatllation and repair
-  "exterior-carpentry": "/icon/mrh_mrhandyman_fence_desktop_272x180_rs.webp",
+  "exterior-carpentry": "/img/0 (7).jpeg",
   "interior-carpentry": "/icon/mrh_walltile_fixing_desktop_272x180_rs.webp",
   "other-carpentry": "/icon/mrh_house_white_livingarea_desktop_272x180_rs.webp",
-  "more-local-carpentry-services": "/icon/mrh-door-molding-desktop-624x322-rs.webp",
+  "more-local-carpentry-services": "/img/0 (1).jpeg",
 
   //plumbing
   "repair-and-replace": "/icon/mrh_tap_leaking_desktop_272x180_rs.webp",
@@ -53,7 +53,7 @@ export const SECTION_IMAGE_MAP: Record<string, string> = {
   "lighting": "/icon/mrh_house_night_desktop_272x180_rs.webp",
   "carbon-monoxide-and-smoke-detector": "/icon/mrh_white_electronic_device_desktop_272x180_rs.webp",
   "home-automation-and-smart-home": "/icon/mrh_home_automtion_desktop_272x180_rs.webp",
-  "electrical-services-and-installation": "/icon/mrh_ladder_highlight_bulb_desktop_272x180_rs.webp",
+  "electrical-services-and-installation": "/img/0 (10).webp",
 
   //other services
   "other-services": "/icon/mrh_dryer_vent3_other-cat_desktop_656x371.webp",
