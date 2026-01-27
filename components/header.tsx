@@ -694,6 +694,7 @@ export function Header() {
       {/* ================= MOBILE MENU SLIDE ================= */}
       <>
         {/* BACKDROP */}
+        
         <div
           className={`fixed inset-0 z-[9998] bg-black/40 transition-opacity duration-300
             ${isNavOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
@@ -748,7 +749,8 @@ export function Header() {
           </div>
 
           {/* MENU CONTENT */}
-          <div className="px-4 py-4">
+          <MobileScroll>
+          <div className="px-4 py-4 overflow-hidden">
             {mobileStep === "main" && (
               <div className="space-y-4">
                 <MenuRow label="Services" onClick={() => setMobileStep("services")} />
@@ -788,7 +790,7 @@ export function Header() {
                 <CommercialList />
               </>
             )}
-          </div>
+          </div></MobileScroll>
         </div>
       </>
 
@@ -805,6 +807,22 @@ export function Header() {
 }
 
 /* ================= REUSABLE COMPONENTS ================= */
+function MobileScroll({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="
+        max-h-[calc(100vh-300px)]
+        overflow-y-auto
+        overscroll-contain
+        scrollbar-hide
+        pr-1
+      "
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
+      {children}
+    </div>
+  )
+}
 
 function MenuRow({
   label,
@@ -1010,8 +1028,9 @@ function ServiceAccordion({ slug }: { slug: string }) {
           {titleCase(service.label)}
           <ChevronRight className="h-4 w-4" />
         </Link>
-
+        <MobileScroll>
         <ResidentialAccordion service={service} />
+        </MobileScroll>
       </>
     )
   }
