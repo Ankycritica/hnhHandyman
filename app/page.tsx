@@ -203,7 +203,7 @@ function checkZip() {
   const tipsData = [
     { title: "Home Maintenance Checklist", desc: "Essential tasks to keep your home in top condition", image: "home-maintenance.png", category: "Maintenance", readTime: "4 min read" },
     { title: "DIY vs Professional", desc: "When to call a handyman and when to do it yourself", image: "diy.png", category: "DIY", readTime: "5 min read" },
-    { title: "Seasonal Home Care", desc: "Prepare your home for every season of the year", image: "season home care.png", category: "Seasonal", readTime: "3 min read" },
+    { title: "Seasonal Home Care", desc: "Prepare your home for every season of the year", image: "season-home-care.png", category: "Seasonal", readTime: "3 min read" },
     { title: "Kitchen Upgrades", desc: "Smart kitchen improvements that add value without breaking the bank", image: "kitchen.png", category: "Upgrades", readTime: "6 min read" },
     { title: "Plumbing Basics", desc: "Simple plumbing fixes you can do before calling the pros", image: "plumbing.png", category: "Plumbing", readTime: "4 min read" },
   ]

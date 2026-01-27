@@ -1,72 +1,3 @@
-export const interiorRepairServices = [
-  {
-    title: "TV Wall Mount Installation",
-    slug: "tv-wall-mount-installation",
-    desc:
-      "Maximize space and create the perfect viewing experience with professional TV wall mounting from Mr. Handyman.",
-  },
-  {
-    title: "Shelving Installation",
-    slug: "shelving-installation",
-    desc:
-      "Get organized with professional shelving installation. Our experts securely install shelves to maximize storage.",
-  },
-  {
-    title: "Ceiling Fan Installation and Replacement",
-    slug: "ceiling-fan-installation",
-    desc:
-      "Improve airflow and comfort in your home with professional ceiling fan installation and replacement services.",
-  },
-  {
-    title: "Child Proofing",
-    slug: "child-proofing",
-    desc:
-      "Protect your family with expert child-proofing solutions, from furniture anchoring to safety gates.",
-  },
-  {
-    title: "Picture Hanging",
-    slug: "picture-hanging",
-    desc:
-      "Securely mount artwork, mirrors, and décor with precision for a clean, professional look.",
-  },
-  {
-    title: "Closet Shelving",
-    slug: "closet-shelving",
-    desc:
-      "Maximize storage and organization with custom closet shelving installed by experienced professionals.",
-  },
-  {
-    title: "Bathroom Caulking",
-    slug: "bathroom-caulking",
-    desc:
-      "Prevent moisture damage and keep your bathroom fresh with clean, durable caulking services.",
-  },
-  {
-    title: "Exhaust Fan Installation and Repair",
-    slug: "exhaust-fan-installation-repair",
-    desc:
-      "Reduce excess moisture and improve indoor air quality with professional exhaust fan services.",
-  },
-  {
-    title: "Furniture Painting and Staining",
-    slug: "furniture-painting-staining",
-    desc:
-      "Refresh worn-out furniture with expert painting and staining services for a like-new finish.",
-  },
-  {
-    title: "Curtains and Drapes Installation and Replacement",
-    slug: "curtains-drapes-installation",
-    desc:
-      "Enhance your home’s style and functionality with professional curtain and drapery installation.",
-  },
-  {
-    title: "Hanging Blinds Installation and Replacement",
-    slug: "hanging-blinds-installation",
-    desc:
-      "Improve privacy and light control with precise blind installation and replacement services.",
-  },
-]
-
 export const ExteriorRepairServices = [
   {
     title: "Window Frame Repair",
@@ -113,5 +44,132 @@ export const GarageRepairServices = [
     slug: "garage-shelving",
     desc:
       "HnHHandyman specializes in professional garage shelving services customized to your needs. Our expert team is ready to help maximize your storage space and organize your garage efficiently. Contact us to start your garage shelving project today!",
+  },
+]
+
+
+
+export interface ServiceItem {
+  title: string
+  slug: string
+  desc: string
+  image: string
+}
+
+export const interiorRepairServices: ServiceItem[] = [
+  {
+    title: "TV Wall Mount Installation",
+    slug: "tv-wall-mount-installation",
+    desc: "Maximize space and create the perfect viewing experience with professional TV wall mounting by HnHHandyman®.",
+    image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Shelving Installation",
+    slug: "shelving-installation",
+    desc:
+      "Get organized with professional shelving installation. Our experts securely install shelves to maximize storage.",
+       image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Ceiling Fan Installation and Replacement",
+    slug: "ceiling-fan-installation",
+    desc:
+      "Improve airflow and comfort in your home with professional ceiling fan installation and replacement services.",
+       image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Child Proofing",
+    slug: "child-proofing",
+    desc:
+      "Protect your family with expert child-proofing solutions, from furniture anchoring to safety gates.",
+       image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Picture Hanging",
+    slug: "picture-hanging",
+    desc:
+      "Securely mount artwork, mirrors, and décor with precision for a clean, professional look.",
+     image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Closet Shelving",
+    slug: "closet-shelving",
+    desc:
+      "Maximize storage and organization with custom closet shelving installed by experienced professionals.",
+    image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Bathroom Caulking",
+    slug: "bathroom-caulking",
+    desc:
+      "Prevent moisture damage and keep your bathroom fresh with clean, durable caulking services.",
+    image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Exhaust Fan Installation and Repair",
+    slug: "exhaust-fan-installation-and-repair",
+    desc:
+      "Reduce excess moisture and improve indoor air quality with professional exhaust fan services.",
+     image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Furniture Painting and Staining",
+    slug: "furniture-painting-and-staining",
+    desc:
+      "Refresh worn-out furniture with expert painting and staining services for a like-new finish.",
+       image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Curtains and Drapes Installation and Replacement",
+    slug: "curtains-and-drapes-installation-and-replacement",
+    desc:
+      "Enhance your home’s style and functionality with professional curtain and drapery installation.",
+     image: "/services/interior/shelving-installation.webp",
+  },
+  {
+    title: "Hanging Blinds Installation and Replacement",
+    slug: "hanging-blinds-installation-and-replacement",
+    desc:
+      "Improve privacy and light control with precise blind installation and replacement services.",
+    image: "/services/interior/shelving-installation.webp",
+  },
+]
+export const exteriorRepairServices: ServiceItem[] = [
+  {
+    title: "Window Frame Repair",
+    slug: "window-frame-repair",
+    desc:
+      "Restore damaged or drafty window frames to improve comfort, efficiency, and appearance.",
+    image: "/services/exterior/window-frame-repair.webp",
+  },
+  {
+    title: "Weatherproofing",
+    slug: "weatherproofing",
+    desc:
+      "Enhance energy efficiency with professional weatherproofing solutions for windows, doors, and garages.",
+    image: "/services/exterior/weatherproofing.webp",
+  },
+  {
+    title: "Gutter Installation and Repair",
+    slug: "gutter-installation-and-repair",
+    desc:
+      "Protect your home from water damage with expertly installed and repaired gutters.",
+    image: "/services/exterior/gutter-installation-and-repair.webp",
+  },
+]
+export const garageRepairServices: ServiceItem[] = [
+  {
+    title: "Garage Storage and Organization",
+    slug: "garage-storage-and-organization",
+    desc:
+      "Maximize garage space with custom storage, shelving, and organization solutions.",
+    image: "/services/garage/garage-storage-and-organization.webp",
+  },
+  {
+    title: "Garage Shelving",
+    slug: "garage-shelving",
+    desc:
+      "Professionally installed garage shelving designed to fit your space and storage needs.",
+    image: "/services/garage/garage-shelving.webp",
   },
 ]
