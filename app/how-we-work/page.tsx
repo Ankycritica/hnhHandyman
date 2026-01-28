@@ -49,13 +49,13 @@ export default function HowWeWorkPage() {
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {["mrh_kitchen_consult2_desktop_400x400", "mrh_tablet_desktop_400x400", "mrh_playhouse_desktop_400x400"].map((img) => (
+            {["near-you", "35", "0 (10)"].map((img) => (
               <div
                 key={img}
                 className="relative h-[300px] rounded-lg overflow-hidden"
               >
                 <Image
-                  src={`/icon/${img}.webp`}
+                  src={`/img/${img}.webp`}
                   alt="What to expect"
                   fill
                   className="object-cover"
@@ -128,7 +128,7 @@ export default function HowWeWorkPage() {
         <div className="container mx-auto px-6 grid md:grid-cols-2 gap-14 items-start">
           <div className="relative h-[440px] rounded-lg overflow-hidden">
             <Image
-              src="/handyman.png"
+              src="/img/Handyman-Services.jpg"
               alt="Why Choose Us"
               fill
               className="object-cover"
@@ -185,7 +185,7 @@ export default function HowWeWorkPage() {
 
           <div className="relative h-[360px] rounded-lg overflow-hidden">
             <Image
-              src="/icon/mrh_crossing_arms_656x371.webp"
+              src="/img/wait.jpg"
               alt="Easy Hiring"
               fill
               className="object-cover"

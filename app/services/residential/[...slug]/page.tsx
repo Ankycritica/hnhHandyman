@@ -387,7 +387,7 @@ export default async function ResidentialSlugPage(
               {/* RIGHT IMAGE */}
               <div>
                 <Image
-                    src="/icon/mrh-studfinder-desktop-656x371-rs.webp"
+                    src="/img/remodel.jpg"
                     alt="Handyman repairing wall"
                     width={650}
                     height={420}

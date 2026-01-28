@@ -170,7 +170,7 @@ function checkZip() {
     title: "Repair Services",
     description:
       "Homes break. Whether you need your gutters or garage shelving fixed, Mr. Handyman has you covered.",
-    image: "/icon/mrh_ceiling_repair_desktop_260x185.webp",
+    image: "/img/rapir.jpg",
     icon: "Wrench",
     href: "/services/residential/repair",
   },
@@ -178,7 +178,7 @@ function checkZip() {
     title: "Commercial Services",
     description:
       "Don’t wait on urgent handyman service for your business. We work with organizations of all sizes.",
-    image: "/icon/mrh_hotel_lobby_commercial_desktop_260x185.webp",
+    image: "/img/commercial.jpg",
     icon: "Building",
     href: "/services/commercial",
   },
@@ -186,7 +186,7 @@ function checkZip() {
     title: "Carpentry Services",
     description:
       "Custom project? Our carpenters get to work right away to develop the perfect product for your spot.",
-    image: "/icon/mrh_door_molding_carpentry_desktop_260x185.webp",
+    image: "/img/carpentry.jpg",
     icon: "Hammer",
     href: "/services/residential/carpentry-installation-and-repair",
   },
@@ -194,7 +194,7 @@ function checkZip() {
     title: "Remodeling Services",
     description:
       "Looking for help with a new kitchen or bathroom remodel? Mr. Handyman’s experts can make it happen.",
-    image: "/icon/mrh_consult5_remodel_desktop_260x185.webp",
+    image: "/img/remodel.jpg",
     icon: "Layout",
     href: "/services/residential/remodel",
   },

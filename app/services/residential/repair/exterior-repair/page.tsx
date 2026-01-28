@@ -54,7 +54,7 @@ export default function InteriorRepairPage() {
         </div>
 
         <Image
-        src="/icon/mrh_caulking_desktop_272x180_rs.webp"
+        src="/img/35.webp"
         alt="Exterior repair"
         width={620}
         height={340}
@@ -260,7 +260,7 @@ export default function InteriorRepairPage() {
         </div>
 
         <Image
-          src="/icon/mrh_worker_kneeling_cupboard_door_handle_desktop_656x371.webp"
+          src="/img/near-you.webp"
           alt="Interior consultation"
           width={620}
           height={360}

@@ -59,7 +59,7 @@ export default function AboutUsPage() {
 
         {/* RIGHT */}
         <Image
-          src="/icon/HnHHandyman.png"
+          src="/img/commercial.jpg"
           alt="Hand N Hand Handyman Professional"
           width={560}
           height={360}
