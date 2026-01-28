@@ -99,7 +99,7 @@ export default function ServicesPage() {
           {/* CARD 1 */}
           <div className="bg-white border rounded-xl shadow-sm hover:shadow-md transition relative overflow-hidden">
             <img
-              src="/icon/mrh_ceiling_repair_desktop_260x185.webp"
+              src="/img/rapir.jpg"
               alt="Repair Services"
               className="w-full h-44 object-cover"
             />
@@ -175,7 +175,7 @@ export default function ServicesPage() {
           {/* CARD 4 */}
           <div className="bg-white border rounded-xl shadow-sm hover:shadow-md transition relative overflow-hidden">
             <img
-              src="/icon/mrh_consult5_remodel_desktop_260x185.webp"
+              src="/img/remodel.jpg"
               alt="Remodeling Services"
               className="w-full h-44 object-cover"
             />
@@ -352,7 +352,7 @@ export default function ServicesPage() {
         </div>
 
         <Image
-          src="/icon/mrh_crossing_arms_656x371.webp"
+          src="/img/35.webp"
           alt="Handyman"
           width={620}
           height={420}
@@ -372,7 +372,7 @@ export default function ServicesPage() {
           </p>
 
           <Image
-            src="/img/0 (1).jpeg"
+            src="/img/handy.png"
             alt=""
             width={1100}
             height={500}
@@ -486,7 +486,7 @@ export default function ServicesPage() {
             {/* Main Post */}
             <div>
               <img
-                src="/icon/mrh_caulking_desktop_272x180_rs.webp"
+                src="/img/2.jpg"
                 alt=""
                 className="rounded-md w-full mb-4"
               />

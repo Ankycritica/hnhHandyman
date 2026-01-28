@@ -61,7 +61,7 @@ export default function RepairPage() {
             {/* RIGHT IMAGE */}
             <div className="flex justify-center md:justify-end">
             <Image
-                src="/icon/mrh-sheetrock-repair-desktop-624x322-rs.webp"
+                src="/img/Handyman-Services.jpg"
                 alt="Sheetrock repair"
                 width={620}
                 height={340}
@@ -108,7 +108,7 @@ export default function RepairPage() {
             {/* RIGHT IMAGE */}
             <div>
             <Image
-                src="/icon/mrh-studfinder-desktop-656x371-rs.webp"
+                src="/img/wait.jpg"
                 alt="Handyman repairing wall"
                 width={650}
                 height={420}
@@ -124,7 +124,7 @@ export default function RepairPage() {
         {[
         {
             title: "Interior Repair",
-            image: "/icon/mrh_caulking_desktop_272x180_rs.webp",
+            image: "/img/interior.jpg",
             desc: `From shelving and TV mounting to childproofing, exhaust fans,
             ceiling fans, picture hanging, caulking, and window treatments —
             we handle it all.`,
@@ -132,7 +132,7 @@ export default function RepairPage() {
         },
         {
             title: "Exterior Repair",
-            image: "/icon/mrh_employee_ladder_outdoor_roof_desktop_272x180_rs.webp",
+            image: "/img/uper.jpg",
             desc: `Window frame repair, gutter installation, weatherproofing,
             debris removal, and masonry services to keep your home protected.`,
             slug: "exterior-repair",

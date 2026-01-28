@@ -51,7 +51,7 @@ export default function InteriorRepairPage() {
         </div>
 
         <Image
-        src="/icon/mrh_caulking_desktop_272x180_rs.webp"
+        src="/img/car-garage.jpg"
         alt="Interior repair"
         width={620}
         height={340}
@@ -236,7 +236,7 @@ export default function InteriorRepairPage() {
       <section className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
         <div>
           <h2 className="text-3xl md:text-3xl font-bold text-red-700 mb-4">
-            Interior Home Repairs Near You
+            Garage Home Repairs Near You
           </h2>
           <div className="h-[2px] w-150 bg-red-700 mb-6" />
           <p className="text-neutral-700 leading-relaxed mb-4">
@@ -257,7 +257,7 @@ export default function InteriorRepairPage() {
         </div>
 
         <Image
-          src="/icon/mrh_worker_kneeling_cupboard_door_handle_desktop_656x371.webp"
+          src="/img/shake.jpg"
           alt="Interior consultation"
           width={620}
           height={360}
@@ -301,15 +301,15 @@ export default function InteriorRepairPage() {
       {/* FAQ */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-6 max-w-4xl">
-          <h2 className="text-3xl font-bold text-red-700 mb-6">FAQs About Interior Repair</h2>
+          <h2 className="text-3xl font-bold text-red-700 mb-6">FAQs About Garage Repair</h2>
 
           {[
             {
-              q: "What interior repair services do you offer?",
-              a: "We handle drywall repair, shelving, TV mounting, caulking, exhaust fans, and more.",
+              q: "What Garage repair services do you offer?",
+              a: "We handle Garage Storage and Organization, Garage Shelving, and more.",
             },
             {
-              q: "How long do interior repairs take?",
+              q: "How long do Garage repairs take?",
               a: "Most projects are completed in a single day.",
             },
             {
