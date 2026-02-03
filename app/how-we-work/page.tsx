@@ -244,7 +244,7 @@ export default function HowWeWorkPage() {
       
       <ResidentialServicesAccordion />
       <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
-      <Footer />
+      <Footer/>
     </>
   )
 }

@@ -14,6 +14,7 @@ import { ContactForm } from "@/components/contact-form"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { getIcon } from "@/lib/icon-map"
+import { TestimonialsSection } from "@/components/TestimonialsSection"
 /* ================= ZIP SERVICE AREA ================= */
 
 const SERVICE_ZIPS = new Set([
@@ -21,7 +22,21 @@ const SERVICE_ZIPS = new Set([
   "22577","22539","23035","23066","23109","23138","23025","23061",
   "23181","23149","23175","23092","23180","22523","23079","22454",
   "22560","23045","23076","23068","23119","23072","23071","23178",
-  "23018","23107","22473","22432"
+  "23018","23107","22473","22432",
+  // Northern Virginia
+  "20147",
+  "22030",
+  "20190",
+  "22102", 
+
+  // Maryland
+  "20850",
+  "20852", 
+  "20910", 
+
+  // Washington DC
+  "20001", 
+  "20007", 
 ])
 
 // Fade-in animation component
@@ -346,73 +361,131 @@ function checkZip() {
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
       {/* Hero Section with Parallax */}
-      <section ref={heroRef} className="relative h-[80vh] min-h-[520px] md:min-h-[720px] overflow-hidden">
+      <section
+        ref={heroRef}
+        className="relative h-[80vh] min-h-[520px] md:min-h-[720px] overflow-hidden"
+      >
+        {/* Background image with parallax */}
         <motion.div
-          style={{ 
-            y: heroY, 
-            scale: heroScale
-          }}
+          style={{ y: heroY, scale: heroScale }}
           className="absolute inset-0"
         >
           <Image
             src="/red-handyman-van-in-driveway-professional-service.jpg"
             alt="Professional handyman service van"
             fill
-            className="object-cover"
             priority
+            className="object-cover"
           />
         </motion.div>
+
+        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-white/50" />
+
+        {/* Content */}
         <motion.div
           style={{ opacity: heroOpacity }}
           className="relative container mx-auto px-6 h-full flex flex-col justify-center"
         >
           <motion.h1
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--primary-blue)] mb-4 sm:mb-6 max-w-2xl leading-tight"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-4xl md:text-6xl font-extrabold text-[var(--primary-blue)] max-w-3xl leading-tight"
           >
-            Local Professional Services You Can Trust
+            Trusted Local Handyman Services Done Right
           </motion.h1>
+
+          {/* Subheading */}
           <motion.p
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="text-base sm:text-lg md:text-xl text-neutral-900 mb-6 sm:mb-8 max-w-xl leading-relaxed"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="mt-5 text-lg md:text-xl text-gray-800 max-w-xl"
           >
-            Quality home repairs and improvements from experienced professionals
+            Professional repairs, remodeling, and maintenance for homes and businesses.
           </motion.p>
+
+          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
+            transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
+            className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
           >
+            {/* PRIMARY CTA */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                onClick={() => setIsChatOpen(true)}
+              <Button
                 size="lg"
+                onClick={() => setIsChatOpen(true)}
                 className="w-full sm:w-auto shadow-lg"
               >
                 <Calendar className="mr-2 h-5 w-5" />
-                SCHEDULE AN APPOINTMENT
+                Schedule an Appointment
               </Button>
             </motion.div>
+
+            {/* SECONDARY CTA */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto border-[var(--primary-blue)] text-[var(--primary-blue)] hover:text-white hover:border-[var(--primary-blue)]"
-              >
               <Link href="/services">
-                Learn More
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full sm:w-auto border-[var(--primary-red)] text-[var(--primary-red)] hover:bg-[var(--primary-red)] hover:text-white"
+                >
+                  Learn More
+                </Button>
               </Link>
-              </Button>
             </motion.div>
           </motion.div>
+
+          {/* TRUST + STATS STRIP */}
+          <div className="mt-10 max-w-3xl">
+            {/* Divider */}
+            <div className="h-px w-full bg-black/20 mb-6" />
+
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 items-start sm:items-center">
+
+              {/* Reviews */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1 text-red-600">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <Star key={i} className="h-6 w-6 fill-red-600" />
+                  ))}
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-neutral-900 leading-none">
+                    181
+                  </p>
+                  <p className="text-sm text-neutral-700">
+                    Customer Reviews
+                  </p>
+                </div>
+              </div>
+
+              {/* Rating */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1 text-yellow-500">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-500" />
+                  ))}
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-neutral-900 leading-none">
+                    4.8 / 5
+                  </p>
+                  <p className="text-sm text-neutral-700">
+                    Average Rating
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </motion.div>
       </section>
+
 
       {/* ================= ZIP SECTION ================= */}
       <section className="py-20 bg-gray-50">
@@ -527,13 +600,10 @@ function checkZip() {
         </div>
       </section>
 
-
       {/* Customer Reviews */}
+      <TestimonialsSection />
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <FadeIn>
-            <h2 className="text-3xl font-bold text-center mb-12">Customer Reviews</h2>
-          </FadeIn>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
@@ -1115,3 +1185,22 @@ function CommercialList() {
     </div>
   )
 }
+
+<style jsx global>{`
+  @keyframes testimonial-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-testimonials {
+    animation: testimonial-scroll 40s linear infinite;
+  }
+
+  .animate-testimonials:hover {
+    animation-play-state: paused;
+  }
+`}</style>

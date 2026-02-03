@@ -170,3 +170,18 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+@keyframes testimonial-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-testimonials {
+  animation: testimonial-scroll 40s linear infinite;
+}
+.animate-testimonials:hover {
+  animation-play-state: paused;
+}
