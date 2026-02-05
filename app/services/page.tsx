@@ -73,7 +73,7 @@ export default function ServicesPage() {
           <FadeIn delay={0.2}>
             <div className="relative">
               <img
-                src="/icon/istockphoto-1840352884-612x612.jpg"
+                src="/new/WhatsApp Image 2026-02-04 at 9.39.41 AM (1).jpeg"
                 alt="Mr Handyman technician"
                 className="rounded-xl shadow-xl object-cover"
               />
@@ -99,7 +99,7 @@ export default function ServicesPage() {
           {/* CARD 1 */}
           <div className="bg-white border rounded-xl shadow-sm hover:shadow-md transition relative overflow-hidden">
             <img
-              src="/img/rapir.jpg"
+              src="/new/WhatsApp Image 2026-02-04 at 9.39.47 AM.jpeg"
               alt="Repair Services"
               className="w-full h-44 object-cover"
             />
@@ -175,7 +175,7 @@ export default function ServicesPage() {
           {/* CARD 4 */}
           <div className="bg-white border rounded-xl shadow-sm hover:shadow-md transition relative overflow-hidden">
             <img
-              src="/img/remodel.jpg"
+              src="/new/WhatsApp Image 2026-02-04 at 9.39.23 AM.jpeg"
               alt="Remodeling Services"
               className="w-full h-44 object-cover"
             />
@@ -372,7 +372,7 @@ export default function ServicesPage() {
           </p>
 
           <Image
-            src="/img/handy.png"
+            src="/new/WhatsApp Image 2026-02-04 at 9.39.49 AM (2).jpeg"
             alt=""
             width={1100}
             height={500}
@@ -486,7 +486,7 @@ export default function ServicesPage() {
             {/* Main Post */}
             <div>
               <img
-                src="/img/2.jpg"
+                src="/new/WhatsApp Image 2026-02-04 at 9.39.49 AM (3).jpeg"
                 alt=""
                 className="rounded-md w-full mb-4"
               />
@@ -538,7 +538,7 @@ export default function ServicesPage() {
             {/* Third Post */}
             <div>
               <img
-                src="/img/0 (7).jpeg"
+                src="/new/WhatsApp Image 2026-02-04 at 9.39.36 AM.jpeg"
                 alt=""
                 className="rounded-md w-full mb-4"
               />
@@ -580,7 +580,7 @@ export default function ServicesPage() {
             {/* Tip Card */}
             <div>
               <img
-                src="/icon/mrh-unfinished-attic-with-brick-and-wood.webp"
+                src="/new/WhatsApp Image 2026-02-04 at 9.52.57 AM (2).jpeg"
                 alt=""
                 className="rounded-md w-full mb-4"
               />
@@ -605,7 +605,7 @@ export default function ServicesPage() {
             {/* Tip Card */}
             <div>
               <img
-                src="/icon/mrh-flooring.webp"
+                src="/new/WhatsApp Image 2026-02-04 at 9.39.37 AM.jpeg"
                 alt=""
                 className="rounded-md w-full mb-4"
               />

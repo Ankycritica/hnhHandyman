@@ -185,7 +185,7 @@ function checkZip() {
     title: "Repair Services",
     description:
       "Homes break. Whether you need your gutters or garage shelving fixed, Mr. Handyman has you covered.",
-    image: "/img/rapir.jpg",
+    image: "/new/WhatsApp Image 2026-02-04 at 9.39.47 AM.jpeg",
     icon: "Wrench",
     href: "/services/residential/repair",
   },
@@ -193,7 +193,7 @@ function checkZip() {
     title: "Commercial Services",
     description:
       "Don’t wait on urgent handyman service for your business. We work with organizations of all sizes.",
-    image: "/img/commercial.jpg",
+    image: "/new/WhatsApp Image 2026-02-04 at 9.39.23 AM (2).jpeg",
     icon: "Building",
     href: "/services/commercial",
   },
@@ -209,18 +209,18 @@ function checkZip() {
     title: "Remodeling Services",
     description:
       "Looking for help with a new kitchen or bathroom remodel? Mr. Handyman’s experts can make it happen.",
-    image: "/img/remodel.jpg",
+    image: "/new/WhatsApp Image 2026-02-04 at 9.39.23 AM.jpeg",
     icon: "Layout",
     href: "/services/residential/remodel",
   },
 ]
 
   const tipsData = [
-    { title: "Home Maintenance Checklist", desc: "Essential tasks to keep your home in top condition", image: "home-maintenance.png", category: "Maintenance", readTime: "4 min read" },
-    { title: "DIY vs Professional", desc: "When to call a handyman and when to do it yourself", image: "diy.png", category: "DIY", readTime: "5 min read" },
-    { title: "Seasonal Home Care", desc: "Prepare your home for every season of the year", image: "season-home-care.png", category: "Seasonal", readTime: "3 min read" },
-    { title: "Kitchen Upgrades", desc: "Smart kitchen improvements that add value without breaking the bank", image: "kitchen.png", category: "Upgrades", readTime: "6 min read" },
-    { title: "Plumbing Basics", desc: "Simple plumbing fixes you can do before calling the pros", image: "plumbing.png", category: "Plumbing", readTime: "4 min read" },
+    { title: "Home Maintenance Checklist", desc: "Essential tasks to keep your home in top condition", image: "new/WhatsApp Image 2026-02-04 at 9.39.23 AM.jpeg", category: "Maintenance", readTime: "4 min read" },
+    { title: "DIY vs Professional", desc: "When to call a handyman and when to do it yourself", image: "new/WhatsApp Image 2026-02-04 at 9.39.42 AM (3).jpeg", category: "DIY", readTime: "5 min read" },
+    { title: "Seasonal Home Care", desc: "Prepare your home for every season of the year", image: "new/WhatsApp Image 2026-02-04 at 9.39.32 AM (1).jpeg", category: "Seasonal", readTime: "3 min read" },
+    { title: "Kitchen Upgrades", desc: "Smart kitchen improvements that add value without breaking the bank", image: "new/WhatsApp Image 2026-02-04 at 9.39.27 AM.jpeg", category: "Upgrades", readTime: "6 min read" },
+    { title: "Plumbing Basics", desc: "Simple plumbing fixes you can do before calling the pros", image: "new/WhatsApp Image 2026-02-04 at 9.39.45 AM (3).jpeg", category: "Plumbing", readTime: "4 min read" },
   ]
   // autoplay loop for tips slider
   useEffect(() => {

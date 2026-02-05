@@ -61,7 +61,7 @@ export default function RepairPage() {
             {/* RIGHT IMAGE */}
             <div className="flex justify-center md:justify-end">
             <Image
-                src="/img/Handyman-Services.jpg"
+                src="/new/WhatsApp Image 2026-02-04 at 9.39.41 AM (2).jpeg"
                 alt="Sheetrock repair"
                 width={620}
                 height={340}
@@ -124,7 +124,7 @@ export default function RepairPage() {
         {[
         {
             title: "Interior Repair",
-            image: "/img/interior.jpg",
+            image: "/new/WhatsApp Image 2026-02-04 at 9.39.40 AM.jpeg",
             desc: `From shelving and TV mounting to childproofing, exhaust fans,
             ceiling fans, picture hanging, caulking, and window treatments —
             we handle it all.`,
@@ -132,7 +132,7 @@ export default function RepairPage() {
         },
         {
             title: "Exterior Repair",
-            image: "/img/uper.jpg",
+            image: "/new/WhatsApp Image 2026-02-04 at 9.39.31 AM (3).jpeg",
             desc: `Window frame repair, gutter installation, weatherproofing,
             debris removal, and masonry services to keep your home protected.`,
             slug: "exterior-repair",

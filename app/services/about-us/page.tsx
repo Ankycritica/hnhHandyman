@@ -59,7 +59,7 @@ export default function AboutUsPage() {
 
         {/* RIGHT */}
         <Image
-          src="/img/commercial.jpg"
+          src="/new/WhatsApp Image 2026-02-04 at 9.39.24 AM (2).jpeg"
           alt="Hand N Hand Handyman Professional"
           width={560}
           height={360}
