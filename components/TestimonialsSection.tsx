@@ -118,7 +118,7 @@ export function TestimonialsSection() {
 
         <div className="text-center mt-6">
           <a
-            href="/reviews"
+            href="/testimonials"
             className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-lg transition"
           >
             See All Testimonials

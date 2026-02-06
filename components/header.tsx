@@ -476,6 +476,8 @@ export function Header() {
               <Menu className="h-6 w-6" />
             </button>
           </div>
+          <div className="block lg:hidden w-full h-px bg-black/20 my-1" />
+          <br/>
 
           {/* ROW 2 : CTA BUTTONS */}
           <div className="flex gap-3 px-4 pb-3 border-b">
@@ -713,7 +715,7 @@ export function Header() {
               </Button>
             </div>
           </div>
-        </div>
+        </div><div className="w-full h-[6px] bg-[var(--primary-red)]" />
       </motion.header>
 
       {/* ================= MOBILE MENU OVERLAY ================= */}

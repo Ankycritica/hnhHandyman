@@ -254,10 +254,11 @@ function checkZip() {
   }, [isNavOpen])
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
-         <Header />
-        <div>
-        {isNavOpen && (
+  <div className="min-h-screen bg-white overflow-x-hidden">
+    <Header />
+    <div>
+      {isNavOpen && (
+
           <div className="fixed inset-0 z-[999] bg-white overflow-y-auto lg:hidden">
 
             {/* TOP BAR */}
@@ -276,7 +277,7 @@ function checkZip() {
                 Call Us
               </Button>
             </div>
-
+            
             {/* MENU CONTENT */}
             <div className="px-6 py-4">
 
@@ -363,9 +364,11 @@ function checkZip() {
       {/* Hero Section with Parallax */}
       <section
         ref={heroRef}
-        className="relative h-[80vh] min-h-[520px] md:min-h-[720px] overflow-hidden"
+        className="relative min-h-[100svh] flex items-center overflow-hidden pt-[96px]"
       >
-        {/* Background image with parallax */}
+
+        {/* Background image */}
+        
         <motion.div
           style={{ y: heroY, scale: heroScale }}
           className="absolute inset-0"
@@ -374,130 +377,112 @@ function checkZip() {
             src="/red-handyman-van-in-driveway-professional-service.jpg"
             alt="Professional handyman service van"
             fill
-            priority
             className="object-cover"
           />
         </motion.div>
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-white/50" />
+        <div className="absolute inset-0 bg-black/65" />
 
         {/* Content */}
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative container mx-auto px-6 h-full flex flex-col justify-center"
+          className="relative z-10 container mx-auto px-5 text-white"
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-4xl md:text-6xl font-extrabold text-[var(--primary-blue)] max-w-3xl leading-tight"
-          >
-            Trusted Local Handyman Services Done Right
-          </motion.h1>
+          <p className="uppercase tracking-wide font-extrabold text-sm mb-2 text-gray-200">
+            Local Handyman Services You Can Trust
+          </p>
 
-          {/* Subheading */}
-          <motion.p
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-5 text-lg md:text-xl text-gray-800 max-w-xl"
-          >
-            Professional repairs, remodeling, and maintenance for homes and businesses.
-          </motion.p>
+          <h1 className="text-3xl sm:text-5xl font-extrabold leading-tight text-white">
+            We Have the Skills and Tools to Deliver High-
+            <span className="block font-extrabold text-white">Quality Results</span>
+          </h1>
 
-          {/* CTAs */}
+          <p className="mt-4 text-white max-w-xl">
+            Maintaining your home or business shouldn't be a struggle. HnHHandyman® is
+            your trusted partner, offering a reliable team of experts to tackle any
+            project. We’re the local handyman services you can trust!
+          </p>
+
+          {/* CTA */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
-            className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8 flex flex-col sm:flex-row gap-4"
           >
-            {/* PRIMARY CTA */}
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                size="lg"
-                onClick={() => setIsChatOpen(true)}
-                className="w-full sm:w-auto shadow-lg"
-              >
-                <Calendar className="mr-2 h-5 w-5" />
-                Schedule an Appointment
-              </Button>
-            </motion.div>
+            <Button size="lg" onClick={() => setIsChatOpen(true)} className="shadow-lg">
+              <Calendar className="mr-2 h-5 w-5" />
+              Schedule an Appointment
+            </Button>
 
-            {/* SECONDARY CTA */}
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/services">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full sm:w-auto border-[var(--primary-red)] text-[var(--primary-red)] hover:bg-[var(--primary-red)] hover:text-white"
-                >
-                  Learn More
-                </Button>
-              </Link>
-            </motion.div>
+            <Link href="/services">
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-[var(--primary-red)] text-[var(--primary-red)] hover:bg-[var(--primary-red)] hover:text-white"
+              >
+                Learn More
+              </Button>
+            </Link>
           </motion.div>
 
-          {/* TRUST + STATS STRIP */}
-          <div className="mt-10 max-w-3xl">
-            {/* Divider */}
-            <div className="h-px w-full bg-black/20 mb-6" />
-
-            <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 items-start sm:items-center">
+          {/* ================= TRUST STRIP (FIXED) ================= */}          
+          {/* TRUST BAR */}
+          <div className="mt-8 border-t border-white/40 pt-5">
+            <div className="flex items-center justify-between gap-6">
 
               {/* Reviews */}
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1 text-red-600">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <Star key={i} className="h-6 w-6 fill-red-600" />
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 text-red-500">
+                  {[...Array(3)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-red-500" />
                   ))}
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-neutral-900 leading-none">
+                  <p className="text-lg font-semibold leading-none text-white">
                     181
                   </p>
-                  <p className="text-sm text-neutral-700">
+                  <p className="text-[11px] text-white/80 leading-tight">
                     Customer Reviews
                   </p>
                 </div>
               </div>
 
               {/* Rating */}
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1 text-yellow-500">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-yellow-500" />
+              <div className="flex items-center gap-3">
+                <div className="flex gap-1 text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-yellow-400" />
                   ))}
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-neutral-900 leading-none">
-                    4.8 / 5
+                  <p className="text-lg font-semibold leading-none text-white">
+                    4.8/5
                   </p>
-                  <p className="text-sm text-neutral-700">
-                    Average Rating
+                  <p className="text-[11px] text-white/80 leading-tight">
+                    Rating
                   </p>
                 </div>
               </div>
 
             </div>
           </div>
-
         </motion.div>
       </section>
 
 
       {/* ================= ZIP SECTION ================= */}
-      <section className="py-20 bg-gray-50">
+      <section className="relative py-24 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-6">
           <FadeIn>
-            <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow">
+            <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
 
-              <h2 className="text-3xl font-bold text-[var(--primary-red)] text-center mb-6">
+              <h2 className="text-3xl font-bold text-center text-[var(--primary-red)] mb-3">
                 Book Your Handyman Today
               </h2>
 
-              <p className="text-gray-600 text-center mb-8">
+              <p className="text-center text-gray-600 mb-8">
                 Enter your ZIP code to find qualified professionals in your area
               </p>
 
