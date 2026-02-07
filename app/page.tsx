@@ -364,7 +364,7 @@ function checkZip() {
       {/* Hero Section with Parallax */}
       <section
         ref={heroRef}
-        className="relative min-h-[100svh] flex items-center overflow-hidden pt-[96px]"
+        className="relative overflow-hidden"
       >
 
         {/* Background image */}
@@ -385,6 +385,7 @@ function checkZip() {
         <div className="absolute inset-0 bg-black/65" />
 
         {/* Content */}
+        <div className="relative z-10 min-h-[100svh] flex items-center pt-[96px]">
         <motion.div
           style={{ opacity: heroOpacity }}
           className="relative z-10 container mx-auto px-5 text-white"
@@ -429,14 +430,14 @@ function checkZip() {
 
           {/* ================= TRUST STRIP (FIXED) ================= */}          
           {/* TRUST BAR */}
-          <div className="mt-8 border-t border-white/40 pt-5">
+          <div className="mt-8 border-t border-white/40 pt-5 pb-[clamp(3rem,6vh,6rem)]">
             <div className="flex items-center justify-between gap-6">
 
               {/* Reviews */}
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1 text-red-500">
                   {[...Array(3)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-red-500" />
+                    <Star key={i} className="h-9 w-9 fill-red-500" />
                   ))}
                 </div>
                 <div>
@@ -468,12 +469,12 @@ function checkZip() {
 
             </div>
           </div>
-        </motion.div>
+        </motion.div></div>
       </section>
 
 
       {/* ================= ZIP SECTION ================= */}
-      <section className="relative py-24 bg-gradient-to-b from-white to-gray-50">
+       <div className="relative z-20 -mt-12 sm:-mt-16 md:-mt-20 pb-24">
         <div className="container mx-auto px-6">
           <FadeIn>
             <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
@@ -582,8 +583,7 @@ function checkZip() {
 
             </div>
           </FadeIn>
-        </div>
-      </section>
+        </div></div>
 
       {/* Customer Reviews */}
       <TestimonialsSection />

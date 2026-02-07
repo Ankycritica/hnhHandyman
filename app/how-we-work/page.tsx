@@ -13,8 +13,9 @@ export const metadata = {
 export default function HowWeWorkPage() {
   return (
     <>
+      <div className="min-h-screen bg-white overflow-x-hidden">
       <Header />
-      {/* ================= BREADCRUMB ================= */}
+      {/* ================= BREADCRUMB ================= */} 
       <div className="pt-24 border-b">
         <div className="container mx-auto px-6 py-4 text-sm text-neutral-600 flex gap-2 items-center">
           <Link href="/" className="hover:text-red-600 flex items-center">
@@ -244,6 +245,7 @@ export default function HowWeWorkPage() {
       
       <ResidentialServicesAccordion />
       <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
+    </div>
       <Footer/>
     </>
   )
