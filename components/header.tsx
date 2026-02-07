@@ -12,7 +12,16 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  Landmark,
+  Hospital,
+  Hotel,
+  Factory,
+  Building2,
+  Utensils,
+  ShoppingBag,
+  Briefcase
 } from "lucide-react"
+
 import { BookNowModal } from "@/components/book-now-modal"
 
 /* ================= HELPERS ================= */
@@ -378,34 +387,43 @@ const COMMERCIAL_SERVICES = [
   {
     title: "Financial Institutions and Banks",
     slug: "financial-institutions-banks",
+    icon: Landmark,
   },
   {
     title: "Healthcare Facilities & Hospitals",
     slug: "healthcare-facilities-hospitals",
+    icon: Hospital,
   },
   {
     title: "Hotels and Hospitality",
     slug: "hotels-hospitality",
+    icon: Hotel,
   },
   {
     title: "Manufacturing",
     slug: "manufacturing",
+    icon: Factory,
+
   },
   {
     title: "Municipal and Government",
     slug: "municipal-government",
+    icon: Building2,
   },
   {
     title: "Restaurants and Food Services",
     slug: "restaurants-food-services",
+    icon: Utensils,
   },
   {
     title: "Retail and Shopping Malls",
     slug: "retail-shopping-malls",
+    icon: ShoppingBag,
   },
   {
     title: "Small Business and Corporate Offices",
     slug: "small-business-corporate-offices",
+    icon: Briefcase,
   },
 ]
 
@@ -458,6 +476,8 @@ export function Header() {
               <Menu className="h-6 w-6" />
             </button>
           </div>
+          <div className="block lg:hidden w-full h-px bg-black/20 my-1" />
+          <br/>
 
           {/* ROW 2 : CTA BUTTONS */}
           <div className="flex gap-3 px-4 pb-3 border-b">
@@ -654,16 +674,24 @@ export function Header() {
                     {/* COMMERCIAL */}
                     {activeType === "commercial" && (
                       <div className="grid grid-cols-3 gap-6">
-                        {COMMERCIAL_SERVICES.map((service) => (
-                          <Link
-                            key={service.slug}
-                            href={`/services/commercial/${service.slug}`}
-                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition"
-                          >
-                            <span className="text-red-600 font-bold text-lg">#</span>
-                            <span className="text-sm font-medium">{service.title}</span>
-                          </Link>
-                        ))}
+                        {COMMERCIAL_SERVICES.map((service) => {
+                          const Icon = service.icon
+
+                          return (
+                            <Link
+                              key={service.slug}
+                              href={`/services/commercial/${service.slug}`}
+                              className="flex items-center gap-4 p-4 rounded-lg hover:bg-gray-50 transition"
+                            >
+                              <div className="w-9 h-9 flex items-center justify-center rounded-full bg-red-50">
+                                <Icon className="h-5 w-5 text-red-600" />
+                              </div>
+                              <span className="text-sm font-medium text-neutral-800">
+                                {service.title}
+                              </span>
+                            </Link>
+                          )
+                        })}
 
                       </div>
                     )}
@@ -678,7 +706,7 @@ export function Header() {
 
             {/* DESKTOP CTA */}
             <div className="flex gap-3 items-center">
-              <Button variant="outline" size="sm">
+              <Button  onClick={() => (window.location.href = "tel:+17032966409")} variant="outline" size="sm">
                 <Phone className="h-4 w-4" /> (703) 296-6409
               </Button>
 
@@ -687,7 +715,7 @@ export function Header() {
               </Button>
             </div>
           </div>
-        </div>
+        </div><div className="w-full h-[6px] bg-[var(--primary-red)]" />
       </motion.header>
 
       {/* ================= MOBILE MENU OVERLAY ================= */}

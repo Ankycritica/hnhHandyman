@@ -260,7 +260,7 @@ export default function InteriorRepairPage() {
         </div>
 
         <Image
-          src="/img/near-you.webp"
+          src="/new/WhatsApp Image 2026-02-04 at 9.39.25 AM (2).jpeg"
           alt="Interior consultation"
           width={620}
           height={360}

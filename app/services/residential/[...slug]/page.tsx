@@ -387,7 +387,7 @@ export default async function ResidentialSlugPage(
               {/* RIGHT IMAGE */}
               <div>
                 <Image
-                    src="/img/remodel.jpg"
+                    src="/new/WhatsApp Image 2026-02-04 at 9.39.45 AM.jpeg"
                     alt="Handyman repairing wall"
                     width={650}
                     height={420}

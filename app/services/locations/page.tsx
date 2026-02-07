@@ -7,7 +7,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { MapPin, Search, CheckCircle2, Calendar} from "lucide-react"
+import { MapPin, Search, CheckCircle2, Calendar,Phone,Locate} from "lucide-react"
 import { ChatWidget } from "@/components/chat-widget"
 /* ================= FADE IN ================= */
 
@@ -33,8 +33,36 @@ function FadeIn({
   )
 }
 
-/* ================= ZIP DATA ================= */
+const HANDYMAN_CONTACTS = {
+  va: {
+    phone: "+1 (571) 555-1001",
+    book: "/request-service",
+  },
+  md: {
+    phone: "+1 (301) 555-2002",
+    book: "/request-service",
+  },
+  dc: {
+    phone: "+1 (202) 555-3003",
+    book: "/request-service",
+  },
+}
+function detectRegionByZip(zip: string) {
+  const code = Number(zip.match(/\d{5}/)?.[0])
 
+  if (!code) return "va"
+
+  // Washington DC → 20000–20599
+  if (code >= 20000 && code <= 20599) return "dc"
+
+  // Maryland → 20600–21999
+  if (code >= 20600 && code <= 21999) return "md"
+
+  // Virginia → 20100–23999
+  if (code >= 20100 && code <= 23999) return "va"
+
+  return "va"
+}
 const SERVICE_ZIPS = [
   "Topping, VA        23169",
   "Wake, VA           23176",
@@ -70,6 +98,21 @@ const SERVICE_ZIPS = [
   "Jamaica, VA        23079",
   "Dunnville, VA      22454",
   "Tappahannock, VA   22560",
+
+  // Northern Virginia
+  "Ashburn, VA        20147",
+  "Fairfax, VA        22030",
+  "Reston, VA         20190",
+  "McLean, VA         22102", 
+
+  // Maryland
+  "Rockville, MD      20850",
+  "North Bethesda, MD 20852", 
+  "Silver Spring, MD  20910", 
+
+  // Washington DC
+  "Washington, DC     20001", 
+  "Georgetown, DC     20007", 
 ]
 
 /* ================= PAGE ================= */
@@ -82,7 +125,19 @@ export default function LocationsPage() {
   const filteredZips = SERVICE_ZIPS.filter((zip) =>
     zip.toLowerCase().includes(query.toLowerCase().trim())
   )
+  const [userLoc, setUserLoc] = useState<any>(null)
+  const [notFound, setNotFound] = useState(false)
+  /* ===== USE MY LOCATION ===== */
+  function useMyLocation() {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      setUserLoc({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+      })
 
+      setMapQuery(`${pos.coords.latitude},${pos.coords.longitude}`)
+    })
+  }
   /* ================= SEARCH HANDLER ================= */
 
   function handleSearch() {
@@ -120,6 +175,16 @@ export default function LocationsPage() {
           <span className="text-red-600 font-semibold">Locations</span>
         </div>
       </div>
+      {/* ================= HERO BANNER ================= */}
+      <section className="bg-[#faf6ed] border-b">
+        <div className="container mx-auto px-6 py-12">
+          <h1 className="text-[40px] font-bold text-red-700 mb-3">
+            Find a Location
+          </h1>
+          <div className="h-[4px] w-20 bg-yellow-500" />
+        </div>
+      </section>
+
       {/* HEADER OFFSET */}
       <div className="pt-24">
 
@@ -132,7 +197,7 @@ export default function LocationsPage() {
               </h1>
 
               <p className="text-center text-neutral-700 max-w-2xl mx-auto mb-10">
-                Enter your ZIP code below to see if our professionals are available near you.
+                Enter your ZIP code to find the nearest handyman and book instantly.
               </p>
             </FadeIn>
 
@@ -151,6 +216,10 @@ export default function LocationsPage() {
                   <Search className="h-4 w-4 mr-2" />
                   Search
                 </Button>
+                <Button variant="outline" onClick={useMyLocation}>
+                <Locate className="mr-2 h-4 w-4" />
+                Use My Location
+              </Button>
               </div>
             </FadeIn>
           </div>
@@ -201,26 +270,66 @@ export default function LocationsPage() {
               </FadeIn>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {filteredZips.map((zip, i) => {
-                  const locationText = zip.split(/\s{2,}/)[0]
-                  const zipCode = zip.match(/\d{5}/)?.[0]
+                
+              {filteredZips.map((zip, i) => {
 
-                  return (
-                    <FadeIn key={zip} delay={i * 0.05}>
+                const locationText = zip.split(/\s{2,}/)[0]
+                const zipCode = zip.match(/\d{5}/)?.[0]
+
+                const region = detectRegionByZip(zip)
+                const contact = HANDYMAN_CONTACTS[region as keyof typeof HANDYMAN_CONTACTS]
+
+                return (
+                  <FadeIn key={zip} delay={i * 0.05}>
+
+                    <div className="bg-white rounded-md shadow-md p-5">
+
+                      {/* ZIP INFO */}
                       <div
                         onClick={() =>
                           setMapQuery(`${locationText} ${zipCode}`)
                         }
-                        className="bg-white rounded-md shadow-md p-5 flex items-center gap-3 hover:shadow-lg cursor-pointer transition"
+                        className="flex items-center gap-3 cursor-pointer"
                       >
-                        <MapPin className="h-5 w-5 text-[var(--primary-red)]" />
-                        <span className="font-semibold text-neutral-800">
+                        <MapPin className="h-5 w-5 text-red-600" />
+                        <span className="font-semibold">
                           {zip}
                         </span>
                       </div>
-                    </FadeIn>
-                  )
-                })}
+
+                      {/* CONTACT BLOCK */}
+                      <div className="mt-3 p-3 bg-gray-50 rounded space-y-2">
+
+                        {/* PHONE */}
+                        <div className="flex items-center gap-3">
+                          <Phone className="h-5 w-5 text-green-600" />
+                          <a
+                            href={`tel:${contact.phone}`}
+                            className="font-bold text-red-700"
+                          >
+                            {contact.phone}
+                          </a>
+                        </div>
+
+                        {/* ===== SCHEDULE BUTTON ===== */}
+                        <Link
+                          href={`/request-service?zip=${zipCode}&area=${locationText}`}
+                          className="block mt-3"
+                        >
+                          <Button className="w-full bg-red-700">
+                            Schedule Service
+                          </Button>
+                        </Link>
+                        
+
+                      </div>
+
+                    </div>
+
+                  </FadeIn>
+                )
+              })}
+
               </div>
             )}
           </div>

@@ -14,6 +14,7 @@ import { ContactForm } from "@/components/contact-form"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { getIcon } from "@/lib/icon-map"
+import { TestimonialsSection } from "@/components/TestimonialsSection"
 /* ================= ZIP SERVICE AREA ================= */
 
 const SERVICE_ZIPS = new Set([
@@ -21,7 +22,21 @@ const SERVICE_ZIPS = new Set([
   "22577","22539","23035","23066","23109","23138","23025","23061",
   "23181","23149","23175","23092","23180","22523","23079","22454",
   "22560","23045","23076","23068","23119","23072","23071","23178",
-  "23018","23107","22473","22432"
+  "23018","23107","22473","22432",
+  // Northern Virginia
+  "20147",
+  "22030",
+  "20190",
+  "22102", 
+
+  // Maryland
+  "20850",
+  "20852", 
+  "20910", 
+
+  // Washington DC
+  "20001", 
+  "20007", 
 ])
 
 // Fade-in animation component
@@ -170,7 +185,7 @@ function checkZip() {
     title: "Repair Services",
     description:
       "Homes break. Whether you need your gutters or garage shelving fixed, Mr. Handyman has you covered.",
-    image: "/img/rapir.jpg",
+    image: "/new/WhatsApp Image 2026-02-04 at 9.39.47 AM.jpeg",
     icon: "Wrench",
     href: "/services/residential/repair",
   },
@@ -178,7 +193,7 @@ function checkZip() {
     title: "Commercial Services",
     description:
       "Don’t wait on urgent handyman service for your business. We work with organizations of all sizes.",
-    image: "/img/commercial.jpg",
+    image: "/new/WhatsApp Image 2026-02-04 at 9.39.23 AM (2).jpeg",
     icon: "Building",
     href: "/services/commercial",
   },
@@ -194,18 +209,18 @@ function checkZip() {
     title: "Remodeling Services",
     description:
       "Looking for help with a new kitchen or bathroom remodel? Mr. Handyman’s experts can make it happen.",
-    image: "/img/remodel.jpg",
+    image: "/new/WhatsApp Image 2026-02-04 at 9.39.23 AM.jpeg",
     icon: "Layout",
     href: "/services/residential/remodel",
   },
 ]
 
   const tipsData = [
-    { title: "Home Maintenance Checklist", desc: "Essential tasks to keep your home in top condition", image: "home-maintenance.png", category: "Maintenance", readTime: "4 min read" },
-    { title: "DIY vs Professional", desc: "When to call a handyman and when to do it yourself", image: "diy.png", category: "DIY", readTime: "5 min read" },
-    { title: "Seasonal Home Care", desc: "Prepare your home for every season of the year", image: "season-home-care.png", category: "Seasonal", readTime: "3 min read" },
-    { title: "Kitchen Upgrades", desc: "Smart kitchen improvements that add value without breaking the bank", image: "kitchen.png", category: "Upgrades", readTime: "6 min read" },
-    { title: "Plumbing Basics", desc: "Simple plumbing fixes you can do before calling the pros", image: "plumbing.png", category: "Plumbing", readTime: "4 min read" },
+    { title: "Home Maintenance Checklist", desc: "Essential tasks to keep your home in top condition", image: "new/WhatsApp Image 2026-02-04 at 9.39.23 AM.jpeg", category: "Maintenance", readTime: "4 min read" },
+    { title: "DIY vs Professional", desc: "When to call a handyman and when to do it yourself", image: "new/WhatsApp Image 2026-02-04 at 9.39.42 AM (3).jpeg", category: "DIY", readTime: "5 min read" },
+    { title: "Seasonal Home Care", desc: "Prepare your home for every season of the year", image: "new/WhatsApp Image 2026-02-04 at 9.39.32 AM (1).jpeg", category: "Seasonal", readTime: "3 min read" },
+    { title: "Kitchen Upgrades", desc: "Smart kitchen improvements that add value without breaking the bank", image: "new/WhatsApp Image 2026-02-04 at 9.39.27 AM.jpeg", category: "Upgrades", readTime: "6 min read" },
+    { title: "Plumbing Basics", desc: "Simple plumbing fixes you can do before calling the pros", image: "new/WhatsApp Image 2026-02-04 at 9.39.45 AM (3).jpeg", category: "Plumbing", readTime: "4 min read" },
   ]
   // autoplay loop for tips slider
   useEffect(() => {
@@ -239,10 +254,11 @@ function checkZip() {
   }, [isNavOpen])
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
-         <Header />
-        <div>
-        {isNavOpen && (
+  <div className="min-h-screen bg-white overflow-x-hidden">
+    <Header />
+    <div>
+      {isNavOpen && (
+
           <div className="fixed inset-0 z-[999] bg-white overflow-y-auto lg:hidden">
 
             {/* TOP BAR */}
@@ -261,7 +277,7 @@ function checkZip() {
                 Call Us
               </Button>
             </div>
-
+            
             {/* MENU CONTENT */}
             <div className="px-6 py-4">
 
@@ -346,12 +362,15 @@ function checkZip() {
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
       {/* Hero Section with Parallax */}
-      <section ref={heroRef} className="relative h-[80vh] min-h-[520px] md:min-h-[720px] overflow-hidden">
+      <section
+        ref={heroRef}
+        className="relative overflow-hidden"
+      >
+
+        {/* Background image */}
+        
         <motion.div
-          style={{ 
-            y: heroY, 
-            scale: heroScale
-          }}
+          style={{ y: heroY, scale: heroScale }}
           className="absolute inset-0"
         >
           <Image
@@ -359,72 +378,112 @@ function checkZip() {
             alt="Professional handyman service van"
             fill
             className="object-cover"
-            priority
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-white/50" />
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/65" />
+
+        {/* Content */}
+        <div className="relative z-10 min-h-[100svh] flex items-center pt-[96px]">
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative container mx-auto px-6 h-full flex flex-col justify-center"
+          className="relative z-10 container mx-auto px-5 text-white"
         >
-          <motion.h1
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--primary-blue)] mb-4 sm:mb-6 max-w-2xl leading-tight"
-          >
-            Local Professional Services You Can Trust
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="text-base sm:text-lg md:text-xl text-neutral-900 mb-6 sm:mb-8 max-w-xl leading-relaxed"
-          >
-            Quality home repairs and improvements from experienced professionals
-          </motion.p>
+          <p className="uppercase tracking-wide font-extrabold text-sm mb-2 text-gray-200">
+            Local Handyman Services You Can Trust
+          </p>
+
+          <h1 className="text-3xl sm:text-5xl font-extrabold leading-tight text-white">
+            We Have the Skills and Tools to Deliver High-
+            <span className="block font-extrabold text-white">Quality Results</span>
+          </h1>
+
+          <p className="mt-4 text-white max-w-xl">
+            Maintaining your home or business shouldn't be a struggle. HnHHandyman® is
+            your trusted partner, offering a reliable team of experts to tackle any
+            project. We’re the local handyman services you can trust!
+          </p>
+
+          {/* CTA */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8 flex flex-col sm:flex-row gap-4"
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                onClick={() => setIsChatOpen(true)}
-                size="lg"
-                className="w-full sm:w-auto shadow-lg"
-              >
-                <Calendar className="mr-2 h-5 w-5" />
-                SCHEDULE AN APPOINTMENT
-              </Button>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button size="lg" onClick={() => setIsChatOpen(true)} className="shadow-lg">
+              <Calendar className="mr-2 h-5 w-5" />
+              Schedule an Appointment
+            </Button>
+
+            <Link href="/services">
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto border-[var(--primary-blue)] text-[var(--primary-blue)] hover:text-white hover:border-[var(--primary-blue)]"
+                className="border-[var(--primary-red)] text-[var(--primary-red)] hover:bg-[var(--primary-red)] hover:text-white"
               >
-              <Link href="/services">
                 Learn More
-              </Link>
               </Button>
-            </motion.div>
+            </Link>
           </motion.div>
-        </motion.div>
+
+          {/* ================= TRUST STRIP (FIXED) ================= */}          
+          {/* TRUST BAR */}
+          <div className="mt-8 border-t border-white/40 pt-5 pb-[clamp(3rem,6vh,6rem)]">
+            <div className="flex items-center justify-between gap-6">
+
+              {/* Reviews */}
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 text-red-500">
+                  {[...Array(3)].map((_, i) => (
+                    <Star key={i} className="h-9 w-9 fill-red-500" />
+                  ))}
+                </div>
+                <div>
+                  <p className="text-lg font-semibold leading-none text-white">
+                    181
+                  </p>
+                  <p className="text-[11px] text-white/80 leading-tight">
+                    Customer Reviews
+                  </p>
+                </div>
+              </div>
+
+              {/* Rating */}
+              <div className="flex items-center gap-3">
+                <div className="flex gap-1 text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-yellow-400" />
+                  ))}
+                </div>
+                <div>
+                  <p className="text-lg font-semibold leading-none text-white">
+                    4.8/5
+                  </p>
+                  <p className="text-[11px] text-white/80 leading-tight">
+                    Rating
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </motion.div></div>
       </section>
 
+
       {/* ================= ZIP SECTION ================= */}
-      <section className="py-20 bg-gray-50">
+       <div className="relative z-20 -mt-12 sm:-mt-16 md:-mt-20 pb-24">
         <div className="container mx-auto px-6">
           <FadeIn>
-            <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow">
+            <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
 
-              <h2 className="text-3xl font-bold text-[var(--primary-red)] text-center mb-6">
+              <h2 className="text-3xl font-bold text-center text-[var(--primary-red)] mb-3">
                 Book Your Handyman Today
               </h2>
 
-              <p className="text-gray-600 text-center mb-8">
+              <p className="text-center text-gray-600 mb-8">
                 Enter your ZIP code to find qualified professionals in your area
               </p>
 
@@ -524,16 +583,12 @@ function checkZip() {
 
             </div>
           </FadeIn>
-        </div>
-      </section>
-
+        </div></div>
 
       {/* Customer Reviews */}
+      <TestimonialsSection />
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <FadeIn>
-            <h2 className="text-3xl font-bold text-center mb-12">Customer Reviews</h2>
-          </FadeIn>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
@@ -1115,3 +1170,22 @@ function CommercialList() {
     </div>
   )
 }
+
+<style jsx global>{`
+  @keyframes testimonial-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-testimonials {
+    animation: testimonial-scroll 40s linear infinite;
+  }
+
+  .animate-testimonials:hover {
+    animation-play-state: paused;
+  }
+`}</style>

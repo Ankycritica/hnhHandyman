@@ -2,6 +2,8 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -9,49 +11,68 @@ import { Input } from "@/components/ui/input"
 import { Phone, Calendar, Users } from "lucide-react"
 
 export default function RequestServicePage() {
+
+  // ================= GET DATA FROM URL =================
+  const searchParams = useSearchParams()
+
+  const zipFromUrl = searchParams.get("zip")
+  const areaFromUrl = searchParams.get("area")
+
+  // ================= FORM STATE =================
+  const [zip, setZip] = useState("")
+  const [area, setArea] = useState("")
+
+  // Auto fill when page opens
+  useEffect(() => {
+    if (zipFromUrl) setZip(zipFromUrl)
+    if (areaFromUrl) setArea(areaFromUrl)
+  }, [zipFromUrl, areaFromUrl])
+
+  // ======================================================
+
   return (
-    
-        <div className="bg-white text-neutral-900 text-center">
-        {/* ================= BREADCRUMB ================= */}
-            <Image
-                    src="/logonew1.png"
-                    alt="Professional Handyman"   
-                    width={200}
-                    height={200}
-                    />
-        <div>
-        <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
-        {/* ================= HERO STEPS ================= */}
-        <section className="bg-neutral-50 border-b">
-            <div className="container mx-auto px-6 py-10">
+    <div className="bg-white text-neutral-900 text-center">
 
-            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto text-center">
-                {[
-                {
-                    icon: Phone,
-                    text: "Share some info and our local handyman will contact you during business hours.",
-                },
-                {
-                    icon: Calendar,
-                    text: "Next, we can schedule a service appointment to start your project.",
-                },
-                {
-                    icon: Users,
-                    text: "Either way, we will call you to discuss your project and answer questions.",
-                },
-                ].map((step, i) => (
-                <div
-                    key={i}
-                    className="bg-white border rounded-lg p-5 shadow-sm flex flex-col items-center gap-3"
-                >
-                    <step.icon className="h-6 w-6 text-red-700" />
-                    <p className="text-sm text-neutral-700">{step.text}</p>
-                </div>
-                ))}
-            </div>
+      <Image
+        src="/logonew1.png"
+        alt="Professional Handyman"
+        width={200}
+        height={200}
+      />
 
-            </div>
-        </section></div>
+      <section className="bg-[#B21E23] pt-1 pb-1 relative"></section>
+
+      {/* ================= HERO STEPS ================= */}
+      <section className="bg-neutral-50 border-b">
+        <div className="container mx-auto px-6 py-10">
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto text-center">
+            {[
+              {
+                icon: Phone,
+                text: "Share some info and our local handyman will contact you during business hours.",
+              },
+              {
+                icon: Calendar,
+                text: "Next, we can schedule a service appointment to start your project.",
+              },
+              {
+                icon: Users,
+                text: "Either way, we will call you to discuss your project and answer questions.",
+              },
+            ].map((step, i) => (
+              <div
+                key={i}
+                className="bg-white border rounded-lg p-5 shadow-sm flex flex-col items-center gap-3"
+              >
+                <step.icon className="h-6 w-6 text-red-700" />
+                <p className="text-sm text-neutral-700">{step.text}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
 
       {/* ================= FORM SECTION ================= */}
       <section className="py-16">
@@ -71,7 +92,19 @@ export default function RequestServicePage() {
                   <Input placeholder="Last Name*" />
                 </div>
 
-                <Input placeholder="ZIP Code*" />
+                {/* ===== AUTO FILLED ZIP ===== */}
+                <Input
+                  placeholder="ZIP Code*"
+                  value={zip}
+                  onChange={(e) => setZip(e.target.value)}
+                />
+
+                {/* ===== AUTO FILLED AREA ===== */}
+                <Input
+                  placeholder="City / Area"
+                  value={area}
+                  onChange={(e) => setArea(e.target.value)}
+                />
 
                 <div className="grid grid-cols-2 gap-4">
                   <Input placeholder="Street Address*" />
@@ -98,10 +131,12 @@ export default function RequestServicePage() {
                   <Button className="bg-red-700 hover:bg-red-800">
                     Submit and Continue
                   </Button>
+
                   <Link href="/">
-                  <Button  variant="outline">Back</Button>
+                    <Button variant="outline">Back</Button>
                   </Link>
                 </div>
+
               </div>
             </div>
 
@@ -130,7 +165,9 @@ export default function RequestServicePage() {
           </div>
         </div>
       </section>
-       <section className="bg-[#B21E23] pt-1 pb-10 relative"></section>
+
+      <section className="bg-[#B21E23] pt-1 pb-10 relative"></section>
+
     </div>
   )
 }

@@ -90,7 +90,7 @@ export default function ResidentialServicesPage() {
           <FadeIn delay={0.2}>
             <div className="relative">
               <img
-                src="/icon/home.jpg"
+                src="/new/WhatsApp Image 2026-02-04 at 9.39.36 AM (1).jpeg"
                 alt="Mr Handyman technician"
                 className="rounded-xl shadow-xl object-cover"
               />

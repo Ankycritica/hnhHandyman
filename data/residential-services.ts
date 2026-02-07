@@ -17,7 +17,7 @@ export const RESIDENTIAL_SERVICES: ResidentialService[] = [
    {
     label: "Repair",
     slug: "repair",
-    image:"/icon/mrh-sheetrock-repair-desktop-624x322-rs.webp",
+    image:"/new/WhatsApp Image 2026-02-04 at 9.39.44 AM.jpeg",
     desc:"Homes that aren't maintained can quickly degrade, bringing down their aesthetic and value. From the exterior of your home to your closets, keeping up with home repairs is easy with HnHHandyman® by your side. Our convenient, one-call solution for house repair jobs makes getting it all done easier.",
     icon: "/icon/mrh_repair_revised_red_icon_55x55.svg",
     sections: {

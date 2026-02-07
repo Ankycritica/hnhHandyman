@@ -1,7 +1,9 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
-import { Facebook, Twitter, Youtube, Linkedin } from "lucide-react"
-
+import { Phone} from "lucide-react"
+import { Button } from "@/components/ui/button"
 export function Footer() {
   return (
     <footer className="bg-gray-100 text-neutral-900 py-12">
@@ -11,10 +13,24 @@ export function Footer() {
             <Image
               src="/logo.png"
               alt="HnHHandyman"
-              width={500}
-              height={500}
+              width={220}
+              height={80}
               className="object-contain"
             />
+        
+            <div className="flex items-center gap-2">
+              <Phone
+                className="h-4 w-4 text-[var(--primary-red)] cursor-pointer"
+                onClick={() => (window.location.href = "tel:+17032966409")}
+              />
+
+              <a
+                href="tel:+17032966409"
+                className="font-bold text-[var(--primary-red)]"
+              >
+                (703) 296-6409
+              </a>
+            </div>
             <p className="text-sm text-neutral-700 leading-relaxed max-w-xs">
               Proudly serving homeowners with reliable, on-time service and
               workmanship backed by our satisfaction promise.
@@ -55,6 +71,16 @@ export function Footer() {
           <div>
           <h3 className="font-bold mb-4">Company</h3>
           <ul className="space-y-2 text-sm text-neutral-700">
+            
+            <li>
+              <Link
+                href="/how-we-work"
+                className="hover:text-[var(--primary-blue)]"
+              >
+                How We Work
+              </Link>
+            </li>
+            <li><Link href="/request-service">Contact Us</Link></li>
             <li>
               <Link
                 href="/services/about-us"
@@ -69,17 +95,9 @@ export function Footer() {
                 href="/services/locations"
                 className="hover:text-[var(--primary-blue)]"
               >
-                Locations
+                Our Locations
               </Link>
-            </li>
-            <li>
-              <Link
-                href="/how-we-work"
-                className="hover:text-[var(--primary-blue)]"
-              >
-                How We Work
-              </Link>
-            </li>
+            </li>   
           </ul>
           </div>
           <div>

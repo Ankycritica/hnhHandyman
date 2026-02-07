@@ -1,0 +1,124 @@
+/* ===== HERO TEXT ===== */
+.mh-hero {
+  text-align: center;
+  padding: 30px 16px 10px;
+}
+
+.mh-hero .title {
+  color: #b21e23;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.mh-hero .sub {
+  color: #374151;
+  max-width: 760px;
+  margin: 8px auto 0;
+  line-height: 1.6;
+}
+
+/* ===== RATING BAR ===== */
+.rating {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  color: #b21e23;
+}
+
+.rating .stars {
+  color: #f5a623;
+  letter-spacing: 1px;
+}
+
+/* ===== MASONRY ===== */
+.mh-reviews-wrap {
+  max-width: 1120px;
+  margin: auto;
+  padding: 20px 16px 80px;
+}
+
+.mh-reviews-grid {
+  column-count: 3;
+  column-gap: 22px;
+}
+
+@media (max-width: 1024px) {
+  .mh-reviews-grid { column-count: 2; }
+}
+
+@media (max-width: 640px) {
+  .mh-reviews-grid { column-count: 1; }
+}
+
+/* ===== CARD FRAME ===== */
+.mh-card {
+  display: inline-block;
+  width: 100%;
+  background: #fff;
+
+  /* THIS CREATES THE EXACT LOOK */
+  border: 10px solid #f2f2f2;
+  border-radius: 6px;
+
+  margin-bottom: 22px;
+}
+
+/* inner white panel */
+.mh-card-inner {
+  border: 1px solid #e8e8e8;
+  padding: 16px 15px 14px;
+}
+
+/* ===== HEADER ===== */
+.mh-card-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* NAME + GOOGLE */
+.name {
+  color: #b21e23;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.via {
+  font-size: 12px;
+  color: #d97706;      /* amber like screenshot */
+  margin-top: 1px;
+}
+
+/* ===== REVIEW TEXT ===== */
+.review-text {
+  font-size: 13.6px;
+  line-height: 1.58;
+  color: #111;
+  margin: 8px 0 10px;
+}
+
+/* ===== OWNER RESPONSE ===== */
+.owner-response {
+  background: #fef9e7;     /* warm cream */
+  border: 1px solid #f3e8b5;
+  padding: 11px;
+  font-size: 12.8px;
+  line-height: 1.55;
+}
+    
