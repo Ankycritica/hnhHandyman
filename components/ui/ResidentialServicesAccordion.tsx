@@ -90,11 +90,11 @@ export function ResidentialServicesAccordion() {
                           <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
                             {services.map((service) => (
                               <Link
-                                key={service}
-                                href={`/services/residential/${cat.slug}/${slugify(section)}/${slugify(service)}`}
+                                key={`${section}-${service.title}`}
+                                href={`/services/residential/${cat.slug}/${slugify(section)}/${slugify(service.title)}`}
                                 className="text-red-700 hover:underline"
                               >
-                                • {service}
+                                • {service.title}
                               </Link>
                             ))}
                           </div>
