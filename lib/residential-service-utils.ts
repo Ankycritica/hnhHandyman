@@ -26,5 +26,5 @@ export const getRepairService = (
   const section = getRepairSection(sectionSlug)
   if (!section) return null
 
-  return section[1].find(s => slugify(s) === serviceSlug)
+  return section[1].find(s => slugify(s.title) === serviceSlug)
 }
