@@ -567,7 +567,7 @@ export function Header() {
               </Link>
 
               {servicesOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[1100px] bg-white rounded-xl shadow-xl border p-6 flex gap-6">
+                  <div className="absolute top-full left-1/3 -translate-x-1/3 mt-4 w-[1100px] bg-white rounded-xl shadow-xl border p-6 flex gap-6">
 
                     {/* LEFT */}
                     <div className="w-[220px] border-r pr-4">
@@ -673,26 +673,28 @@ export function Header() {
 
                     {/* COMMERCIAL */}
                     {activeType === "commercial" && (
-                      <div className="grid grid-cols-3 gap-6">
+                      <div className="grid grid-cols-4 gap-6">
                         {COMMERCIAL_SERVICES.map((service) => {
-                          const Icon = service.icon
+                          const Icon = service.icon;
 
                           return (
                             <Link
                               key={service.slug}
                               href={`/services/commercial/${service.slug}`}
-                              className="flex items-center gap-4 p-4 rounded-lg hover:bg-gray-50 transition"
+                              className="flex flex-col items-center text-center gap-3 p-4 rounded-xl hover:bg-gray-50 transition"
                             >
-                              <div className="w-9 h-9 flex items-center justify-center rounded-full bg-red-50">
-                                <Icon className="h-5 w-5 text-red-600" />
+                              {/* ICON TOP */}
+                              <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+                                <Icon className="h-5 w-5 text-red-300" />
                               </div>
+
+                              {/* NAME BELOW */}
                               <span className="text-sm font-medium text-neutral-800">
                                 {service.title}
                               </span>
                             </Link>
-                          )
+                          );
                         })}
-
                       </div>
                     )}
 
@@ -701,6 +703,7 @@ export function Header() {
               )}
             </div>
               <Link href="/services/locations">Locations</Link>
+              <Link href="/gallery">Gallery</Link>
               <Link href="/how-we-work">How We Work</Link>
             </nav>
 

@@ -64,25 +64,29 @@ for (const [sectionName, services] of Object.entries(category.sections)) {
     // FINAL SERVICE DIRECTLY
     if (sectionSlug) {
       const service = services.find(
-        s => slugify(s) === sectionSlug
+        s => slugify(s.title) === sectionSlug
       )
 
       if (service) {
-        return {
-          type: "service" as const,
-          title: service,
-          description: `Professional ${service.toLowerCase()} services for residential properties.`,
-          icon: category.icon,
-          image:category.image,
-          desc: category.desc,
-          category: category.label,
-          categorySlug: category.slug,
+          return {
+            type: "service" as const,
+            title: service.title,
+            description: service.desc,
+
+            bullets: service.bullets,
+            serviceImage: service.image,
+
+            icon: category.icon,
+            image: category.image,
+            desc: category.desc,
+
+            category: category.label,
+            categorySlug: category.slug,
+          }
         }
       }
+      continue
     }
-
-    continue
-  }
 
   /* =========================
      NORMAL SECTION FLOW
@@ -91,41 +95,51 @@ for (const [sectionName, services] of Object.entries(category.sections)) {
 
   // SECTION PAGE
   if (!itemSlug) {
-    return {
-      type: "section" as const,
-      title: sectionName,
-      category: category.label,
-      description: `Expert ${category.label.toLowerCase()} services you can trust.`,
-      icon: category.icon,
-      image: category.image,
-      desc: category.desc,
-      categorySlug: category.slug,
-      sectionSlug,
-      services,
+      return {
+        type: "section" as const,
+        title: sectionName,
+        category: category.label,
+        description: `Expert ${sectionName}  services you can trust.`,
+        icon: category.icon,
+        image: getSectionImage(slugify(sectionName)),
+        desc: category.desc,
+        categorySlug: category.slug,
+        sectionSlug,
+        services,   // OBJECT ARRAY
+      }
     }
-  }
 
   // FINAL SERVICE
   const service = services.find(
-    s => slugify(s) === itemSlug
+    s => slugify(s.title) === itemSlug
   )
 
   if (service) {
-    return {
-      type: "service" as const,
-      title: service,
-      description: `Professional ${service.toLowerCase()} services for residential properties.`,
-      icon: category.icon,
-      image: category.image,
-      desc: category.desc,
-      category: category.label,
-      categorySlug: category.slug,
-      section: sectionName,
-      sectionSlug,
+      return {
+        type: "service" as const,
+
+        title: service.title,
+        description: service.desc,
+
+        bullets: service.bullets,
+        serviceImage:
+        service.image ||
+        getSectionImage(slugify(sectionName)) ||
+        category.image,
+
+        icon: category.icon,
+        image: getSectionImage(slugify(sectionName)) ||
+      service.image ||
+      category.image,
+        desc: category.desc,
+
+        category: category.label,
+        categorySlug: category.slug,
+        section: sectionName,
+        sectionSlug,
+      }
     }
   }
-}
-
 
   return null
 }
@@ -297,11 +311,15 @@ export default async function ResidentialSlugPage(
         )}
 
         {data.type === "section" && (
-          <>
-            {data.services.slice(0, 2).join(", ")}
-            {" & More"}
-          </>
-        )}
+            <>
+              {data.services
+                .slice(0, 2)
+                .map(s => s.title)
+                .join(", ")
+              }
+              {" & More"}
+            </>
+          )}
 
         {data.type === "service" && data.section && (
           <>
@@ -318,7 +336,13 @@ export default async function ResidentialSlugPage(
     {/* RIGHT IMAGE */}
     <div className="flex justify-center md:justify-end">
       <Image
-        src={data.image}
+        src={
+      data.type === "service"
+        ? data.serviceImage || data.image || "/images/fallback.jpg"
+        : data.type === "section"
+        ? data.image
+        : data.image || "/images/fallback.jpg"
+    }
         alt={data.title}
         width={620}
         height={340}
@@ -387,7 +411,7 @@ export default async function ResidentialSlugPage(
               {/* RIGHT IMAGE */}
               <div>
                 <Image
-                    src="/new/WhatsApp Image 2026-02-04 at 9.39.45 AM.jpeg"
+                    src="/img/0 (10).webp"
                     alt="Handyman repairing wall"
                     width={650}
                     height={420}
@@ -469,11 +493,11 @@ export default async function ResidentialSlugPage(
             {/* Cards */}
             <div className="grid md:grid-cols-3 gap-8">
                 {data.services.map((service) => {
-                  const href = `/services/residential/${data.categorySlug}/${data.sectionSlug}/${slugify(service)}`
+                  const href = `/services/residential/${data.categorySlug}/${data.sectionSlug}/${slugify(service.title)}`
 
                   return (
                     <Link
-                      key={service}
+                      key={service.title}
                       href={href}
                       className="group relative bg-white rounded-xl
                                 border border-transparent
@@ -488,12 +512,11 @@ export default async function ResidentialSlugPage(
                       {/* Content */}
                       <div className="p-6 pr-14">
                         <h3 className="font-bold text-lg mb-3 leading-snug">
-                          {service}
+                          {service.title}
                         </h3>
 
                         <p className="text-neutral-600 text-sm leading-relaxed line-clamp-3">
-                          Professional service delivered by trusted experts to improve
-                          functionality, safety, and comfort in your home or business.
+                          {service.desc}
                         </p>
                       </div>
 
@@ -527,15 +550,27 @@ export default async function ResidentialSlugPage(
                     <div className="h-1 w-250 bg-red-700 mt-2" />
                   </h2>
                   <p className="text-neutral-700 mb-4">
-                    Keeping up with home repairs can be a challenge. That's where
-                    HnHHandyman comes in. We offer a wide range of{" "}
-                    {data.title.toLowerCase()} services to help you maintain and
-                    improve your home.
+                    {data.description}
                   </p>
+                  <ul className="mb-6 space-y-2">
+                    {data.bullets?.map((b, i) => (
+                      <li key={i} className="text-neutral-700 flex gap-2">
+                        <span>•</span> {b}
+                      </li>
+                    ))}
+                  </ul>
                   <p className="text-neutral-700 mb-4">
                     From small repairs to larger projects, we have the skills and
                     experience to get the job done right.
                   </p>
+                  {/* IMAGE USING OLD LAYOUT */}
+                  <Image
+                    src={data.serviceImage}
+                    alt={data.title}
+                    width={900}
+                    height={420}
+                    className="rounded-xl shadow-lg my-6"
+                  />
 
                   <p className="text-neutral-700 leading-relaxed mb-6">
                     Our experienced professionals provide expert{" "}

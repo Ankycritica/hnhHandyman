@@ -29,7 +29,7 @@ export const SECTION_IMAGE_MAP: Record<string, string> = {
     "patio-and-yard": "/icon/mrh_swingset_desktop_272x180_rs.webp",
 
 //flooring
-    "more-local-floor-installation-and-repair-services": "/icon/mrh_laying_tile_desktop_272x180_rs.webp",
+    "more-local-floor-installation-and-repair-services": "/new/mrh-placing-ceramic-floortile-desktop-656x371-rs.webp",
    
     "tile-and-vinyl": "/icon/mrh_laying_tile_desktop_272x180_rs.webp",
     "wood-and-laminate": "/icon/mrh_wood_flooring_desktop_272x180_rs.webp",
