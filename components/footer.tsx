@@ -109,6 +109,18 @@ export function Footer() {
               <li>support@hnhhandyman.com</li>
               <li>123 Service Ave, Suite 200</li>
               <li>Mon - Sat: 8:00am - 6:00pm</li>
+              <div className="hidden md:flex flex-col gap-2 pt-2">
+              <p className="font-bold tracking-wide">CALL US NOW...!</p>
+              <a href="tel:+17032966409" className="hover:scale-105 transition">
+                <Image
+                  src="/call-us-now.png"
+                  alt="Call Us Now"
+                  width={120}
+                  height={120}
+                  className="object-contain"
+                />
+              </a>
+            </div>
             </ul>
           </div>
         </div>

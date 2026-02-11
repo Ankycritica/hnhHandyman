@@ -198,7 +198,7 @@ export default function InteriorRepairPage() {
         transition={{ delay: i * 0.05 }}
         >
         <Link
-          href={`/services/residential/repair/interior-repair/${item.slug}`}
+          href={`/services/residential/repair/garage-repair/${item.slug}`}
           className="block h-full"
         >
           <div className="relative bg-white rounded-xl border shadow-md hover:shadow-lg transition p-6 h-full">

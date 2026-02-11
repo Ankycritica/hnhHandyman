@@ -24,7 +24,7 @@ function FadeIn({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
     >
@@ -63,7 +63,7 @@ function detectRegionByZip(zip: string) {
 
   return "va"
 }
-const SERVICE_ZIPS = [
+const SERVICE_ZIPS = Array.from(new Set([
   "Topping, VA        23169",
   "Wake, VA           23176",
   "Freeport, VA       22579",
@@ -101,19 +101,100 @@ const SERVICE_ZIPS = [
 
   // Northern Virginia
   "Ashburn, VA        20147",
+  "Ashburn, VA        20148" ,
   "Fairfax, VA        22030",
   "Reston, VA         20190",
   "McLean, VA         22102", 
+  "Merrifield, VA     22081",
+  "Virgina, VA        20105" ,
+  "Virgina, VA        20106",
+  "Virgina, VA        20107",
+  "Virgina, VA        20109", 
+  "Virgina, VA        20110", 
+  "Virgina, VA        20111",
+  "Virgina, VA        20112",
+  "Virgina, VA        20115", 
+  "Virgina, VA        20117", 
+  "Virgina, VA        20119", 
+  "Virgina, VA        20120", 
+  "Virgina, VA        20121", 
+  "Virgina, VA        20124",
+  "Virgina, VA        20129", 
+  "Virgina, VA        20132", 
+  "Virgina, VA        20135", 
+  "Virgina, VA        20136", 
+  "Virgina, VA        20137", 
+  "Virgina, VA        20141",
+  "Virgina, VA        20143", 
+  "Virgina, VA        20144",
+
+  
 
   // Maryland
   "Rockville, MD      20850",
   "North Bethesda, MD 20852", 
   "Silver Spring, MD  20910", 
+  "Southern, MD        20601",
+  "Southern, MD        20602",
+  "Southern, MD        20603",
+  "Southern, MD        20604",
+  "Southern, MD        20630",
+  "Southern, MD        20606",
+  "Southern, MD        20607",
+  "Southern, MD        20608",
+  "Southern, MD        20609",
+  "Southern, MD        20611",
+  "Southern, MD        20613",
+  "Southern, MD        20615",
+  "Southern, MD        20616",
+  "Southern, MD        20617",
+  "Southern, MD        20618",
+  "Southern, MD        20619",
+  "Southern, MD        20620",
+  "Southern, MD        20621",
+  "Southern, MD        20622",
+  "Southern, MD        20623",
+  "Southern, MD        20624",
+  "Southern, MD        20626",
+  "Southern, MD        20628",
+  "Southern, MD        20630",
+  "Southern, MD        20632",
+  "Southern, MD        20634",
+
 
   // Washington DC
   "Washington, DC     20001", 
   "Georgetown, DC     20007", 
-]
+  "Washington, DC     20009", 
+  "Washington, DC     20036", 
+  "Washington, DC     20057", 
+  "Washington, DC     20003", 
+  "Washington, DC     20004", 
+  "Washington, DC     20005", 
+  "Washington, DC     20006", 
+  "Washington, DC     20007", 
+  "Washington, DC     20008", 
+  "Washington, DC     20010", 
+  "Washington, DC     20011", 
+  "Washington, DC     20012", 
+  "Washington, DC     20015", 
+  "Washington, DC     20016", 
+  "Washington, DC     20017", 
+  "Washington, DC     20018",  
+  "Washington, DC     20019", 
+  "Washington, DC     20020", 
+  "Washington, DC     20024", 
+  "Washington, DC     20032", 
+  "Washington, DC     20036", 
+  "Washington, DC     20037", 
+  "Washington, DC     20045", 
+  "Washington, DC     20052",  
+  "Washington, DC     20059", 
+  "Washington, DC     20064", 
+  
+]))
+
+
 
 /* ================= PAGE ================= */
 
@@ -121,10 +202,16 @@ export default function LocationsPage() {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [query, setQuery] = useState("")
   const [mapQuery, setMapQuery] = useState("Virginia, USA")
+  const [activeTab, setActiveTab] = useState<"va" | "md" | "dc">("va")
 
-  const filteredZips = SERVICE_ZIPS.filter((zip) =>
+
+const filteredZips = SERVICE_ZIPS.filter(
+  (zip) =>
+    detectRegionByZip(zip) === activeTab &&
     zip.toLowerCase().includes(query.toLowerCase().trim())
-  )
+)
+
+
   const [userLoc, setUserLoc] = useState<any>(null)
   const [notFound, setNotFound] = useState(false)
   /* ===== USE MY LOCATION ===== */
@@ -144,12 +231,19 @@ export default function LocationsPage() {
     if (!query.trim()) return
 
     const match = SERVICE_ZIPS.find((zip) =>
-      zip.includes(query.trim())
+      zip.toLowerCase().includes(query.toLowerCase().trim())
     )
 
     if (match) {
       const locationText = match.split(/\s{2,}/)[0] // "Topping, VA"
-      setMapQuery(`${locationText} ${query}`)
+      const zipCode = match.match(/\d{5}/)?.[0]
+      const region = detectRegionByZip(match)
+
+      // 🔥 AUTO SWITCH TAB
+      setActiveTab(region as "va" | "md" | "dc")
+
+      // 🔥 UPDATE MAP
+      setMapQuery(`${locationText}, ${zipCode}, USA`)
     } else {
       setMapQuery("Virginia, USA")
     }
@@ -238,9 +332,30 @@ export default function LocationsPage() {
             />
           </div>
         </div>
-
-        {/* ================= ZIP RESULTS ================= */}
         <section className="py-16 bg-white">
+          {/* ================= ZIP RESULTS ================= */}
+          <div className="flex gap-4 justify-center mb-8">
+          {[
+            { key: "va", label: "Virginia" },
+            { key: "md", label: "Maryland" },
+            { key: "dc", label: "Washington DC" },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => {
+                setActiveTab(tab.key as any)
+                setQuery("")
+              }}
+              className={`px-6 py-2 rounded-full font-semibold border ${
+                activeTab === tab.key
+                  ? "bg-red-700 text-white"
+                  : "bg-white text-red-700"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
           <div className="container mx-auto px-6">
             <FadeIn>
               <div className="flex justify-between items-center mb-8">
@@ -269,6 +384,7 @@ export default function LocationsPage() {
                 </div>
               </FadeIn>
             ) : (
+              
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 
               {filteredZips.map((zip, i) => {
@@ -280,7 +396,7 @@ export default function LocationsPage() {
                 const contact = HANDYMAN_CONTACTS[region as keyof typeof HANDYMAN_CONTACTS]
 
                 return (
-                  <FadeIn key={zip} delay={i * 0.05}>
+                  <FadeIn key={`${zip}-${i}`} delay={i * 0.05}>
 
                     <div className="bg-white rounded-md shadow-md p-5">
 
