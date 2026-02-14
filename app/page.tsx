@@ -27,16 +27,29 @@ const SERVICE_ZIPS = new Set([
   "20147",
   "22030",
   "20190",
-  "22102", 
+  "22102", "20105", "20106", "20107", "20109", "20110", "20111", "20112",
+  "20115", "20117", "20119", "20120", "20121", "20124",
+  "20129", "20132", "20135", "20136", "20137", "20141",
+  "20143", "20144", "20147", "20148",
+  "22081",
 
   // Maryland
   "20850",
   "20852", 
-  "20910", 
+  "20910", "20601", "20602", "20603", "20604",
+  "20606", "20607", "20608", "20609",
+  "20611", "20613", "20615", "20616",
+  "20617", "20618", "20619", "20620",
+  "20621", "20622", "20623", "20624",
+  "20626", "20628", "20630", "20632",
+  "20634",
 
   // Washington DC
-  "20001", 
-  "20007", 
+  "20001", "20002", "20003", "20004", "20005", "20006",
+  "20007", "20008", "20009", "20010", "20011", "20012",
+  "20015", "20016", "20017", "20018", "20019", "20020",
+  "20024", "20032", "20036", "20037", "20045", "20052",
+  "20057", "20059", "20064" 
 ])
 
 // Fade-in animation component
@@ -469,15 +482,16 @@ function checkZip() {
 
             </div>
           </div>
-        </motion.div></div>
+        </motion.div>
+        </div>
       </section>
 
 
       {/* ================= ZIP SECTION ================= */}
-       <div className="relative z-20 -mt-12 sm:-mt-16 md:-mt-20 pb-24">
+       <div className="relative z-20 -mt-12 sm:-mt-16 md:-mt-10 pb-20">
         <div className="container mx-auto px-6">
           <FadeIn>
-            <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
+            <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl border border-gray-300 p-8 md:p-10">
 
               <h2 className="text-3xl font-bold text-center text-[var(--primary-red)] mb-3">
                 Book Your Handyman Today
