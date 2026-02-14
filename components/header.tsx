@@ -570,7 +570,7 @@ export function Header() {
                   <div className="absolute top-full left-1/3 -translate-x-1/3 mt-4 w-[1100px] bg-white rounded-xl shadow-xl border p-6 flex gap-6">
 
                     {/* LEFT */}
-                    <div className="w-[220px] border-r pr-4">
+                    <div className="w-[220px] border-r border-gray-200 pr-4">
                       <Link
                           href="/services/residential">
                       <button
@@ -578,10 +578,10 @@ export function Header() {
                           setActiveType("residential")
                           setActiveResidential(null)
                         }}
-                        className={`block w-full text-left px-4 py-3 rounded ${
+                        className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
                           activeType === "residential"
-                            ? "bg-red-50 text-red-600"
-                            : ""
+                            ? "bg-red-100 text-red-700 font-semibold"
+                            : "text-neutral-800 hover:bg-red-50"
                         }`}
                       >
                         Residential
@@ -593,10 +593,10 @@ export function Header() {
                           setActiveType("commercial")
                           setActiveResidential(null)
                         }}
-                        className={`block w-full text-left px-4 py-3 rounded ${
+                        className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
                           activeType === "commercial"
-                            ? "bg-red-50 text-red-600"
-                            : ""
+                            ? "bg-red-100 text-red-700 font-semibold"
+                            : "text-neutral-800 hover:bg-red-50"
                         }`}
                       >
                         Commercial
@@ -613,17 +613,17 @@ export function Header() {
                           <button
                             key={s.slug}
                             onClick={() => setActiveResidential(s)}
-                            className="flex flex-col items-center text-center gap-3 p-4 rounded-xl hover:bg-gray-50"
+                            className="flex flex-col items-center text-center gap-3 p-4 rounded-xl hover:bg-red-50 transition-all duration-200"
                           >
-                            <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+                            <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.12)] ring-1 ring-gray-200">
                                 <Image
                                   src={s.icon}
                                   alt={s.label}
-                                  width={22}
-                                  height={22}
+                                  width={26}
+                                  height={26}
                                 />
                               </div>
-                            <span className="text-sm font-medium">{s.label} </span>
+                            <span className="text-sm font-semibold text-neutral-900">{s.label} </span>
                           </button>
                         ))}
                       </div>
@@ -633,7 +633,7 @@ export function Header() {
                         <div>
                           <button
                             onClick={() => setActiveResidential(null)}
-                            className="text-red-600 mb-4 flex items-center gap-2"
+                            className="text-red-600 mb-4 flex items-center gap-2 "
                           >
                             <ChevronLeft /><Link
                                     href={`/services/residential/${activeResidential.slug}/`}
@@ -657,7 +657,7 @@ export function Header() {
                                       <li key={item}>
                                         <Link
                                           href={`/services/residential/${activeResidential.slug}/${slugify(section)}/${slugify(item)}`}
-                                          className="hover:text-red-600"
+                                          className="hover:bg-red-50"
                                         >
                                           {item}
                                         </Link>
@@ -681,15 +681,15 @@ export function Header() {
                             <Link
                               key={service.slug}
                               href={`/services/commercial/${service.slug}`}
-                              className="flex flex-col items-center text-center gap-3 p-4 rounded-xl hover:bg-gray-50 transition"
+                              className="flex flex-col items-center text-center gap-3 p-4 rounded-xl hover:bg-red-50 transition-all duration-200"
                             >
                               {/* ICON TOP */}
-                              <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
-                                <Icon className="h-5 w-5 text-red-300" />
+                              <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.12)] ring-1 ring-gray-200">
+                                <Icon className="h-6 w-6 text-red-600" strokeWidth={1.8} />
                               </div>
 
                               {/* NAME BELOW */}
-                              <span className="text-sm font-medium text-neutral-800">
+                              <span className="text-sm font-semibold text-neutral-900">
                                 {service.title}
                               </span>
                             </Link>

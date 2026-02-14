@@ -624,7 +624,7 @@ export default async function ResidentialSlugPage(
                     Contact us today!
                   </p>
 
-                  <Link href="/how-we-work">
+                  <Link href="/services/locations">
                     <button className="bg-red-700 hover:bg-red-700 text-white px-6 py-3 rounded-md font-semibold shadow">
                       Learn More
                     </button>

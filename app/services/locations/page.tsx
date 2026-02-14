@@ -35,35 +35,21 @@ function FadeIn({
 
 const HANDYMAN_CONTACTS = {
   va: {
-    phone: "+1 (571) 555-1001",
+    phone: "+1 (703) 296-6409",
     book: "/request-service",
   },
   md: {
-    phone: "+1 (301) 555-2002",
+    phone: "+1 (240) 801-6458",
     book: "/request-service",
   },
   dc: {
-    phone: "+1 (202) 555-3003",
+    phone: "+1 (804) 480-2550",
     book: "/request-service",
   },
 }
-function detectRegionByZip(zip: string) {
-  const code = Number(zip.match(/\d{5}/)?.[0])
 
-  if (!code) return "va"
-
-  // Washington DC → 20000–20599
-  if (code >= 20000 && code <= 20599) return "dc"
-
-  // Maryland → 20600–21999
-  if (code >= 20600 && code <= 21999) return "md"
-
-  // Virginia → 20100–23999
-  if (code >= 20100 && code <= 23999) return "va"
-
-  return "va"
-}
 const SERVICE_ZIPS = Array.from(new Set([
+  // Virginia
   "Topping, VA        23169",
   "Wake, VA           23176",
   "Freeport, VA       22579",
@@ -98,7 +84,6 @@ const SERVICE_ZIPS = Array.from(new Set([
   "Jamaica, VA        23079",
   "Dunnville, VA      22454",
   "Tappahannock, VA   22560",
-
   // Northern Virginia
   "Ashburn, VA        20147",
   "Ashburn, VA        20148" ,
@@ -193,6 +178,28 @@ const SERVICE_ZIPS = Array.from(new Set([
   "Washington, DC     20064", 
   
 ]))
+type Region = "va" | "md" | "dc"
+
+// Build ZIP → Region map once
+const ZIP_REGION_MAP: Record<string, Region> = {}
+SERVICE_ZIPS.forEach(entry => {
+  const zipMatch = entry.match(/(\d{5})$/)
+  const stateMatch = entry.match(/,\s*(VA|MD|DC)\s+/)
+
+  if (!zipMatch || !stateMatch) return
+
+  const zip = zipMatch[1]
+  const state = stateMatch[1]
+
+  if (state === "VA") ZIP_REGION_MAP[zip] = "va"
+  if (state === "MD") ZIP_REGION_MAP[zip] = "md"
+  if (state === "DC") ZIP_REGION_MAP[zip] = "dc"
+})
+
+
+function getZipFromEntry(entry: string) {
+  return entry.match(/\d{5}$/)?.[0] || ""
+}
 
 
 
@@ -202,14 +209,15 @@ export default function LocationsPage() {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [query, setQuery] = useState("")
   const [mapQuery, setMapQuery] = useState("Virginia, USA")
-  const [activeTab, setActiveTab] = useState<"va" | "md" | "dc">("va")
+  const [activeTab, setActiveTab] = useState<Region>("va")
 
 
-const filteredZips = SERVICE_ZIPS.filter(
-  (zip) =>
-    detectRegionByZip(zip) === activeTab &&
-    zip.toLowerCase().includes(query.toLowerCase().trim())
-)
+
+const filteredZips = SERVICE_ZIPS.filter(entry => {
+  const zip = getZipFromEntry(entry)
+  return ZIP_REGION_MAP[zip] === activeTab
+})
+
 
 
   const [userLoc, setUserLoc] = useState<any>(null)
@@ -237,10 +245,12 @@ const filteredZips = SERVICE_ZIPS.filter(
     if (match) {
       const locationText = match.split(/\s{2,}/)[0] // "Topping, VA"
       const zipCode = match.match(/\d{5}/)?.[0]
-      const region = detectRegionByZip(match)
 
       // 🔥 AUTO SWITCH TAB
-      setActiveTab(region as "va" | "md" | "dc")
+      if (zipCode && ZIP_REGION_MAP[zipCode]) {
+        setActiveTab(ZIP_REGION_MAP[zipCode])
+      }
+
 
       // 🔥 UPDATE MAP
       setMapQuery(`${locationText}, ${zipCode}, USA`)
@@ -392,8 +402,8 @@ const filteredZips = SERVICE_ZIPS.filter(
                 const locationText = zip.split(/\s{2,}/)[0]
                 const zipCode = zip.match(/\d{5}/)?.[0]
 
-                const region = detectRegionByZip(zip)
-                const contact = HANDYMAN_CONTACTS[region as keyof typeof HANDYMAN_CONTACTS]
+                const contact = HANDYMAN_CONTACTS[activeTab]
+
 
                 return (
                   <FadeIn key={`${zip}-${i}`} delay={i * 0.05}>
