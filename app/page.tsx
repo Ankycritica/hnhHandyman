@@ -395,7 +395,7 @@ function checkZip() {
         </motion.div>
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black/65" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
 
         {/* Content */}
         <div className="relative z-10 min-h-[100svh] flex items-center pt-[96px]">

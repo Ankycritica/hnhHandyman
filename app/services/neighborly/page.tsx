@@ -139,7 +139,7 @@ export default function HowWeWorkPage() {
           {/* IMAGE */}
           <div className="relative h-[620px] rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/icon/HnHHandyman.png"
+              src="/img/Handyman-Services.jpg"
               alt="Professional Handyman"
               fill
               className="object-cover"
