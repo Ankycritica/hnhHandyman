@@ -3,48 +3,277 @@
     "title": "Financial Institutions and Banks",
     "shortDescription": "Professional handyman services for banks and financial institutions including repairs, security-focused upgrades, and facility maintenance.",
     "iconName": "Landmark",
-    "slug": "financial-institutions-banks"
+    "slug": "financial-institutions-banks",
+    "heroImage": "/new/mrh_commercial_bank_reception_desktop-hero_624x322.webp",
+    "pledgeImage": "/new/mrh_commercial_bank_reception_desktop-hero_624x322.webp",
+    "servicesList": [
+      "Security Fixture Installation",
+      "ATM Area Repairs",
+      "Interior & Exterior Painting",
+      "Lighting Upgrades",
+      "Door & Lock Repairs",
+      "Drywall & Ceiling Repair"
+    ],
+    "clients": ["Chase", "Wells Fargo", "Capital One", "TD Bank"],
+    "resources": [
+      {
+        "title": "Bank Facility Maintenance Guide",
+        "description": "Best practices for maintaining financial institutions.",
+        "image": "/img/0 (3).jpeg"
+      },
+      {
+        "title": "Security Upgrade Checklist",
+        "description": "Ensure compliance and safety standards.",
+        "image": "/new/iStock-1221471613.jpg"
+      },
+      {
+        "title": "Preventive Maintenance for Banks",
+        "description": "Reduce operational disruptions.",
+        "image": "/new/maintenance-engineer-working-on-desk-260nw-2351414477.webp"
+      }
+    ]
   },
+
   {
     "title": "Healthcare Facilities and Hospitals",
     "shortDescription": "Specialized handyman services for healthcare facilities, hospitals, and clinics with a focus on safety, compliance, and minimal disruption.",
     "iconName": "Hospital",
-    "slug": "healthcare-facilities-hospitals"
+    "slug": "healthcare-facilities-hospitals",
+    "heroImage": "/icon/mrh_commercial_bank_reception_chair_computers_desktop_656x371.webp",
+    "pledgeImage": "/icon/mrh_commercial_bank_reception_chair_computers_desktop_656x371.webp",
+    "servicesList": [
+      "Medical Room Repairs",
+      "Handrail Installation",
+      "Wall Protection Systems",
+      "Floor Tile Replacement",
+      "Emergency Repairs",
+      "Lighting & Electrical Fixes"
+    ],
+    "clients": ["City Hospital", "Care Clinics", "HealthFirst"],
+    "resources": [
+      {
+        "title": "Healthcare Maintenance Checklist",
+        "description": "Maintain sterile and safe environments.",
+        "image": "/new/image hospital clenaing.jpg"
+      },
+      {
+        "title": "Facility Safety Compliance",
+        "description": "Meet healthcare safety regulations.",
+        "image": "/new/Safety-Legislation-in-Healthcare-Ensuring-Compliance-in-Hospitals-450x250.jpg"
+      },
+      {
+        "title": "Preventive Repairs in Hospitals",
+        "description": "Reduce downtime and patient disruption.",
+        "image": "/img/0 (3).jpeg"
+      }
+    ]
   },
+
   {
     "title": "Hotels and Hospitality",
     "shortDescription": "Hospitality-focused repair and maintenance services for hotels, resorts, and lodging facilities to maintain guest-ready standards.",
     "iconName": "Hotel",
-    "slug": "hotels-hospitality"
+    "slug": "hotels-hospitality",
+    "heroImage": "/icon/mrh-elegant-hotel-cafe-desktop-624x322-rs.webp",
+    "pledgeImage": "/icon/mrh-elegant-hotel-cafe-desktop-624x322-rs.webp",
+    "servicesList": [
+      "Guest Room Repairs",
+      "Lobby & Common Area Maintenance",
+      "Outdoor Fixture Repairs",
+      "Furniture Assembly & Repair",
+      "Plumbing Fixes",
+      "Emergency Response Services"
+    ],
+    "clients": ["Grand Hotel", "Resort Paradise", "City Inn"],
+    "resources": [
+      {
+        "title": "Hotel Maintenance Best Practices",
+        "description": "Keep your hotel guest-ready.",
+        "image": "/new/WhatsApp Image 2026-02-04 at 9.39.36 AM (4).jpeg"
+      },
+      {
+        "title": "Emergency Repairs in Hospitality",
+        "description": "Respond quickly to maintenance issues.",
+        "image": "/new/1-scaled.jpg"
+      },
+      {
+        "title": "Outdoor Maintenance for Hotels",
+        "description": "Enhance curb appeal and safety.",
+        "image": "/new/iStock-1895580003-1024x696.jpg"
+      }
+    ]
   },
   {
     "title": "Manufacturing Facilities",
     "shortDescription": "Maintenance and repair services for manufacturing environments including structural repairs, safety upgrades, and workspace improvements.",
     "iconName": "Factory",
-    "slug": "manufacturing"
+    "slug": "manufacturing",
+    "heroImage": "/icon/mrh-shop-desktop-624x322-rs.webp",
+    "pledgeImage": "/icon/mrh-shop-desktop-624x322-rs.webp",
+    "servicesList": [
+      "Structural Repairs",
+      "Safety Fixture Installation",
+      "Equipment Area Maintenance",
+      "Flooring Repairs",
+      "Lighting Upgrades",
+      "Emergency Repairs"
+    ],
+    "clients": ["Auto Manufacturing Co", "Textile Factory", "Food Processing Inc"],
+    "resources": [
+      {
+        "title": "Manufacturing Facility Maintenance",
+        "description": "Keep your production line running smoothly.",
+        "image": "/new/PHOTO-2024-09-30-12-00-36-1536x1024-1.webp"
+      },
+      {
+        "title": "Safety Upgrades for Manufacturing",
+        "description": "Enhance worker safety and compliance.",
+        "image": "/new/7-Tips-to-Improve-Safety-at-a-Manufacturing-Plant.png"
+      },
+      {
+        "title": "Preventive Maintenance in Factories",
+        "description": "Reduce downtime and costly repairs.",
+        "image": "/new/engineer-ding-Predictive-MaintenancePdM.webp"
+      }
+    ]
   },
   {
     "title": "Municipal and Government Buildings",
     "shortDescription": "Reliable handyman services for municipal and government properties including offices, public buildings, and community facilities.",
     "iconName": "Building2",
-    "slug": "municipal-government"
+    "slug": "municipal-government",
+    "heroImage": "/icon/mrh-minicipalbuiding-tree-logo-desktop-624x322-rs.webp",
+    "pledgeImage": "/icon/mrh-minicipalbuiding-tree-logo-desktop-624x322-rs.webp",
+    "servicesList": [
+      "Public Building Repairs",
+      "Park Facility Maintenance",
+      "Community Center Upkeep",
+      "Outdoor Fixture Repairs",
+      "Emergency Response Services",
+      "ADA Compliance Upgrades"
+    ],
+    "clients": ["City Hall", "Public Library", "Community Center"],
+    "resources": [
+      {
+        "title": "Government Building Maintenance",
+        "description": "Best practices for public property upkeep.",
+        "image": "/new/A-blue-sign-featuring-a-wheelchair-symbol.jpeg"
+      },
+      {
+        "title": "ADA Compliance Upgrades",
+        "description": "Ensure accessibility for all citizens.",
+        "image": "/new/ada compliance.webp"
+      },
+      {
+        "title": "Emergency Repairs for Public Buildings",
+        "description": "Respond quickly to maintenance issues.",
+        "image": "/new/Repairs of PSB along West Main Street 1.jpg"
+      }
+    ]
   },
   {
     "title": "Restaurants and Food Services",
     "shortDescription": "Commercial repair services for restaurants and food service businesses including dining areas, kitchens, and customer-facing spaces.",
     "iconName": "Utensils",
-    "slug": "restaurants-food-services"
+    "slug": "restaurants-food-services",
+    "heroImage": "/icon/mrh-modern-restaurent-interior-desktop-624x322-rs.webp",
+    "pledgeImage": "/icon/mrh-modern-restaurent-interior-desktop-624x322-rs.webp",
+    "servicesList": [
+      "Dining Area Repairs",
+      "Kitchen Maintenance",
+      "Plumbing Fixes",
+      "Flooring Repairs",
+      "Lighting Upgrades",
+      "Emergency Response Services"
+    ],
+    "clients": ["City Diner", "Gourmet Bistro", "Fast Food Express"],
+    "resources": [
+      {
+        "title": "Restaurant Maintenance Guide",
+        "description": "Keep your restaurant running smoothly.",
+        "image": "/new/African American chef checking kitchens supplies while working at restaurant.webp"
+      },
+      {
+        "title": "Kitchen Safety Upgrades",
+        "description": "Enhance safety in your food prep areas.",
+        "image": "/new/multiracial-chefs-working-in-commercial-kitchen-at-restaurant.jpg"
+      },
+      {
+        "title": "Emergency Repairs for Restaurants",
+        "description": "Respond quickly to maintenance issues.",
+        "image": "/new/emergency exit overlay.png"
+      }
+    ]
   },
+
   {
     "title": "Retail and Shopping Malls",
     "shortDescription": "Retail property maintenance services for shopping centers and malls including storefront repairs, signage, and interior improvements.",
     "iconName": "ShoppingBag",
-    "slug": "retail-shopping-malls"
+    "slug": "retail-shopping-malls",
+    "heroImage": "/icon/mrh-modernstore-building-exterior-desktop-624x322-rs.webp",
+    "pledgeImage": "/icon/mrh-modernstore-building-exterior-desktop-624x322-rs.webp",
+    "servicesList": [
+      "Storefront Repairs",
+      "Signage Installation",
+      "Lighting Replacement",
+      "Drywall Repairs",
+      "Graffiti Removal",
+      "Floor Tile Maintenance"
+    ],
+    "clients": ["Guess", "Gap", "Target", "TJ Maxx", "Nine West"],
+    "resources": [
+      {
+        "title": "Retail Store Maintenance Guide",
+        "description": "Keep your store customer-ready.",
+        "image": "/new/retail service.jpg"
+      },
+      {
+        "title": "Storefront Damage Prevention",
+        "description": "Protect your retail investment.",
+        "image": "/new/Wide-angle_view.webp"
+      },
+      {
+        "title": "Lighting Improvements for Retail",
+        "description": "Enhance safety and aesthetics.",
+        "image": "/new/light retial.webp"
+      }
+    ]
   },
+
   {
     "title": "Small Business and Corporate Offices",
     "shortDescription": "Flexible handyman services for small businesses and corporate offices covering repairs, upgrades, and ongoing maintenance needs.",
     "iconName": "Briefcase",
-    "slug": "small-business-corporate-offices"
+    "slug": "small-business-corporate-offices",
+    "heroImage": "/icon/mrh-interior-openoffice-desktop-624x322-rs.webp",
+    "pledgeImage": "/icon/mrh-interior-openoffice-desktop-624x322-rs.webp",
+    "servicesList": [
+      "Office Partition Repairs",
+      "Ceiling & Lighting Repairs",
+      "Furniture Assembly",
+      "Wall Painting",
+      "Door Repairs",
+      "Workspace Improvements"
+    ],
+    "clients": ["Tech Solutions Inc", "Global Finance", "Creative Studio"],
+    "resources": [
+      {
+        "title": "Office Maintenance Essentials",
+        "description": "Keep your workplace productive.",
+        "image": "/new/office-cleaning-services-848x480.jpg"
+      },
+      {
+        "title": "Workspace Upgrade Guide",
+        "description": "Modernize your office efficiently.",
+        "image": "/new/Modern-Office.jpg"
+      },
+      {
+        "title": "Preventive Office Repairs",
+        "description": "Avoid costly business interruptions.",
+        "image": "/new/african-american-male-female-engineers.webp"
+      }
+    ]
   }
 ]
+

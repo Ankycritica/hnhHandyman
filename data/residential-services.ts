@@ -55,20 +55,20 @@ make("Shelving Installation", "/new/mrh_floating_glass_shelves_empty_desktop-her
 make("Ceiling Fan Installation", "/new/mrh-fan-roof-desktop-624x322-rs.webp"),
 make("Child Proofing", "/new/mrh-steps-babyproofing-desktop-624x322-rs.webp"),
 make("Picture Hanging", "/new/mrh-picture-holding-hand-desktop-624x322-rs.webp"),
-make("Closet Shelving", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
+make("Closet Shelving", "/new/mrh_storageroom_emptyjar_shelves_desktop_624x322_rs.webp"),
 make("Bathroom Caulking", "/new/WhatsApp Image 2026-02-04 at 9.53.04 AM.jpeg"),
 make("Exhaust Fan Installation and Repair", "/new/mrh_airduct_fixing_roof_desktop_624x322_rs.webp"),
 make("Furniture Painting and Staining", "/new/mrh_carpenter_applying_protectivevanish_desktop_624x322_rs.webp"),
-make("Curtains and Drapes Installation and Replacement", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
-make("Hanging Blinds Installation and Replacement", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg")
+make("Curtains and Drapes Installation and Replacement", "/new/mrh_curtain_install3_desktop_656x371._rs.webp"),
+make("Hanging Blinds Installation and Replacement", "/new/mrh_worker_assembling_windowblinds_desktop_656x371_rs.webp"),
 ],
 
 "Exterior Repair": [
 make("Window Frame Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.30 AM.jpeg"),
 make("Weatherproofing", "/new/mrh-window-beading-hand-desktop-624x322-rs.webp"),
-make("Debris Removal", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
+make("Debris Removal", "/new/mrh_rottedwood_baskets_outdoor_desktop_656x371_rs.webp"),
 make("Gutter Installation and Repair", "/new/mrh_corner_roofgutter_rooftop_desktop_656x371_rs.webp"),
-make("Masonry and Concrete Services", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg")
+make("Masonry and Concrete Services", "/new/mrh_worker_bricklayer_installing_desktop_624x322_rs.webp")
 ],
 
 "Garage Repair": [
@@ -121,12 +121,12 @@ make("Bathroom Remodeling and Repair", "/new/mrh-washroom-glass-bathtub-desktop-
 make("Vanity and Bathroom Mirror Installation", "/new/mrh-mirrors-desktop-624x322-rs.webp"),
 make("Tub Enclosure Installation and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.47 AM (3).jpeg"),
 make("Bathtub Repair and Replacement", "/new/WhatsApp Image 2026-02-04 at 9.39.48 AM (2).jpeg"),
-make("Walk In Tub Installation and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
+make("Walk In Tub Installation and Repair", "/new/mrh_bathroom_washbasin_shower_desktop_656x371_rs.webp"),
 make("Shower Tile Installation and Repair", "/new/mrh_marble_bathroom_shower_sink_glassdoor_desktop_656x371.webp")
 ],
 
 "Kitchen": [
-make("Kitchen Remodeling and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
+make("Kitchen Remodeling and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.47 AM (1).jpeg"),
 make("Kitchen Backsplash Installation", "/new/mrh-stovetop-desktop-624x322-rs.webp"),
 make("Cabinet Installation and Repair", "/new/mrh-hand-drawer-pulls-desktop-624x322-rs.webp"),
 make("Countertop Installation and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.46 AM (3).jpeg"),
@@ -136,12 +136,12 @@ make("Custom Kitchen Island Installation", "/new/WhatsApp Image 2026-02-04 at 9.
 "Rooms and Other Services": [
 make("Bedroom Remodeling and Repair", "/new/mrh-room-window-door-desktop-624x322-rs.webp"),
 make("Basement Remodeling and Repair", "/new/mrh-basement-desktop-624x322.webp"),
-make("Attic Remodeling and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
+make("Attic Remodeling and Repair", "/new/mrh_attic_finishing_desktop_624x322_rs.webp"),
 make("Dining Room Remodeling and Repair", "/new/mrh-home-light-desktop-656x371-rs.webp"),
-make("Home Office Remodeling and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
+make("Home Office Remodeling and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.25 AM (2).jpeg"),
 make("Living Room Remodeling and Repair", "/new/mrh-home-light-desktop-656x371-rs.webp"),
 make("Safety and Mobility Services", "/new/mrh-hand-handrail-wall-desktop-624x322-rs.webp"),
-make("Acoustic Ceiling Removal", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
+make("Acoustic Ceiling Removal", "/new/acoustic-removal.jpg"),
 make("Ceiling Texture Service", "/new/mrh-home-light-desktop-656x371-rs.webp"),
 make("Popcorn Ceiling Removal", "/new/mrh-home-light-desktop-656x371-rs.webp")
 ],
@@ -175,7 +175,7 @@ make("Barn Door Installation and Repair", "/new/mrh-home-interiorlight-desktop-6
 make("Exterior Door Installation and Replacement", "/new/WhatsApp Image 2026-02-04 at 9.39.36 AM.jpeg"),
 make("Keyless Entry Installation and Replacement", "/new/WhatsApp Image 2026-02-04 at 9.39.36 AM.jpeg"),
 make("Storefront Door and Window Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.36 AM.jpeg"),
-make("Storm Door Installation and Replacement", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
+make("Storm Door Installation and Replacement", "/new/mrh-doors.webp"),
 make("Door Closer Installation and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.36 AM.jpeg"),
 make("Interior Door Installation and Repair", "/new/WhatsApp Image 2026-02-04 at 9.39.36 AM.jpeg")
 ],
@@ -187,7 +187,7 @@ make("Window Screen Installation", "/new/WhatsApp Image 2026-02-04 at 9.39.49 AM
 ],
 
 "More Window and Door Services":[
-make("Other Window and Door Services", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg")
+make("Other Window and Door Services", "/new/WhatsApp Image 2026-02-04 at 9.39.41 AM.jpeg")
 ]
 
 }
@@ -477,7 +477,7 @@ make("Appliance Repair and Service", "/new/mrh-kitchen-desktop-624x322-rs.webp")
 make("Landscape Design and Installation", "/new/WhatsApp Image 2026-02-04 at 9.53.04 AM (1).jpeg"),
 make("Dryer Vent Service and Repair", "/new/WhatsApp Image 2026-02-04 at 9.53.07 AM.jpeg"),
 make("Garage Door Services", "/new/mrh-shutter-motor-desktop-656x371-rs.webp"),
-make("Glass Services", "/new/WhatsApp Image 2026-02-04 at 9.39.34 AM.jpeg"),
+make("Glass Services", "/new/Untitled.jpg"),
 make("Glide Out Shelving", "/new/mrh-slide-shelf-desktop-624x322.webp"),
 make("Power and Pressure Washing", "/new/mrh-stoneslab-cleaning-pressurecleaner-desktop-624x322-rs.webp"),
 make("Attic Insulation and Repairs", "/new/folding-attic-stairs-closeup-hardware.webp"),
